@@ -45,33 +45,33 @@ public:
 	int m_coinHeight;
 	int m_numberOfCoins;
 
-	float m_coinPosX[15];
-	float m_coinPosY[15];
+	float m_coinPosX[35];
+	float m_coinPosY[35];
 
 	std::string m_police;
 	int m_numberOfPolice;
-	float m_policePosX[10];
-	float m_policePosY[10];
+	float m_policePosX[15];
+	float m_policePosY[15];
 
 	std::string m_truck;
 	int m_numberOfTruck;
-	float m_truckPosX[10];
-	float m_truckPosY[10];
+	float m_truckPosX[15];
+	float m_truckPosY[15];
 
 	std::string m_ambulance;
 	int m_numberOfAmbulance;
-	float m_ambulancePosX[10];
-	float m_ambulancePosY[10];
+	float m_ambulancePosX[15];
+	float m_ambulancePosY[15];
 
 	std::string m_mini_van;
 	int m_numberOfMiniVan;
-	float m_minivanPosX[10];
-	float m_minivanPosY[10];
+	float m_minivanPosX[15];
+	float m_minivanPosY[15];
 
 	std::string m_mini_truck;
 	int m_numberOfMiniTruck;
-	float m_minitruckPosX[10];
-	float m_minitruckPosY[10];
+	float m_minitruckPosX[15];
+	float m_minitruckPosY[15];
 
 	std::string m_taxi;
 	int m_numberOfTaxi;

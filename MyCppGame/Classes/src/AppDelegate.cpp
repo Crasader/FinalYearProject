@@ -1,6 +1,8 @@
 #include "AppDelegate.h"
 #include "MainMenuScene.h"
 #include "SplashScene.h"
+#include "cocos2d.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 
@@ -38,6 +40,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 		director->setOpenGLView(glview);
 	}
 	auto fileUtils = FileUtils::getInstance();
+
 
 	// Set the design resolution with the NO_BORDER policy.
 	glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
@@ -81,6 +84,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	//auto scene = MainMenu::createScene();
 	auto scene = Splash::createScene();
 	director->runWithScene(scene);
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("audio/background.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("audio/background.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.0005);
 
 	return true;
 }

@@ -5,7 +5,7 @@ USING_NS_CC;
 HUD * HUD::create()
 {
 	HUD * hud = new HUD();
-	if (hud && hud->initWithFile("GameScreen/scorehud.png"))
+	if (hud && hud->initWithFile("GameScreen/scorehud1.png"))
 	{
 		hud->autorelease();
 		hud->initHUD();

@@ -46,7 +46,10 @@ public:
 	std::vector<MiniTruck *> m_miniTrucks;  // add this
 	void createMTrucks();    // add this
 	void ScrollBackground();
-
+	int scoreX;
+	int scoreY;
+	int scoreX1;
+	int scoreY1;
 	// Called when user pauses gameplay.
 	void activatePauseScene(Ref *pSender);
 	void update(float dt);

@@ -35,7 +35,7 @@ void GameScreen::addBackGroundSprite(cocos2d::Size const & visibleSize, cocos2d:
 	backgroundSprite = Sprite::create
 		(ptr->m_backgroundTextureFile);
 	backgroundSprite->setPosition(Point((visibleSize.width / 2) +
-		origin.x, (visibleSize.height) + 1400));
+		origin.x, (visibleSize.height) + 2000));
 	this->addChild(backgroundSprite, -1);
 }
 
@@ -83,22 +83,25 @@ bool GameScreen::init()
 	player = Player::create();
 	player->setPosition(100, 125);
 	player->setAnchorPoint(Point(0.5f, 0.55f));
-	this->addChild(player);
+	this->addChild(player,5);
 
 	hud = HUD::create();
 	hud->setPosition(715, 465);
 	this->addChild(hud);
 
-	score = 0;
+	/*score = 0;
+	scoreX = 730;
+	scoreY = 460;
+	scoreX1 = 663;
+	scoreY1 = 460;*/
 
-	auto label = Label::createWithTTF("Score:", "fonts/Marker Felt.ttf", 32);
-	label->setPosition(663,460);
+	/*auto label = Label::createWithTTF("Score:", "fonts/Marker Felt.ttf", 32);
+	label->setPosition(scoreX1, scoreY1);
 	this->addChild(label);
-
 	__String *tempScore = __String::createWithFormat("%i", score);
 	auto scoreLabel = Label::createWithTTF(tempScore->getCString(), "fonts/Marker Felt.ttf", 32);
-	scoreLabel->setPosition(730, 460);
-	this->addChild(scoreLabel);
+	scoreLabel->setPosition(scoreX, scoreY);
+	this->addChild(scoreLabel);*/
 
 	auto menu = Menu::create(pauseItem, NULL);
 	menu->setPosition(Point::ZERO);
@@ -156,16 +159,23 @@ void GameScreen::update(float dt)
 {
 	if (move == true)
 	{
-		player->setPositionY(player->getPosition().y + 7);
+		player->setPositionY(player->getPosition().y + 7.5);
 	}
-	if (player->getPosition().y > 3930)
+	if (player->getPosition().y > 4450)
 	{
 		float i = 2;
 		activateGameOverScene(i);
 	}
-	//hud->setPositionY(hud->getPosition().y + 7);
+	if (player->getPosition().x < 25)
+	{
+		player->setPositionX(26);
+	}
+	if (player->getPosition().x > 775)
+	{
+		player->setPositionX(774);
+	}
+	hud->setPositionY(hud->getPosition().y + 7.5);
 	cameraTarget->setPositionY(player->getPosition().y + 115);
-	ScrollBackground();
 	Particles();
 }
 
@@ -177,7 +187,10 @@ bool GameScreen::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event * event)
 
 void GameScreen::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event * event)
 {
-	player->setPosition(touch->getLocation().x,player->getPosition().y);
+	if (move == true)
+	{
+		player->setPosition(touch->getLocation().x, player->getPosition().y);
+	}
 }
 
 void GameScreen::Particles()
@@ -185,7 +198,7 @@ void GameScreen::Particles()
 	auto size = Director::getInstance()->getWinSize();
 	auto m_emitter = ParticleSmoke::createWithTotalParticles(900);
 	//m_emitter->setTexture(Director::getInstance()->getTextureCache()->addImage("smoke.png"));
-	m_emitter->setDuration(0.05f);
+	m_emitter->setDuration(0.015f);
 	m_emitter->setGravity(Point(0, -240));
 	m_emitter->setAngle(0);
 	m_emitter->setAngleVar(360);
@@ -279,7 +292,7 @@ void GameScreen::createCoins()
 		m_coins.push_back(base);
 		spritebatch->addChild(base, 1);
 	}
-	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
+	this->addChild(spritebatch, 4, COINS_SPRITE_BATCH);
 }
 
 void GameScreen::createPolice()
@@ -354,11 +367,11 @@ bool GameScreen::onContactBegin(cocos2d::PhysicsContact &contact)
 
 	if ((0x000001 == a->getCollisionBitmask() && 0x000003 == b->getCollisionBitmask() || 0x000001 == b->getCollisionBitmask() && 0x000003 == a->getCollisionBitmask()))
 	{
-		//a->applyForce(Vect(100, 75));
+		//a->applyForce(Vect(0, -75));
 		//a->setAngularVelocity(200);
 		score = score + 10;
 		//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/scoreSound.mp3");
-		a->removeFromWorld();
+		//a->removeFromWorld();
 	}
 	return true;
 }
