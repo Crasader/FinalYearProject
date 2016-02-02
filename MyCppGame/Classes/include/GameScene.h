@@ -9,6 +9,7 @@
 #include "GameOverScene.h"
 #include "GameData.h"
 #include "Player.h"
+#include "PowerUp.h"
 #include "Coin.h"
 #include "Police.h"
 #include "Truck.h"
@@ -28,6 +29,7 @@ public:
 	virtual bool init();
 	Player * player;
 	HUD * hud;
+	PowerUp * powerUp;
 	cocos2d::Sprite *cameraTarget;
 	cocos2d::Sprite *backgroundSprite;
 	cocos2d::Sprite *backgroundSprite2;
@@ -53,7 +55,7 @@ public:
 	void createTrucks();    // add this
 	std::vector<MiniTruck *> m_miniTrucks;  // add this
 	void createMTrucks();    // add this
-	void ScrollBackground();
+	void ScrollBackground(float dt);
 	// Called when user pauses gameplay.
 	void activatePauseScene(Ref *pSender);
 	void update(float dt);

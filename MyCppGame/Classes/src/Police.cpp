@@ -21,11 +21,9 @@ Police * Police::create(Vec2 position, GameStates & gameState)
 		pSprite->autorelease();
 
 		pSprite->initOptions(position);
-		pSprite->setTag(70);
 		cocos2d::Size size(80, 150);
 		auto towerBody = PhysicsBody::createBox(size);
 		towerBody->setCollisionBitmask(0x000002);
-		towerBody->setTag(70);
 		towerBody->setContactTestBitmask(true);
 		//towerBody->setDynamic(false);
 

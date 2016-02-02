@@ -7,7 +7,7 @@ Scene* GameScreen::createScene()
 {
 	auto scene = Scene::createWithPhysics();
 	scene->getPhysicsWorld()->setGravity(Vec2(0, 0));
-	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	auto layer = GameScreen::create();
 	layer->SetPhysicsWorld(scene->getPhysicsWorld());
 
@@ -58,9 +58,9 @@ void GameScreen::addBackGroundSprite(cocos2d::Size const & visibleSize, cocos2d:
 	this->addChild(backgroundSprite3, -1);
 }
 
-void GameScreen::ScrollBackground()
+void GameScreen::ScrollBackground(float dt)
 {
-	//backgroundSprite->setPositionY(backgroundSprite->getPosition().y + 2.5f);
+	player->createBody(player);
 }
 
 bool GameScreen::init()
@@ -101,17 +101,21 @@ bool GameScreen::init()
 	player->setAnchorPoint(Point(0.5f, 0.55f));
 	this->addChild(player,5);
 
+	powerUp = PowerUp::create();
+	powerUp->setPosition(700, 1850);
+	this->addChild(powerUp);
+
 	hud = HUD::create();
-	hud->setPosition(715, 465);
-	this->addChild(hud);
+	hud->setPosition(715, 455);
+	this->addChild(hud,6);
 
 	label = Label::createWithTTF("Score:", "fonts/Marker Felt.ttf", 32);
 	label->setPosition(683, 460);
-	this->addChild(label);
+	this->addChild(label,7);
 	__String *tempScore = __String::createWithFormat("%i", score);
 	scoreLabel = Label::createWithTTF(tempScore->getCString(), "fonts/Marker Felt.ttf",32);
 	scoreLabel->setPosition(750, 460);
-	this->addChild(scoreLabel);
+	this->addChild(scoreLabel,7);
 
 	auto menu = Menu::create(pauseItem, NULL);
 	menu->setPosition(Point::ZERO);
@@ -389,11 +393,20 @@ bool GameScreen::onContactBegin(cocos2d::PhysicsContact &contact)
 				score = score + 10;
 				__String *tempScore = __String::createWithFormat("%i", score);
 				scoreLabel->setString(tempScore->getCString());
-				//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/scoreSound.mp3");
+				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/scoreSound.mp3");
 				nodeB->removeFromParentAndCleanup(true);
 			}
+
+			/*if (nodeB->getTag() == 40)
+			{
+				score = score + 1000;
+				__String *tempScore = __String::createWithFormat("%i", score);
+				scoreLabel->setString(tempScore->getCString());
+				nodeB->removeFromParentAndCleanup(true);
+				nodeA->removeFromPhysicsWorld();
+			}*/
 		}
-		else if (nodeA->getTag() == 30)
+		if (nodeA->getTag() == 30)
 		{
 			score = score + 10;
 			__String *tempScore = __String::createWithFormat("%i", score);
@@ -401,6 +414,15 @@ bool GameScreen::onContactBegin(cocos2d::PhysicsContact &contact)
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/scoreSound.mp3");
 			nodeA->removeFromParentAndCleanup(true);
 		}
+		/*if (nodeA->getTag() == 40)
+		{
+			score = score + 1000;
+			__String *tempScore = __String::createWithFormat("%i", score);
+			scoreLabel->setString(tempScore->getCString());
+			nodeA->removeFromParentAndCleanup(true);
+			nodeB->removeFromPhysicsWorld();
+			this->scheduleOnce(schedule_selector(GameScreen::ScrollBackground), 5.0f);
+		}*/
 	}
 
 	if ((0x000001 == a->getCollisionBitmask() && 0x000002 == b->getCollisionBitmask() || 0x000001 == b->getCollisionBitmask() && 0x000002 == a->getCollisionBitmask()))

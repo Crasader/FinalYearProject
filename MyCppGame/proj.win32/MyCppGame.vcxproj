@@ -159,6 +159,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\src\PauseScene.cpp" />
     <ClCompile Include="..\Classes\src\Player.cpp" />
     <ClCompile Include="..\Classes\src\Police.cpp" />
+    <ClCompile Include="..\Classes\src\PowerUp.cpp" />
     <ClCompile Include="..\Classes\src\SplashScene.cpp" />
     <ClCompile Include="..\Classes\src\Taxi.cpp" />
     <ClCompile Include="..\Classes\src\TowerBase.cpp" />
@@ -182,6 +183,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\include\PauseScene.h" />
     <ClInclude Include="..\Classes\include\Player.h" />
     <ClInclude Include="..\Classes\include\Police.h" />
+    <ClInclude Include="..\Classes\include\PowerUp.h" />
     <ClInclude Include="..\Classes\include\SplashScene.h" />
     <ClInclude Include="..\Classes\include\Taxi.h" />
     <ClInclude Include="..\Classes\include\TowerBase.h" />
