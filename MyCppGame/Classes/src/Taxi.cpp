@@ -21,10 +21,11 @@ Taxi * Taxi::create(Vec2 position, GameStates & gameState)
 		pSprite->autorelease();
 
 		pSprite->initOptions(position);
-
+		pSprite->setTag(60);
 		cocos2d::Size size(100, 100);
 		auto towerBody = PhysicsBody::createBox(size);
 		towerBody->setCollisionBitmask(0x000003);
+		towerBody->setTag(60);
 		towerBody->setContactTestBitmask(true);
 		//towerBody->setDynamic(false);
 

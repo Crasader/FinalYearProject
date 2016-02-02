@@ -152,6 +152,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\src\GameScene.cpp" />
     <ClCompile Include="..\Classes\src\HUD.cpp" />
     <ClCompile Include="..\Classes\src\LevelLoader.cpp" />
+    <ClCompile Include="..\Classes\src\LoadingScene.cpp" />
     <ClCompile Include="..\Classes\src\MainMenuScene.cpp" />
     <ClCompile Include="..\Classes\src\MiniTruck.cpp" />
     <ClCompile Include="..\Classes\src\OptionsScene.cpp" />
@@ -174,6 +175,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\include\GameStates.h" />
     <ClInclude Include="..\Classes\include\HUD.h" />
     <ClInclude Include="..\Classes\include\LevelLoader.h" />
+    <ClInclude Include="..\Classes\include\LoadingScene.h" />
     <ClInclude Include="..\Classes\include\MainMenuScene.h" />
     <ClInclude Include="..\Classes\include\MiniTruck.h" />
     <ClInclude Include="..\Classes\include\OptionsScene.h" />

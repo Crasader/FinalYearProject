@@ -9,9 +9,11 @@ Player * Player::create()
 	{
 		player->autorelease();
 		player->initPlayer();
-		cocos2d::Size size(60, 120);
+		player->setTag(10);
+		cocos2d::Size size(70, 150);
 		auto playerBody = PhysicsBody::createBox(size);
 		playerBody->setCollisionBitmask(0x000001);
+		playerBody->setTag(10);
 		playerBody->setContactTestBitmask(true);
 		playerBody->setDynamic(false);
 

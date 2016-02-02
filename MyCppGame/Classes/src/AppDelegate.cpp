@@ -85,8 +85,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	auto scene = Splash::createScene();
 	director->runWithScene(scene);
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("audio/background.mp3");
-	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("audio/background.mp3");
-	CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.0005);
+	//CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("audio/background.mp3");
+	//CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(1.0f);
 
 	return true;
 }

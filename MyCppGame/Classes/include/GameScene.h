@@ -14,6 +14,7 @@
 #include "Truck.h"
 #include "MiniTruck.h"
 #include "Ambulance.h"
+#include "LoadingScene.h"
 #include "2d/CCParticleSystemQuad.h"
 #include <algorithm>
 #include <vector>
@@ -29,7 +30,14 @@ public:
 	HUD * hud;
 	cocos2d::Sprite *cameraTarget;
 	cocos2d::Sprite *backgroundSprite;
+	cocos2d::Sprite *backgroundSprite2;
+	cocos2d::Sprite *backgroundSprite3;
+	cocos2d::Sprite *backgroundSprite4;
 	cocos2d::Follow *camera;
+	cocos2d::Label *label;
+	cocos2d::Label *scoreLabel;
+	cocos2d::MenuItemSprite *pauseItem;
+	cocos2d::ProgressTimer *progressTimer;
 	std::string const TOWERS_SPRITE_BATCH = "TowerBases";
 	std::string const COINS_SPRITE_BATCH = "Coins";
 	GameStates m_gameState;
@@ -46,15 +54,12 @@ public:
 	std::vector<MiniTruck *> m_miniTrucks;  // add this
 	void createMTrucks();    // add this
 	void ScrollBackground();
-	int scoreX;
-	int scoreY;
-	int scoreX1;
-	int scoreY1;
 	// Called when user pauses gameplay.
 	void activatePauseScene(Ref *pSender);
 	void update(float dt);
 	// Called at game over 
 	void activateGameOverScene(float dt);
+	void activateLoadingScene(float dt);
 	void addBackGroundSprite(cocos2d::Size const & visibleSize, cocos2d::Point const & origin);
 	bool move;
 	unsigned int score;

@@ -24,9 +24,11 @@ TowerBase * TowerBase::create(Vec2 position, GameStates & gameState)
 		pSprite->initOptions(position);
 
 		pSprite->addEvents();
+		pSprite->setTag(50);
 
 		auto towerBody = PhysicsBody::createBox(pSprite->getContentSize());
 		towerBody->setCollisionBitmask(0x000002);
+		towerBody->setTag(50);
 		towerBody->setContactTestBitmask(true);
 		towerBody->setDynamic(false);
 

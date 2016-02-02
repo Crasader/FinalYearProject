@@ -21,10 +21,12 @@ Truck * Truck::create(Vec2 position, GameStates & gameState)
 		pSprite->autorelease();
 
 		pSprite->initOptions(position);
+		pSprite->setTag(20);
 
-		cocos2d::Size size(60, 120);
+		cocos2d::Size size(80, 200);
 		auto towerBody = PhysicsBody::createBox(size);
 		towerBody->setCollisionBitmask(0x000002);
+		towerBody->setTag(20);
 		towerBody->setContactTestBitmask(true);
 		//towerBody->setDynamic(false);
 

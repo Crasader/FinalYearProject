@@ -23,13 +23,15 @@ Coin * Coin::create(Vec2 position, GameStates & gameState)
 		pSprite->initOptions(position);
 
 		pSprite->addEvents();
+		pSprite->setTag(30);
 
 		auto towerBody = PhysicsBody::createBox(pSprite->getContentSize());
 		towerBody->setCollisionBitmask(0x000003);
 		towerBody->setContactTestBitmask(true);
+		towerBody->setTag(30);
 		//towerBody->setDynamic(false);
 
-		//pSprite->setPhysicsBody(towerBody);
+		pSprite->setPhysicsBody(towerBody);
 
 		return pSprite;
 	}

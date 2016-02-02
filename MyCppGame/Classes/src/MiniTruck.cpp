@@ -21,10 +21,11 @@ MiniTruck * MiniTruck::create(Vec2 position, GameStates & gameState)
 		pSprite->autorelease();
 
 		pSprite->initOptions(position);
-
-		cocos2d::Size size(60, 120);
+		pSprite->setTag(80);
+		cocos2d::Size size(80, 150);
 		auto towerBody = PhysicsBody::createBox(size);
 		towerBody->setCollisionBitmask(0x000002);
+		towerBody->setTag(80);
 		towerBody->setContactTestBitmask(true);
 		//towerBody->setDynamic(false);
 

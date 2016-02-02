@@ -37,11 +37,6 @@ bool Splash::init()
 
 	this->addChild(backgroundSprite);
 
-	auto logo = Sprite::create("logo.jpeg");
-	logo->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
-
-	this->addChild(logo);
-
 	this->scheduleOnce(schedule_selector(Splash::activateMainMenuScene), 4.0f);
 
 	return true;
