@@ -50,33 +50,33 @@ public:
 
 	std::string m_police;
 	int m_numberOfPolice;
-	float m_policePosX[15];
-	float m_policePosY[15];
+	float m_policePosX[25];
+	float m_policePosY[25];
 
 	std::string m_truck;
 	int m_numberOfTruck;
-	float m_truckPosX[15];
-	float m_truckPosY[15];
+	float m_truckPosX[25];
+	float m_truckPosY[25];
 
 	std::string m_ambulance;
 	int m_numberOfAmbulance;
-	float m_ambulancePosX[15];
-	float m_ambulancePosY[15];
+	float m_ambulancePosX[25];
+	float m_ambulancePosY[25];
 
 	std::string m_mini_van;
 	int m_numberOfMiniVan;
-	float m_minivanPosX[15];
-	float m_minivanPosY[15];
+	float m_minivanPosX[25];
+	float m_minivanPosY[25];
 
 	std::string m_mini_truck;
 	int m_numberOfMiniTruck;
-	float m_minitruckPosX[15];
-	float m_minitruckPosY[15];
+	float m_minitruckPosX[25];
+	float m_minitruckPosY[25];
 
 	std::string m_taxi;
 	int m_numberOfTaxi;
-	float m_taxiPosX[10];
-	float m_taxiPosY[10];
+	float m_taxiPosX[25];
+	float m_taxiPosY[25];
 
 
 	// Projectile related fields.

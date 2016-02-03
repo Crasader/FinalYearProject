@@ -60,7 +60,8 @@ void GameScreen::addBackGroundSprite(cocos2d::Size const & visibleSize, cocos2d:
 
 void GameScreen::ScrollBackground(float dt)
 {
-	player->createBody(player);
+	//player->createBody(player);
+	powerUpBool = false;
 }
 
 bool GameScreen::init()
@@ -91,6 +92,8 @@ bool GameScreen::init()
 
 	this->addChild(edgeNode);
 
+	powerUpBool = false;
+
 	pauseItem->setPosition(Point(pauseItem->getContentSize().width -
 		(pauseItem->getContentSize().width / 4) + origin.x,
 		visibleSize.height - pauseItem->getContentSize().height +
@@ -106,15 +109,15 @@ bool GameScreen::init()
 	this->addChild(powerUp);
 
 	hud = HUD::create();
-	hud->setPosition(715, 455);
+	hud->setPosition(725, 465);
 	this->addChild(hud,6);
 
 	label = Label::createWithTTF("Score:", "fonts/Marker Felt.ttf", 32);
-	label->setPosition(683, 460);
+	label->setPosition(695, 450);
 	this->addChild(label,7);
 	__String *tempScore = __String::createWithFormat("%i", score);
 	scoreLabel = Label::createWithTTF(tempScore->getCString(), "fonts/Marker Felt.ttf",32);
-	scoreLabel->setPosition(750, 460);
+	scoreLabel->setPosition(762, 450);
 	this->addChild(scoreLabel,7);
 
 	auto menu = Menu::create(pauseItem, NULL);
@@ -173,13 +176,13 @@ void GameScreen::update(float dt)
 {
 	if (move == true)
 	{
-		player->setPositionY(player->getPosition().y + 7.5);
 		scoreLabel->setPositionY(scoreLabel->getPosition().y + 7.5);
 		label->setPositionY(label->getPosition().y + 7.5);
 		hud->setPositionY(hud->getPosition().y + 7.5);
 		pauseItem->setPositionY(pauseItem->getPosition().y + 7.5);
+		player->setPositionY(player->getPosition().y + 7.5);
 	}
-	if (player->getPosition().y > 4450)
+	if (player->getPosition().y > 4650)
 	{
 		float i = 2;
 		//activateGameOverScene(i);
@@ -397,16 +400,17 @@ bool GameScreen::onContactBegin(cocos2d::PhysicsContact &contact)
 				nodeB->removeFromParentAndCleanup(true);
 			}
 
-			/*if (nodeB->getTag() == 40)
+			else if (nodeB->getTag() == 40)
 			{
 				score = score + 1000;
 				__String *tempScore = __String::createWithFormat("%i", score);
 				scoreLabel->setString(tempScore->getCString());
 				nodeB->removeFromParentAndCleanup(true);
-				nodeA->removeFromPhysicsWorld();
-			}*/
+				powerUpBool = true;
+				this->scheduleOnce(schedule_selector(GameScreen::ScrollBackground), 5.0f);
+			}
 		}
-		if (nodeA->getTag() == 30)
+		else if (nodeA->getTag() == 30)
 		{
 			score = score + 10;
 			__String *tempScore = __String::createWithFormat("%i", score);
@@ -414,23 +418,26 @@ bool GameScreen::onContactBegin(cocos2d::PhysicsContact &contact)
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/scoreSound.mp3");
 			nodeA->removeFromParentAndCleanup(true);
 		}
-		/*if (nodeA->getTag() == 40)
+		else if (nodeA->getTag() == 40)
 		{
 			score = score + 1000;
 			__String *tempScore = __String::createWithFormat("%i", score);
 			scoreLabel->setString(tempScore->getCString());
 			nodeA->removeFromParentAndCleanup(true);
-			nodeB->removeFromPhysicsWorld();
+			powerUpBool = true;
 			this->scheduleOnce(schedule_selector(GameScreen::ScrollBackground), 5.0f);
-		}*/
+		}
 	}
 
 	if ((0x000001 == a->getCollisionBitmask() && 0x000002 == b->getCollisionBitmask() || 0x000001 == b->getCollisionBitmask() && 0x000002 == a->getCollisionBitmask()))
 	{
-		this->scheduleOnce(schedule_selector(GameScreen::activateGameOverScene), 3.0f);
-		CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/crashSound.mp3");
-		move = false;
-		Crash();
+		if (powerUpBool == false)
+		{
+			this->scheduleOnce(schedule_selector(GameScreen::activateGameOverScene), 3.0f);
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/crashSound.mp3");
+			move = false;
+			Crash();
+		}
 	}
 	return true;
 }

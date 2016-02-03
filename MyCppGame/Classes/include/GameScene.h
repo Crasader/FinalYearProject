@@ -1,5 +1,4 @@
 #pragma once
-
 #include "cocos2d.h"
 #include "Export.h"
 #include "HUD.h"
@@ -43,6 +42,7 @@ public:
 	std::string const TOWERS_SPRITE_BATCH = "TowerBases";
 	std::string const COINS_SPRITE_BATCH = "Coins";
 	GameStates m_gameState;
+	bool powerUpBool;
 	std::vector<TowerBase *> m_towerBases;  // add this
 	void createTowerBases();    // add this
 	std::vector<Coin *> m_coins;  // add this
