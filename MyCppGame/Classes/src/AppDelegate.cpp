@@ -14,12 +14,18 @@ typedef struct tagResource
 
 
 // Landscape config.
-// 800x480 = Normal screen, WVGA 
-static Resource smallResource = { cocos2d::Size(800, 480), "sd" };
+//// 800x480 = Normal screen, WVGA 
+//static Resource smallResource = { cocos2d::Size(800, 480), "sd" };
+//// 1280x800 = Extra large screen, WXGA, medium density screen (160)
+//static Resource mediumResource = { cocos2d::Size(1280, 800), "hd" };
+//// 1900x1200 = WUXGA, Devices with such as Nexus 7, Nvidia Shield.
+//static Resource largeResource = { cocos2d::Size(1920, 1200), "shd" };
+
+static Resource smallResource = { cocos2d::Size(400, 800), "sd" };
 // 1280x800 = Extra large screen, WXGA, medium density screen (160)
-static Resource mediumResource = { cocos2d::Size(1280, 800), "hd" };
+static Resource mediumResource = { cocos2d::Size(800, 1280), "hd" };
 // 1900x1200 = WUXGA, Devices with such as Nexus 7, Nvidia Shield.
-static Resource largeResource = { cocos2d::Size(1920, 1200), "shd" };
+static Resource largeResource = { cocos2d::Size(1200, 1920), "shd" };
 
 static cocos2d::Size designResolutionSize = smallResource.size;
 

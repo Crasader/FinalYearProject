@@ -30,7 +30,7 @@ bool Loading::init()
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-	auto backgroundSprite = Sprite::create("optionsbackground.png");
+	auto backgroundSprite = Sprite::create("loadingBack.png");
 	backgroundSprite->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
 
 	this->addChild(backgroundSprite);
@@ -40,7 +40,7 @@ bool Loading::init()
 
 	this->addChild(sprite);
 
-	this->scheduleOnce(schedule_selector(Loading::activateGameScene), 3.0f);
+	this->scheduleOnce(schedule_selector(Loading::activateGameScene), 2.0f);
 
 	this->scheduleUpdate();
 	return true;

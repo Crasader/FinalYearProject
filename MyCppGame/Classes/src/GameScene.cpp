@@ -7,7 +7,7 @@ Scene* GameScreen::createScene()
 {
 	auto scene = Scene::createWithPhysics();
 	scene->getPhysicsWorld()->setGravity(Vec2(0, 0));
-	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	auto layer = GameScreen::create();
 	layer->SetPhysicsWorld(scene->getPhysicsWorld());
 
@@ -84,20 +84,22 @@ bool GameScreen::init()
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Point origin = Director::getInstance()->getVisibleOrigin();
 
-	auto edgeBody = PhysicsBody::createEdgeBox(visibleSize, PHYSICSBODY_MATERIAL_DEFAULT, 2);
+	//auto edgeBody = PhysicsBody::createEdgeBox(visibleSize, PHYSICSBODY_MATERIAL_DEFAULT, 2);
 
-	auto edgeNode = Node::create();
-	edgeNode->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
-	edgeNode->setPhysicsBody(edgeBody);
+	//auto edgeNode = Node::create();
+	//edgeNode->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+	//edgeNode->setPhysicsBody(edgeBody);
 
-	this->addChild(edgeNode);
+	//this->addChild(edgeNode);
 
 	powerUpBool = false;
 
-	pauseItem->setPosition(Point(pauseItem->getContentSize().width -
-		(pauseItem->getContentSize().width / 4) + origin.x,
-		visibleSize.height - pauseItem->getContentSize().height +
-		(pauseItem->getContentSize().width / 4) + origin.y));
+	//pauseItem->setPosition(Point(pauseItem->getContentSize().width -
+	//	(pauseItem->getContentSize().width / 4) + origin.x,
+	//	visibleSize.height - pauseItem->getContentSize().height +
+	//	(pauseItem->getContentSize().width / 4) + origin.y));
+
+	pauseItem->setPosition(22, 520);
 
 	player = Player::create();
 	player->setPosition(100, 125);
@@ -105,19 +107,19 @@ bool GameScreen::init()
 	this->addChild(player,5);
 
 	powerUp = PowerUp::create();
-	powerUp->setPosition(700, 1850);
+	powerUp->setPosition(500,3900);
 	this->addChild(powerUp);
 
 	hud = HUD::create();
-	hud->setPosition(725, 465);
+	hud->setPosition(340, 530);
 	this->addChild(hud,6);
 
 	label = Label::createWithTTF("Score:", "fonts/Marker Felt.ttf", 32);
-	label->setPosition(695, 450);
+	label->setPosition(320, 522);
 	this->addChild(label,7);
 	__String *tempScore = __String::createWithFormat("%i", score);
 	scoreLabel = Label::createWithTTF(tempScore->getCString(), "fonts/Marker Felt.ttf",32);
-	scoreLabel->setPosition(762, 450);
+	scoreLabel->setPosition(377, 522);
 	this->addChild(scoreLabel,7);
 
 	auto menu = Menu::create(pauseItem, NULL);
@@ -163,7 +165,7 @@ bool GameScreen::init()
 
 	cameraTarget = Sprite::create();
 	cameraTarget->setPositionX(visibleSize.width / 2);
-	cameraTarget->setPositionY(player->getPosition().y + 115);
+	cameraTarget->setPositionY(player->getPosition().y - 115);
 	this->scheduleUpdate();
 	this->addChild(cameraTarget);
 	camera = Follow::create(cameraTarget, Rect::ZERO);
@@ -182,7 +184,7 @@ void GameScreen::update(float dt)
 		pauseItem->setPositionY(pauseItem->getPosition().y + 7.5);
 		player->setPositionY(player->getPosition().y + 7.5);
 	}
-	if (player->getPosition().y > 4650)
+	if (player->getPosition().y > 5500)
 	{
 		float i = 2;
 		//activateGameOverScene(i);

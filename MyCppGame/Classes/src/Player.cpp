@@ -32,12 +32,12 @@ void Player::initPlayer()
 
 void Player::createBody(Player * p)
 {
-	cocos2d::Size size(70, 150);
-	auto playerBody = PhysicsBody::createBox(size);
-	playerBody->setCollisionBitmask(0x000001);
-	playerBody->setTag(10);
-	playerBody->setContactTestBitmask(true);
-	playerBody->setDynamic(false);
+	//cocos2d::Size size(70, 150);
+	//auto playerBody = PhysicsBody::createBox(size);
+	//playerBody->setCollisionBitmask(0x000001);
+	//playerBody->setTag(10);
+	//playerBody->setContactTestBitmask(true);
+	//playerBody->setDynamic(false);
 
-	p->setPhysicsBody(playerBody);
+	//p->setPhysicsBody(playerBody);
 }

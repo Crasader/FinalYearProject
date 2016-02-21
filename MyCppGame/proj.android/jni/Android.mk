@@ -11,16 +11,26 @@ LOCAL_MODULE := cocos2dcpp_shared
 LOCAL_MODULE_FILENAME := libcocos2dcpp
 
 LOCAL_SRC_FILES := hellocpp/main.cpp \
+   ../../Classes/src/Ambulance.cpp \
    ../../Classes/src/AppDelegate.cpp \
+   ../../Classes/src/Coin.cpp \
    ../../Classes/src/GameData.cpp \
    ../../Classes/src/GameOverScene.cpp \
    ../../Classes/src/GameScene.cpp \
+   ../../Classes/src/HUD.cpp \
    ../../Classes/src/LevelLoader.cpp \
    ../../Classes/src/MainMenuScene.cpp \
-   ../../Classes/src/PauseScene.cpp \
-   ../../Classes/src/SplashScene.cpp \
+   ../../Classes/src/MiniTruck.cpp \
    ../../Classes/src/OptionsScene.cpp \
-   ../../Classes/src/Player.cpp
+   ../../Classes/src/PauseScene.cpp \
+   ../../Classes/src/Player.cpp \
+   ../../Classes/src/Police.cpp \
+   ../../Classes/src/SplashScene.cpp \
+   ../../Classes/src/Taxi.cpp \
+   ../../Classes/src/TowerBase.cpp \
+   ../../Classes/src/LoadingScene.cpp \
+   ../../Classes/src/PowerUp.cpp \
+   ../../Classes/src/Truck.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes/include
 
