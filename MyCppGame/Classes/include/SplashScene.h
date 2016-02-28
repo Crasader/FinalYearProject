@@ -2,6 +2,7 @@
 
 #include "cocos2d.h"
 #include "MainMenuScene.h"
+#include "SonarFrameworks.h"
 
 class Splash : public cocos2d::Layer
 {

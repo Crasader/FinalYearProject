@@ -21,13 +21,21 @@ void MainMenu::activateGameScene(Ref *pSender)
 
 void MainMenu::activateOptionsScene(Ref *pSender)
 {
-	auto scene = Options::createScene();
-	Director::getInstance()->replaceScene(TransitionFade::create(1.0, scene));
+	/*auto scene = Options::createScene();
+	Director::getInstance()->replaceScene(TransitionFade::create(1.0, scene));*/
+	if (SonarCocosHelper::GooglePlayServices::isSignedIn)
+	{
+		SonarCocosHelper::GooglePlayServices::showAchievements();
+	}
 }
 
 void MainMenu::activateQuitScene(Ref *pSender)
 {
-	Director::getInstance()->end();
+	//Director::getInstance()->end();
+	if (SonarCocosHelper::GooglePlayServices::isSignedIn)
+	{
+		SonarCocosHelper::GooglePlayServices::showLeaderboard("CgkI69-MotMIEAIQAg");
+	}
 }
 
 bool MainMenu::init()

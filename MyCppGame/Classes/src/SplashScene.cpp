@@ -29,6 +29,10 @@ bool Splash::init()
 		return false;
 	}
 
+	if (!SonarCocosHelper::GooglePlayServices::isSignedIn)
+	{
+		SonarCocosHelper::GooglePlayServices::signIn();
+	}
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 

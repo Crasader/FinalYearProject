@@ -7,7 +7,7 @@ Scene* GameScreen::createScene()
 {
 	auto scene = Scene::createWithPhysics();
 	scene->getPhysicsWorld()->setGravity(Vec2(0, 0));
-	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	auto layer = GameScreen::create();
 	layer->SetPhysicsWorld(scene->getPhysicsWorld());
 
@@ -24,6 +24,10 @@ void GameScreen::activatePauseScene(Ref *pSender)
 
 void GameScreen::activateLoadingScene(float dt)
 {
+	if (SonarCocosHelper::GooglePlayServices::isSignedIn)
+	{
+		SonarCocosHelper::GooglePlayServices::submitScore("CgkI69-MotMIEAIQAg", score);
+	}
 	auto scene = Loading::createScene();
 	Director::getInstance()->replaceScene(scene);
 }
@@ -107,7 +111,7 @@ bool GameScreen::init()
 	this->addChild(player,5);
 
 	powerUp = PowerUp::create();
-	powerUp->setPosition(500,3900);
+	powerUp->setPosition(195,1500);
 	this->addChild(powerUp);
 
 	hud = HUD::create();
@@ -400,6 +404,10 @@ bool GameScreen::onContactBegin(cocos2d::PhysicsContact &contact)
 				scoreLabel->setString(tempScore->getCString());
 				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/scoreSound.mp3");
 				nodeB->removeFromParentAndCleanup(true);
+				if (SonarCocosHelper::GooglePlayServices::isSignedIn)
+				{
+					SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQAA",1);
+				}
 			}
 
 			else if (nodeB->getTag() == 40)
@@ -419,6 +427,10 @@ bool GameScreen::onContactBegin(cocos2d::PhysicsContact &contact)
 			scoreLabel->setString(tempScore->getCString());
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/scoreSound.mp3");
 			nodeA->removeFromParentAndCleanup(true);
+			if (SonarCocosHelper::GooglePlayServices::isSignedIn)
+			{
+				SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQAA", 1);
+			}
 		}
 		else if (nodeA->getTag() == 40)
 		{
@@ -427,7 +439,7 @@ bool GameScreen::onContactBegin(cocos2d::PhysicsContact &contact)
 			scoreLabel->setString(tempScore->getCString());
 			nodeA->removeFromParentAndCleanup(true);
 			powerUpBool = true;
-			this->scheduleOnce(schedule_selector(GameScreen::ScrollBackground), 5.0f);
+			this->scheduleOnce(schedule_selector(GameScreen::ScrollBackground), 3.0f);
 		}
 	}
 
@@ -439,6 +451,10 @@ bool GameScreen::onContactBegin(cocos2d::PhysicsContact &contact)
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/crashSound.mp3");
 			move = false;
 			Crash();
+			if (SonarCocosHelper::GooglePlayServices::isSignedIn)
+			{
+				SonarCocosHelper::GooglePlayServices::unlockAchievement(achievementID);
+			}
 		}
 	}
 	return true;

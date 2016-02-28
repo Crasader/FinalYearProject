@@ -19,6 +19,7 @@
 #include <algorithm>
 #include <vector>
 #include <string>
+#include "SonarFrameworks.h"
 
 
 class GameScreen : public cocos2d::Layer
@@ -65,6 +66,7 @@ public:
 	void addBackGroundSprite(cocos2d::Size const & visibleSize, cocos2d::Point const & origin);
 	bool move;
 	unsigned int score;
+	const char* achievementID = "CgkI69-MotMIEAIQAQ";
 	bool onContactBegin(cocos2d::PhysicsContact &contact);
 	bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event * event);
 	void onTouchMoved(cocos2d::Touch *touch, cocos2d::Event * event);
