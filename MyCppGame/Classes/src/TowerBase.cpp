@@ -25,7 +25,8 @@ TowerBase * TowerBase::create(Vec2 position, GameStates & gameState)
 
 		pSprite->addEvents();
 
-		auto towerBody = PhysicsBody::createBox(pSprite->getContentSize());
+		cocos2d::Size size(60, 140);
+		auto towerBody = PhysicsBody::createBox(size);
 		towerBody->setCollisionBitmask(0x000002);
 		towerBody->setContactTestBitmask(true);
 		towerBody->setDynamic(false);
@@ -61,7 +62,8 @@ void TowerBase::addEvents()
 
 void TowerBase::addBody(TowerBase * sprite)
 {
-	auto towerBody = PhysicsBody::createBox(sprite->getContentSize());
+	cocos2d::Size size(60, 140);
+	auto towerBody = PhysicsBody::createBox(size);
 	towerBody->setCollisionBitmask(0x000002);
 	towerBody->setContactTestBitmask(true);
 

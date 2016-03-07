@@ -22,7 +22,7 @@ Truck * Truck::create(Vec2 position, GameStates & gameState)
 
 		pSprite->initOptions(position);
 
-		cocos2d::Size size(80, 200);
+		cocos2d::Size size(70, 200);
 		auto towerBody = PhysicsBody::createBox(size);
 		towerBody->setCollisionBitmask(0x000002);
 		towerBody->setContactTestBitmask(true);

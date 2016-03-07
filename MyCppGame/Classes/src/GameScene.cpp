@@ -198,9 +198,9 @@ void GameScreen::update(float dt)
 	{
 		player->setPositionX(26);
 	}
-	if (player->getPosition().x > 775)
+	if (player->getPosition().x > 372)
 	{
-		player->setPositionX(774);
+		player->setPositionX(371);
 	}
 	cameraTarget->setPositionY(player->getPosition().y + 115);
 	//Particles();

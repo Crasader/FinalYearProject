@@ -47,7 +47,7 @@ bool MainMenu::init()
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-	auto backgroundSprite = Sprite::create("MainMenuScreen/background.png");
+	auto backgroundSprite = Sprite::create("GameScreen/roadbackground.png");
 	backgroundSprite->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
 
 	this->addChild(backgroundSprite);
@@ -74,5 +74,20 @@ bool MainMenu::init()
 	menu->alignItemsVerticallyWithPadding(visibleSize.height / 15);
 	this->addChild(menu);
 
+	//cameraTarget = Sprite::create();
+	//cameraTarget->setPositionX(visibleSize.width / 2);
+	//cameraTarget->setPositionY(y);
+	//this->scheduleUpdate();
+	//this->addChild(cameraTarget);
+	//camera = Follow::create(cameraTarget, Rect::ZERO);
+	//camera->retain();
+	//this->runAction(camera);
+
 	return true;
+}
+
+void MainMenu::update(float dt)
+{
+	y = y + 5;
+	//cameraTarget->setPositionY(y);
 }

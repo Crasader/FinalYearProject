@@ -8,6 +8,10 @@
 class MainMenu : public cocos2d::Layer
 {
 public:
+	cocos2d::Follow *camera;
+	cocos2d::Sprite *cameraTarget;
+	int y;
+	void update(float dt);
 	static cocos2d::Scene* createScene();
 	virtual bool init();
 	void activateGameScene(Ref * pSender);
