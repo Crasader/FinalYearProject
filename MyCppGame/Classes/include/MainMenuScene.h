@@ -2,6 +2,7 @@
 
 #include "cocos2d.h"
 #include "GameScene.h"
+#include "EndlessMode.h"
 #include "OptionsScene.h"
 #include "SonarFrameworks.h"
 
@@ -10,6 +11,8 @@ class MainMenu : public cocos2d::Layer
 public:
 	cocos2d::Follow *camera;
 	cocos2d::Sprite *cameraTarget;
+	cocos2d::Sprite *backgroundSprite;
+	Size visibleSize;
 	int y;
 	void update(float dt);
 	static cocos2d::Scene* createScene();

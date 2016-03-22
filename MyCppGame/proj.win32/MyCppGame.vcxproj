@@ -147,6 +147,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\src\Ambulance.cpp" />
     <ClCompile Include="..\Classes\src\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\src\Coin.cpp" />
+    <ClCompile Include="..\Classes\src\EndlessMode.cpp" />
     <ClCompile Include="..\Classes\src\GameData.cpp" />
     <ClCompile Include="..\Classes\src\GameOverScene.cpp" />
     <ClCompile Include="..\Classes\src\GameScene.cpp" />
@@ -170,6 +171,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\include\Ambulance.h" />
     <ClInclude Include="..\Classes\include\AppDelegate.h" />
     <ClInclude Include="..\Classes\include\Coin.h" />
+    <ClInclude Include="..\Classes\include\EndlessMode.h" />
     <ClInclude Include="..\Classes\include\GameData.h" />
     <ClInclude Include="..\Classes\include\GameOverScene.h" />
     <ClInclude Include="..\Classes\include\GameScene.h" />

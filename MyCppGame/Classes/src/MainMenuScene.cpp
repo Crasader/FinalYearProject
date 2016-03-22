@@ -15,8 +15,11 @@ Scene* MainMenu::createScene()
 
 void MainMenu::activateGameScene(Ref *pSender)
 {
+	/*auto scene = EndlessMode::createScene();
+	Director::getInstance()->replaceScene(scene);*/
 	auto scene = GameScreen::createScene();
 	Director::getInstance()->replaceScene(scene);
+	
 }
 
 void MainMenu::activateOptionsScene(Ref *pSender)
@@ -44,12 +47,12 @@ bool MainMenu::init()
 	{
 		return false;
 	}
-	Size visibleSize = Director::getInstance()->getVisibleSize();
+	visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-	auto backgroundSprite = Sprite::create("GameScreen/roadbackground.png");
-	backgroundSprite->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
-
+	backgroundSprite = Sprite::create("GameScreen/roadbackground.png");
+	backgroundSprite->setPosition(Point(visibleSize.width / 2 + origin.x, (visibleSize.height) + 500));
+	y = (visibleSize.height) + 500;
 	this->addChild(backgroundSprite);
 
 	auto menuTitle =
@@ -77,7 +80,7 @@ bool MainMenu::init()
 	//cameraTarget = Sprite::create();
 	//cameraTarget->setPositionX(visibleSize.width / 2);
 	//cameraTarget->setPositionY(y);
-	//this->scheduleUpdate();
+	this->scheduleUpdate();
 	//this->addChild(cameraTarget);
 	//camera = Follow::create(cameraTarget, Rect::ZERO);
 	//camera->retain();
@@ -88,6 +91,11 @@ bool MainMenu::init()
 
 void MainMenu::update(float dt)
 {
-	y = y + 5;
-	//cameraTarget->setPositionY(y);
+	y = y - 5;
+	backgroundSprite->setPosition(backgroundSprite->getPosition().x, y);
+
+	if (y < -530)
+	{
+		y = (visibleSize.height) + 500;
+	}
 }

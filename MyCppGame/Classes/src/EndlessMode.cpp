@@ -1,9 +1,9 @@
-#include "GameScene.h"
+#include "EndlessMode.h"
 #include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 
-Scene* GameScreen::createScene()
+Scene* EndlessMode::createScene()
 {
 	auto scene = Scene::createWithPhysics();
 	scene->getPhysicsWorld()->setGravity(Vec2(0, 0));
@@ -16,30 +16,13 @@ Scene* GameScreen::createScene()
 	return scene;
 }
 
-void GameScreen::activatePauseScene(Ref *pSender)
-{
-	auto scene = PauseMenu::createScene();
-	Director::getInstance()->pushScene(scene);
-}
-
-void GameScreen::activateLoadingScene(float dt)
-{
-	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/LevelCompleted.mp3");
-	if (SonarCocosHelper::GooglePlayServices::isSignedIn)
-	{
-		SonarCocosHelper::GooglePlayServices::submitScore("CgkI69-MotMIEAIQAg", score);
-	}
-	auto scene = Loading::createScene();
-	Director::getInstance()->replaceScene(scene);
-}
-
-void GameScreen::activateGameOverScene(float dt)
+void EndlessMode::activateGameOverScene(float dt)
 {
 	auto scene = GameOver::createScene();
 	Director::getInstance()->replaceScene(scene);
 }
 
-void GameScreen::addBackGroundSprite(cocos2d::Size const & visibleSize, cocos2d::Point const & origin)
+void EndlessMode::addBackGroundSprite(cocos2d::Size const & visibleSize, cocos2d::Point const & origin)
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 
@@ -63,19 +46,19 @@ void GameScreen::addBackGroundSprite(cocos2d::Size const & visibleSize, cocos2d:
 	this->addChild(backgroundSprite3, -1);
 }
 
-void GameScreen::ScrollBackground(float dt)
+void EndlessMode::ScrollBackground(float dt)
 {
 	//player->createBody(player);
 	powerUpBool = false;
-	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/PowerUpOver.mp3");
 }
 
-bool GameScreen::init()
+bool EndlessMode::init()
 {
 	if (!Layer::init())
 	{
 		return false;
 	}
+	yPos = 500;
 	m_gameState = GameStates::PlaceGunTower;
 	score = 0;
 	move = true;
@@ -110,23 +93,23 @@ bool GameScreen::init()
 	player = Player::create();
 	player->setPosition(100, 125);
 	player->setAnchorPoint(Point(0.5f, 0.55f));
-	this->addChild(player,5);
+	this->addChild(player, 5);
 
 	powerUp = PowerUp::create();
-	powerUp->setPosition(195,1500);
+	powerUp->setPosition(195, 1500);
 	this->addChild(powerUp);
 
 	hud = HUD::create();
 	hud->setPosition(340, 530);
-	this->addChild(hud,6);
+	this->addChild(hud, 6);
 
 	label = Label::createWithTTF("Score:", "fonts/Marker Felt.ttf", 32);
 	label->setPosition(320, 522);
-	this->addChild(label,7);
+	this->addChild(label, 7);
 	__String *tempScore = __String::createWithFormat("%i", score);
-	scoreLabel = Label::createWithTTF(tempScore->getCString(), "fonts/Marker Felt.ttf",32);
+	scoreLabel = Label::createWithTTF(tempScore->getCString(), "fonts/Marker Felt.ttf", 32);
 	scoreLabel->setPosition(377, 522);
-	this->addChild(scoreLabel,7);
+	this->addChild(scoreLabel, 7);
 
 	auto menu = Menu::create(pauseItem, NULL);
 	menu->setPosition(Point::ZERO);
@@ -161,8 +144,8 @@ bool GameScreen::init()
 
 	Device::setAccelerometerEnabled(true);
 	auto listener = EventListenerAcceleration::create(CC_CALLBACK_2(GameScreen::OnAcceleration, this));
-	
-	
+
+
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
 	auto contactListener = EventListenerPhysicsContact::create();
@@ -180,7 +163,7 @@ bool GameScreen::init()
 	return true;
 }
 
-void GameScreen::update(float dt)
+void EndlessMode::update(float dt)
 {
 	if (move == true)
 	{
@@ -193,8 +176,6 @@ void GameScreen::update(float dt)
 	if (player->getPosition().y > 5500)
 	{
 		float i = 2;
-		//activateGameOverScene(i);
-		activateLoadingScene(i);
 	}
 	if (player->getPosition().x < 25)
 	{
@@ -208,13 +189,57 @@ void GameScreen::update(float dt)
 	//Particles();
 }
 
-bool GameScreen::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event * event)
+void EndlessMode::EndlessGame()
+{
+	randX = cocos2d::RandomHelper::random_int(0, 4);
+	tempRand = randX;
+	if (randX == 1)
+	{
+		xPos = 60;
+	}
+	if (randX == 2)
+	{
+		xPos = 195;
+	}
+	if (randX == 3)
+	{
+		xPos = 340;
+	}
+	createCars(xPos, yPos);
+
+	randX = cocos2d::RandomHelper::random_int(0, 4);
+	if (randX == tempRand)
+	{
+		randX = cocos2d::RandomHelper::random_int(0, 4);
+	}
+	else
+	{
+		tempRand = randX;
+		if (randX == 1)
+		{
+			xPos = 60;
+		}
+		if (randX == 2)
+		{
+			xPos = 195;
+		}
+		if (randX == 3)
+		{
+			xPos = 340;
+		}
+		createCars(xPos, yPos);
+	}
+	yPos = yPos + 200;
+	tempRand = 0;
+}
+
+bool EndlessMode::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event * event)
 {
 	CCLOG("onTouchBegan x = %f, y = %f", touch->getLocation().x, touch->getLocation().y);
 	return true;
 }
 
-void GameScreen::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event * event)
+void EndlessMode::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event * event)
 {
 	if (move == true)
 	{
@@ -222,40 +247,7 @@ void GameScreen::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event * event)
 	}
 }
 
-void GameScreen::Particles()
-{
-	auto size = Director::getInstance()->getWinSize();
-	auto m_emitter = ParticleSmoke::createWithTotalParticles(900);
-	//m_emitter->setTexture(Director::getInstance()->getTextureCache()->addImage("smoke.png"));
-	m_emitter->setDuration(0.015f);
-	m_emitter->setGravity(Point(0, -240));
-	m_emitter->setAngle(0);
-	m_emitter->setAngleVar(360);
-	m_emitter->setRadialAccel(50);
-	m_emitter->setRadialAccelVar(0);
-	m_emitter->setTangentialAccel(0);
-	m_emitter->setTangentialAccelVar(0);
-	m_emitter->setPosVar(Point(1, 0));
-	m_emitter->setLife(0.15f);
-	m_emitter->setLifeVar(0.15f);
-	m_emitter->setStartSpin(0);
-	m_emitter->setStartSpinVar(0);
-	m_emitter->setEndSpin(0);
-	m_emitter->setEndSpinVar(0);
-	m_emitter->setStartColor(Color4F(0, 0, 0, 1));
-	m_emitter->setStartColorVar(Color4F(0, 0, 0, 0));
-	m_emitter->setEndColor(Color4F(0, 0, 0, 1));
-	m_emitter->setEndColorVar(Color4F(0, 0, 0, 0));
-	m_emitter->setStartSize(7.5f);
-	m_emitter->setStartSizeVar(0);
-	m_emitter->setEndSize(2.0f);
-	m_emitter->setEndSizeVar(0);
-	m_emitter->setEmissionRate(80);
-	m_emitter->setPosition(Vec2(player->getPosition().x + 15, player->getPosition().y - 72));
-	addChild(m_emitter, 10);
-}
-
-void GameScreen::Crash()
+void EndlessMode::Crash()
 {
 	auto size = Director::getInstance()->getWinSize();
 	auto m_emitter = ParticleExplosion::createWithTotalParticles(900);
@@ -289,7 +281,7 @@ void GameScreen::Crash()
 	addChild(m_emitter, 10);
 }
 
-void GameScreen::OnAcceleration(cocos2d::CCAcceleration* pAcceleration, cocos2d::Event * event)
+void EndlessMode::OnAcceleration(cocos2d::CCAcceleration* pAcceleration, cocos2d::Event * event)
 {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
@@ -305,7 +297,7 @@ void GameScreen::OnAcceleration(cocos2d::CCAcceleration* pAcceleration, cocos2d:
 	}
 }
 
-void GameScreen::createTowerBases()
+void EndlessMode::createTowerBases()
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
@@ -319,7 +311,7 @@ void GameScreen::createTowerBases()
 	this->addChild(spritebatch, 1, TOWERS_SPRITE_BATCH);
 }
 
-void GameScreen::createCoins()
+void EndlessMode::createCoins()
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
@@ -333,7 +325,7 @@ void GameScreen::createCoins()
 	this->addChild(spritebatch, 4, COINS_SPRITE_BATCH);
 }
 
-void GameScreen::createPolice()
+void EndlessMode::createPolice()
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
@@ -347,7 +339,21 @@ void GameScreen::createPolice()
 	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
 }
 
-void GameScreen::createAmbulances()
+void EndlessMode::createCars(int x, int y)
+{
+	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
+	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
+
+	for (int i = 0; i < ptr->m_numberOfPolice; i++)
+	{
+		Police * base = Police::create(Vec2(x, y), m_gameState);
+		m_cars.push_back(base);
+		spritebatch->addChild(base, 1);
+	}
+	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
+}
+
+void EndlessMode::createAmbulances()
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
@@ -361,7 +367,7 @@ void GameScreen::createAmbulances()
 	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
 }
 
-void GameScreen::createMTrucks()
+void EndlessMode::createMTrucks()
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
@@ -375,7 +381,7 @@ void GameScreen::createMTrucks()
 	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
 }
 
-void GameScreen::createTrucks()
+void EndlessMode::createTrucks()
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
@@ -389,7 +395,7 @@ void GameScreen::createTrucks()
 	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
 }
 
-bool GameScreen::onContactBegin(cocos2d::PhysicsContact &contact)
+bool EndlessMode::onContactBegin(cocos2d::PhysicsContact &contact)
 {
 	PhysicsBody *a = contact.getShapeA()->getBody();
 	PhysicsBody *b = contact.getShapeB()->getBody();
@@ -408,13 +414,12 @@ bool GameScreen::onContactBegin(cocos2d::PhysicsContact &contact)
 				nodeB->removeFromParentAndCleanup(true);
 				if (SonarCocosHelper::GooglePlayServices::isSignedIn)
 				{
-					SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQAA",1);
+					SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQAA", 1);
 				}
 			}
 
 			else if (nodeB->getTag() == 40)
 			{
-				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/PowerUpCollected.mp3");
 				score = score + 1000;
 				__String *tempScore = __String::createWithFormat("%i", score);
 				scoreLabel->setString(tempScore->getCString());
@@ -437,7 +442,6 @@ bool GameScreen::onContactBegin(cocos2d::PhysicsContact &contact)
 		}
 		else if (nodeA->getTag() == 40)
 		{
-			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/PowerUpCollected.mp3");
 			score = score + 1000;
 			__String *tempScore = __String::createWithFormat("%i", score);
 			scoreLabel->setString(tempScore->getCString());
@@ -459,7 +463,6 @@ bool GameScreen::onContactBegin(cocos2d::PhysicsContact &contact)
 			{
 				SonarCocosHelper::GooglePlayServices::unlockAchievement(achievementID);
 			}
-			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/GameOver.mp3");
 		}
 	}
 	return true;
