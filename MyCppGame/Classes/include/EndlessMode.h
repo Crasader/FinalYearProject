@@ -22,18 +22,19 @@
 #include "SonarFrameworks.h"
 
 
-class EndlessMode : public cocos2d::Layer
+class Endless : public cocos2d::Layer
 {
 public:
 	static cocos2d::Scene* createScene();
 	virtual bool init();
-	Player * player;
-	HUD * hud;
-	PowerUp * powerUp;
 	int randX;
 	int yPos;
 	int	xPos;
 	int tempRand;
+	float temp;
+	Player * player;
+	HUD * hud;
+	PowerUp * powerUp;
 	cocos2d::Sprite *cameraTarget;
 	cocos2d::Sprite *backgroundSprite;
 	cocos2d::Sprite *backgroundSprite2;
@@ -60,14 +61,17 @@ public:
 	void createTrucks();    // add this
 	std::vector<MiniTruck *> m_miniTrucks;  // add this
 	void createMTrucks();    // add this
-	void createCars(int x, int y);    // add this
-	void EndlessGame();
-	std::vector<Police *> m_cars;  // add this
 	void ScrollBackground(float dt);
 	// Called when user pauses gameplay.
+	void activatePauseScene(Ref *pSender);
 	void update(float dt);
+	void createCars(int x, int y);    // add this
+	std::vector<Police *> m_cars;  // add this
+	void EndlessGame(float dt);
+	void Timer(float dt);
 	// Called at game over 
 	void activateGameOverScene(float dt);
+	void activateLoadingScene(float dt);
 	void addBackGroundSprite(cocos2d::Size const & visibleSize, cocos2d::Point const & origin);
 	bool move;
 	unsigned int score;
@@ -76,8 +80,10 @@ public:
 	bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event * event);
 	void onTouchMoved(cocos2d::Touch *touch, cocos2d::Event * event);
 	void Crash();
+	void Particles();
 	cocos2d::PhysicsWorld * sceneWorld;
 	void SetPhysicsWorld(cocos2d::PhysicsWorld * world) { sceneWorld = world; };
+	//void OnAcceleration(cocos2d::Acceleration * acc, cocos2d::Event * event);
 	virtual void OnAcceleration(cocos2d::CCAcceleration* pAccelerationValue, cocos2d::Event * event);
-	CREATE_FUNC(EndlessMode);
+	CREATE_FUNC(Endless);
 };

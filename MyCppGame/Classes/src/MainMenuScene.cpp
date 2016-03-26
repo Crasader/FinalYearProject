@@ -15,10 +15,10 @@ Scene* MainMenu::createScene()
 
 void MainMenu::activateGameScene(Ref *pSender)
 {
-	/*auto scene = EndlessMode::createScene();
-	Director::getInstance()->replaceScene(scene);*/
-	auto scene = GameScreen::createScene();
+	auto scene = Endless::createScene();
 	Director::getInstance()->replaceScene(scene);
+	//auto scene = GameScreen::createScene();
+	//Director::getInstance()->replaceScene(scene);
 	
 }
 

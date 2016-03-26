@@ -3,12 +3,12 @@
 
 USING_NS_CC;
 
-Scene* EndlessMode::createScene()
+Scene* Endless::createScene()
 {
 	auto scene = Scene::createWithPhysics();
 	scene->getPhysicsWorld()->setGravity(Vec2(0, 0));
 	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
-	auto layer = GameScreen::create();
+	auto layer = Endless::create();
 	layer->SetPhysicsWorld(scene->getPhysicsWorld());
 
 	scene->addChild(layer);
@@ -16,13 +16,30 @@ Scene* EndlessMode::createScene()
 	return scene;
 }
 
-void EndlessMode::activateGameOverScene(float dt)
+void Endless::activatePauseScene(Ref *pSender)
+{
+	auto scene = PauseMenu::createScene();
+	Director::getInstance()->pushScene(scene);
+}
+
+void Endless::activateLoadingScene(float dt)
+{
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/LevelCompleted.mp3");
+	if (SonarCocosHelper::GooglePlayServices::isSignedIn)
+	{
+		SonarCocosHelper::GooglePlayServices::submitScore("CgkI69-MotMIEAIQAg", score);
+	}
+	auto scene = Loading::createScene();
+	Director::getInstance()->replaceScene(scene);
+}
+
+void Endless::activateGameOverScene(float dt)
 {
 	auto scene = GameOver::createScene();
 	Director::getInstance()->replaceScene(scene);
 }
 
-void EndlessMode::addBackGroundSprite(cocos2d::Size const & visibleSize, cocos2d::Point const & origin)
+void Endless::addBackGroundSprite(cocos2d::Size const & visibleSize, cocos2d::Point const & origin)
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 
@@ -46,19 +63,21 @@ void EndlessMode::addBackGroundSprite(cocos2d::Size const & visibleSize, cocos2d
 	this->addChild(backgroundSprite3, -1);
 }
 
-void EndlessMode::ScrollBackground(float dt)
+void Endless::ScrollBackground(float dt)
 {
 	//player->createBody(player);
 	powerUpBool = false;
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/PowerUpOver.mp3");
 }
 
-bool EndlessMode::init()
+bool Endless::init()
 {
 	if (!Layer::init())
 	{
 		return false;
 	}
-	yPos = 500;
+	this->scheduleOnce(schedule_selector(Endless::EndlessGame), 0.0f);
+	yPos = 550;
 	m_gameState = GameStates::PlaceGunTower;
 	score = 0;
 	move = true;
@@ -68,7 +87,7 @@ bool EndlessMode::init()
 	pauseItem =
 		MenuItemImage::create("GameScreen/Pause_Button.png",
 			"GameScreen/Pause_Button(Click).png",
-			CC_CALLBACK_1(GameScreen::activatePauseScene, this));
+			CC_CALLBACK_1(Endless::activatePauseScene, this));
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Point origin = Director::getInstance()->getVisibleOrigin();
@@ -116,18 +135,22 @@ bool EndlessMode::init()
 	this->addChild(menu);
 
 	addBackGroundSprite(visibleSize, origin);
-	createTowerBases();
+	/*createTowerBases();
 	createCoins();
 	createPolice();
 	createAmbulances();
 	createMTrucks();
-	createTrucks();
+	createTrucks();*/
 
 	/*auto listener = EventListenerTouchOneByOne::create();
 	listener->setSwallowTouches(true);
 
-	listener->onTouchBegan = CC_CALLBACK_2(GameScreen::onTouchBegan, this);
-	listener->onTouchMoved = CC_CALLBACK_2(GameScreen::onTouchMoved, this);*/
+	listener->onTouchBegan = CC_CALLBACK_2(Endless::onTouchBegan, this);
+	listener->onTouchMoved = CC_CALLBACK_2(Endless::onTouchMoved, this);*/
+	for (int i = 0; i < 100; i++)
+	{
+		EndlessGame(temp);
+	}
 
 	auto director = Director::getInstance();
 	auto glview = director->getOpenGLView();
@@ -143,19 +166,21 @@ bool EndlessMode::init()
 	}
 
 	Device::setAccelerometerEnabled(true);
-	auto listener = EventListenerAcceleration::create(CC_CALLBACK_2(GameScreen::OnAcceleration, this));
+	auto listener = EventListenerAcceleration::create(CC_CALLBACK_2(Endless::OnAcceleration, this));
 
 
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
 	auto contactListener = EventListenerPhysicsContact::create();
-	contactListener->onContactBegin = CC_CALLBACK_1(GameScreen::onContactBegin, this);
+	contactListener->onContactBegin = CC_CALLBACK_1(Endless::onContactBegin, this);
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);
 
 	cameraTarget = Sprite::create();
 	cameraTarget->setPositionX(visibleSize.width / 2);
 	cameraTarget->setPositionY(player->getPosition().y - 115);
 	this->scheduleUpdate();
+	//this->schedule(schedule_selector(Endless::EndlessGame), 0.25f);
+	//this->schedule(schedule_selector(Endless::Timer), 1.0f);
 	this->addChild(cameraTarget);
 	camera = Follow::create(cameraTarget, Rect::ZERO);
 	camera->retain();
@@ -163,7 +188,7 @@ bool EndlessMode::init()
 	return true;
 }
 
-void EndlessMode::update(float dt)
+void Endless::update(float dt)
 {
 	if (move == true)
 	{
@@ -172,10 +197,6 @@ void EndlessMode::update(float dt)
 		hud->setPositionY(hud->getPosition().y + 7.5);
 		pauseItem->setPositionY(pauseItem->getPosition().y + 7.5);
 		player->setPositionY(player->getPosition().y + 7.5);
-	}
-	if (player->getPosition().y > 5500)
-	{
-		float i = 2;
 	}
 	if (player->getPosition().x < 25)
 	{
@@ -186,34 +207,20 @@ void EndlessMode::update(float dt)
 		player->setPositionX(371);
 	}
 	cameraTarget->setPositionY(player->getPosition().y + 115);
+	//EndlessGame(temp);
 	//Particles();
 }
 
-void EndlessMode::EndlessGame()
+void Endless::Timer(float dt)
 {
-	randX = cocos2d::RandomHelper::random_int(0, 4);
-	tempRand = randX;
-	if (randX == 1)
-	{
-		xPos = 60;
-	}
-	if (randX == 2)
-	{
-		xPos = 195;
-	}
-	if (randX == 3)
-	{
-		xPos = 340;
-	}
-	createCars(xPos, yPos);
+	score = score + 1;
+	__String *tempScore = __String::createWithFormat("%i", score);
+	scoreLabel->setString(tempScore->getCString());
+}
 
-	randX = cocos2d::RandomHelper::random_int(0, 4);
-	if (randX == tempRand)
-	{
-		randX = cocos2d::RandomHelper::random_int(0, 4);
-	}
-	else
-	{
+void Endless::EndlessGame(float dt)
+{
+		randX = cocos2d::RandomHelper::random_int(1, 4);
 		tempRand = randX;
 		if (randX == 1)
 		{
@@ -228,18 +235,81 @@ void EndlessMode::EndlessGame()
 			xPos = 340;
 		}
 		createCars(xPos, yPos);
-	}
-	yPos = yPos + 200;
-	tempRand = 0;
+
+		randX = cocos2d::RandomHelper::random_int(1, 4);
+		if (randX == tempRand)
+		{
+			if (tempRand == 1)
+			{
+				randX = cocos2d::RandomHelper::random_int(2, 4);
+				tempRand = randX;
+				if (tempRand == 2)
+				{
+					xPos = 195;
+				}
+				if (tempRand == 3)
+				{
+					xPos = 340;
+				}
+			}
+			if (tempRand == 2)
+			{
+				//if (randX == 2)
+				//{
+					//randX = 3;
+					xPos = 340;
+				//}
+				//if (randX == 1)
+				//{
+					//xPos = 60;
+				//}
+				//if (randX == 3)
+				//{
+					//xPos = 340;
+				//}
+			}
+			if (tempRand == 3)
+			{
+				randX = cocos2d::RandomHelper::random_int(1, 3);
+				tempRand = randX;
+				if (tempRand == 1)
+				{
+					xPos = 60;
+				}
+				if (tempRand == 2)
+				{
+					xPos = 195;
+				}
+			}
+			createCars(xPos, yPos);
+		}
+		else
+		{
+			if (randX == 1)
+			{
+				xPos = 60;
+			}
+			if (randX == 2)
+			{
+				xPos = 195;
+			}
+			if (randX == 3)
+			{
+				xPos = 340;
+			}
+			createCars(xPos, yPos);
+		}
+		yPos = yPos + 500;
+		tempRand = 0;
 }
 
-bool EndlessMode::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event * event)
+bool Endless::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event * event)
 {
 	CCLOG("onTouchBegan x = %f, y = %f", touch->getLocation().x, touch->getLocation().y);
 	return true;
 }
 
-void EndlessMode::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event * event)
+void Endless::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event * event)
 {
 	if (move == true)
 	{
@@ -247,7 +317,40 @@ void EndlessMode::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event * event)
 	}
 }
 
-void EndlessMode::Crash()
+void Endless::Particles()
+{
+	auto size = Director::getInstance()->getWinSize();
+	auto m_emitter = ParticleSmoke::createWithTotalParticles(900);
+	//m_emitter->setTexture(Director::getInstance()->getTextureCache()->addImage("smoke.png"));
+	m_emitter->setDuration(0.015f);
+	m_emitter->setGravity(Point(0, -240));
+	m_emitter->setAngle(0);
+	m_emitter->setAngleVar(360);
+	m_emitter->setRadialAccel(50);
+	m_emitter->setRadialAccelVar(0);
+	m_emitter->setTangentialAccel(0);
+	m_emitter->setTangentialAccelVar(0);
+	m_emitter->setPosVar(Point(1, 0));
+	m_emitter->setLife(0.15f);
+	m_emitter->setLifeVar(0.15f);
+	m_emitter->setStartSpin(0);
+	m_emitter->setStartSpinVar(0);
+	m_emitter->setEndSpin(0);
+	m_emitter->setEndSpinVar(0);
+	m_emitter->setStartColor(Color4F(0, 0, 0, 1));
+	m_emitter->setStartColorVar(Color4F(0, 0, 0, 0));
+	m_emitter->setEndColor(Color4F(0, 0, 0, 1));
+	m_emitter->setEndColorVar(Color4F(0, 0, 0, 0));
+	m_emitter->setStartSize(7.5f);
+	m_emitter->setStartSizeVar(0);
+	m_emitter->setEndSize(2.0f);
+	m_emitter->setEndSizeVar(0);
+	m_emitter->setEmissionRate(80);
+	m_emitter->setPosition(Vec2(player->getPosition().x + 15, player->getPosition().y - 72));
+	addChild(m_emitter, 10);
+}
+
+void Endless::Crash()
 {
 	auto size = Director::getInstance()->getWinSize();
 	auto m_emitter = ParticleExplosion::createWithTotalParticles(900);
@@ -281,7 +384,7 @@ void EndlessMode::Crash()
 	addChild(m_emitter, 10);
 }
 
-void EndlessMode::OnAcceleration(cocos2d::CCAcceleration* pAcceleration, cocos2d::Event * event)
+void Endless::OnAcceleration(cocos2d::CCAcceleration* pAcceleration, cocos2d::Event * event)
 {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
@@ -297,7 +400,18 @@ void EndlessMode::OnAcceleration(cocos2d::CCAcceleration* pAcceleration, cocos2d
 	}
 }
 
-void EndlessMode::createTowerBases()
+void Endless::createCars(int x, int y)
+{
+	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
+	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
+		Police * base = Police::create(Vec2(x, y), m_gameState);
+		m_cars.push_back(base);
+		spritebatch->addChild(base, 1);
+	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
+}
+
+
+void Endless::createTowerBases()
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
@@ -311,7 +425,7 @@ void EndlessMode::createTowerBases()
 	this->addChild(spritebatch, 1, TOWERS_SPRITE_BATCH);
 }
 
-void EndlessMode::createCoins()
+void Endless::createCoins()
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
@@ -325,7 +439,7 @@ void EndlessMode::createCoins()
 	this->addChild(spritebatch, 4, COINS_SPRITE_BATCH);
 }
 
-void EndlessMode::createPolice()
+void Endless::createPolice()
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
@@ -339,21 +453,7 @@ void EndlessMode::createPolice()
 	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
 }
 
-void EndlessMode::createCars(int x, int y)
-{
-	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
-	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
-
-	for (int i = 0; i < ptr->m_numberOfPolice; i++)
-	{
-		Police * base = Police::create(Vec2(x, y), m_gameState);
-		m_cars.push_back(base);
-		spritebatch->addChild(base, 1);
-	}
-	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
-}
-
-void EndlessMode::createAmbulances()
+void Endless::createAmbulances()
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
@@ -367,7 +467,7 @@ void EndlessMode::createAmbulances()
 	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
 }
 
-void EndlessMode::createMTrucks()
+void Endless::createMTrucks()
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
@@ -381,7 +481,7 @@ void EndlessMode::createMTrucks()
 	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
 }
 
-void EndlessMode::createTrucks()
+void Endless::createTrucks()
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
@@ -395,7 +495,7 @@ void EndlessMode::createTrucks()
 	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
 }
 
-bool EndlessMode::onContactBegin(cocos2d::PhysicsContact &contact)
+bool Endless::onContactBegin(cocos2d::PhysicsContact &contact)
 {
 	PhysicsBody *a = contact.getShapeA()->getBody();
 	PhysicsBody *b = contact.getShapeB()->getBody();
@@ -420,12 +520,13 @@ bool EndlessMode::onContactBegin(cocos2d::PhysicsContact &contact)
 
 			else if (nodeB->getTag() == 40)
 			{
+				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/PowerUpCollected.mp3");
 				score = score + 1000;
 				__String *tempScore = __String::createWithFormat("%i", score);
 				scoreLabel->setString(tempScore->getCString());
 				nodeB->removeFromParentAndCleanup(true);
 				powerUpBool = true;
-				this->scheduleOnce(schedule_selector(GameScreen::ScrollBackground), 5.0f);
+				this->scheduleOnce(schedule_selector(Endless::ScrollBackground), 5.0f);
 			}
 		}
 		else if (nodeA->getTag() == 30)
@@ -442,12 +543,13 @@ bool EndlessMode::onContactBegin(cocos2d::PhysicsContact &contact)
 		}
 		else if (nodeA->getTag() == 40)
 		{
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/PowerUpCollected.mp3");
 			score = score + 1000;
 			__String *tempScore = __String::createWithFormat("%i", score);
 			scoreLabel->setString(tempScore->getCString());
 			nodeA->removeFromParentAndCleanup(true);
 			powerUpBool = true;
-			this->scheduleOnce(schedule_selector(GameScreen::ScrollBackground), 3.0f);
+			this->scheduleOnce(schedule_selector(Endless::ScrollBackground), 3.0f);
 		}
 	}
 
@@ -455,7 +557,7 @@ bool EndlessMode::onContactBegin(cocos2d::PhysicsContact &contact)
 	{
 		if (powerUpBool == false)
 		{
-			this->scheduleOnce(schedule_selector(GameScreen::activateGameOverScene), 3.0f);
+			this->scheduleOnce(schedule_selector(Endless::activateGameOverScene), 3.0f);
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/crashSound.mp3");
 			move = false;
 			Crash();
@@ -463,6 +565,7 @@ bool EndlessMode::onContactBegin(cocos2d::PhysicsContact &contact)
 			{
 				SonarCocosHelper::GooglePlayServices::unlockAchievement(achievementID);
 			}
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/GameOver.mp3");
 		}
 	}
 	return true;
