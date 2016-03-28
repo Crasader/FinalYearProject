@@ -102,7 +102,7 @@ void LevelLoader::loadGameData()
 	ptr->m_numberOfAmbulance = tower["number_of_ambulance"].GetInt();
 	Value const & ambulanceBases = tower["my_ambulance"];
 	//// Iterate through the array.
-	for (int i = 0; i < minitruckBases.Size(); i++) {
+	for (int i = 0; i < ambulanceBases.Size(); i++) {
 		ptr->m_ambulancePosX[i] = ambulanceBases[i]["x"].GetInt();
 		ptr->m_ambulancePosY[i] = ambulanceBases[i]["y"].GetInt();
 	}

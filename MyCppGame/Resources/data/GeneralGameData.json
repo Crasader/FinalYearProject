@@ -23,7 +23,7 @@
         "x": 31,
         "y": 55
       },
-      "number_of_tower_bases": 7,
+      "number_of_tower_bases": 9,
       "tower_bases": [
         {
           "x": 195,
@@ -52,9 +52,17 @@
         {
           "x": 340,
           "y": 3610
+        },
+        {
+          "x": 340,
+          "y": 4300
+        },
+        {
+          "x": 195,
+          "y": 4900
         }
       ],
-      "number_of_police": 8,
+      "number_of_police": 10,
       "my_police": [
         {
           "x": 340,
@@ -87,9 +95,17 @@
         {
           "x": 60,
           "y": 3800
+        },
+        {
+          "x": 60,
+          "y": 4300
+        },
+        {
+          "x": 340,
+          "y": 4850
         }
       ],
-      "number_of_truck": 7,
+      "number_of_truck": 9,
       "my_truck": [
         {
           "x": 195,
@@ -118,9 +134,17 @@
         {
           "x": 340,
           "y": 3410
+        },
+        {
+          "x": 60,
+          "y": 4050
+        },
+        {
+          "x": 60,
+          "y": 5300
         }
       ],
-      "number_of_ambulance": 2,
+      "number_of_ambulance": 5,
       "my_ambulance": [
         {
           "x": 340,
@@ -129,9 +153,21 @@
         {
           "x": 195,
           "y": 1000
+        },
+        {
+          "x": 340,
+          "y": 3800
+        },
+        {
+          "x": 195,
+          "y": 4650
+        },
+        {
+          "x": 195,
+          "y": 5725
         }
       ],
-      "number_of_minitruck": 2,
+      "number_of_minitruck": 5,
       "my_minitruck": [
         {
           "x": 195,
@@ -140,6 +176,18 @@
         {
           "x": 340,
           "y": 800
+        },
+        {
+          "x": 340,
+          "y": 4050
+        },
+        {
+          "x": 340,
+          "y": 4625
+        },
+        {
+          "x": 195,
+          "y": 5475
         }
       ],
       "number_of_coins": 23,

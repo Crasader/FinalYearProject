@@ -190,7 +190,7 @@ void GameScreen::update(float dt)
 		pauseItem->setPositionY(pauseItem->getPosition().y + 7.5);
 		player->setPositionY(player->getPosition().y + 7.5);
 	}
-	if (player->getPosition().y > 5500)
+	if (player->getPosition().y > 6050)
 	{
 		float i = 2;
 		//activateGameOverScene(i);
