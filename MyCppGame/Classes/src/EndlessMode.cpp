@@ -220,7 +220,7 @@ void Endless::Timer(float dt)
 
 void Endless::EndlessGame(float dt)
 {
-		randX = cocos2d::RandomHelper::random_int(1, 4);
+		randX = cocos2d::RandomHelper::random_int(1, 3);
 		tempRand = randX;
 		if (randX == 1)
 		{
@@ -234,54 +234,90 @@ void Endless::EndlessGame(float dt)
 		{
 			xPos = 340;
 		}
-		createCars(xPos, yPos);
+		
+		randCar = cocos2d::RandomHelper::random_int(1, 5);
+		if (randCar == 1)
+		{
+			createTrucks(xPos, yPos);
+		}
+		else if (randCar == 2)
+		{
+			createTowerBases(xPos, yPos);
+		}
+		else if (randCar == 3)
+		{
+			createPolice(xPos, yPos);
+		}
+		else if (randCar == 4)
+		{
+			createAmbulances(xPos, yPos);
+		}
+		else if (randCar == 5)
+		{
+			createMTrucks(xPos, yPos);
+		}
 
-		randX = cocos2d::RandomHelper::random_int(1, 4);
+		randX = cocos2d::RandomHelper::random_int(1, 3);
 		if (randX == tempRand)
 		{
 			if (tempRand == 1)
 			{
-				randX = cocos2d::RandomHelper::random_int(2, 4);
-				tempRand = randX;
-				if (tempRand == 2)
+				randX = cocos2d::RandomHelper::random_int(2, 3);
+				if (randX == 2)
 				{
 					xPos = 195;
 				}
-				if (tempRand == 3)
+				if (randX == 3)
 				{
 					xPos = 340;
 				}
 			}
 			if (tempRand == 2)
 			{
-				//if (randX == 2)
-				//{
-					//randX = 3;
-					xPos = 340;
-				//}
-				//if (randX == 1)
-				//{
-					//xPos = 60;
-				//}
-				//if (randX == 3)
-				//{
-					//xPos = 340;
-				//}
-			}
-			if (tempRand == 3)
-			{
-				randX = cocos2d::RandomHelper::random_int(1, 3);
-				tempRand = randX;
-				if (tempRand == 1)
+				randX = cocos2d::RandomHelper::random_int(7, 8);
+				if (randX == 7)
 				{
 					xPos = 60;
 				}
-				if (tempRand == 2)
+				if (randX == 8)
+				{
+					xPos = 340;
+				}
+			}
+			if (tempRand == 3)
+			{
+				randX = cocos2d::RandomHelper::random_int(1, 2);
+				if (randX == 1)
+				{
+					xPos = 60;
+				}
+				if (randX == 2)
 				{
 					xPos = 195;
 				}
 			}
-			createCars(xPos, yPos);
+			
+			randCar = cocos2d::RandomHelper::random_int(1, 5);
+			if (randCar == 1)
+			{
+				createTrucks(xPos, yPos);
+			}
+			else if (randCar == 2)
+			{
+				createTowerBases(xPos, yPos);
+			}
+			else if (randCar == 3)
+			{
+				createPolice(xPos, yPos);
+			}
+			else if (randCar == 4)
+			{
+				createAmbulances(xPos, yPos);
+			}
+			else if (randCar == 5)
+			{
+				createMTrucks(xPos, yPos);
+			}
 		}
 		else
 		{
@@ -297,7 +333,28 @@ void Endless::EndlessGame(float dt)
 			{
 				xPos = 340;
 			}
-			createCars(xPos, yPos);
+			
+			randCar = cocos2d::RandomHelper::random_int(1, 5);
+			if (randCar == 1)
+			{
+				createTrucks(xPos, yPos);
+			}
+			else if (randCar == 2)
+			{
+				createTowerBases(xPos, yPos);
+			}
+			else if (randCar == 3)
+			{
+				createPolice(xPos, yPos);
+			}
+			else if (randCar == 4)
+			{
+				createAmbulances(xPos, yPos);
+			}
+			else if (randCar == 5)
+			{
+				createMTrucks(xPos, yPos);
+			}
 		}
 		yPos = yPos + 500;
 		tempRand = 0;
@@ -400,28 +457,14 @@ void Endless::OnAcceleration(cocos2d::CCAcceleration* pAcceleration, cocos2d::Ev
 	}
 }
 
-void Endless::createCars(int x, int y)
+
+void Endless::createTowerBases(int x, int y)
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
-		Police * base = Police::create(Vec2(x, y), m_gameState);
-		m_cars.push_back(base);
-		spritebatch->addChild(base, 1);
-	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
-}
-
-
-void Endless::createTowerBases()
-{
-	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
-	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
-
-	for (int i = 0; i < ptr->m_numberOfTowerBases; i++)
-	{
-		TowerBase * base = TowerBase::create(Vec2(ptr->m_towerBaseX[i], ptr->m_towerBaseY[i]), m_gameState);
+		TowerBase * base = TowerBase::create(Vec2(x, y), m_gameState);
 		m_towerBases.push_back(base);
 		spritebatch->addChild(base, 1);
-	}
 	this->addChild(spritebatch, 1, TOWERS_SPRITE_BATCH);
 }
 
@@ -439,59 +482,44 @@ void Endless::createCoins()
 	this->addChild(spritebatch, 4, COINS_SPRITE_BATCH);
 }
 
-void Endless::createPolice()
+void Endless::createPolice(int x, int y)
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
-
-	for (int i = 0; i < ptr->m_numberOfPolice; i++)
-	{
-		Police * base = Police::create(Vec2(ptr->m_policePosX[i], ptr->m_policePosY[i]), m_gameState);
+		Police * base = Police::create(Vec2(x,y), m_gameState);
 		m_polices.push_back(base);
 		spritebatch->addChild(base, 1);
-	}
 	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
 }
 
-void Endless::createAmbulances()
+void Endless::createAmbulances(int x, int y)
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 0; i < ptr->m_numberOfAmbulance; i++)
-	{
-		Ambulance * base = Ambulance::create(Vec2(ptr->m_ambulancePosX[i], ptr->m_ambulancePosY[i]), m_gameState);
+		Ambulance * base = Ambulance::create(Vec2(x,y), m_gameState);
 		m_ambulances.push_back(base);
 		spritebatch->addChild(base, 1);
-	}
 	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
 }
 
-void Endless::createMTrucks()
+void Endless::createMTrucks(int x, int y)
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
-
-	for (int i = 0; i < ptr->m_numberOfMiniTruck; i++)
-	{
-		MiniTruck * base = MiniTruck::create(Vec2(ptr->m_minitruckPosX[i], ptr->m_minitruckPosY[i]), m_gameState);
+		MiniTruck * base = MiniTruck::create(Vec2(x,y), m_gameState);
 		m_miniTrucks.push_back(base);
 		spritebatch->addChild(base, 1);
-	}
 	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
 }
 
-void Endless::createTrucks()
+void Endless::createTrucks(int x, int y)
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
-
-	for (int i = 0; i < ptr->m_numberOfTruck; i++)
-	{
-		Truck * base = Truck::create(Vec2(ptr->m_truckPosX[i], ptr->m_truckPosY[i]), m_gameState);
+		Truck * base = Truck::create(Vec2(x,y), m_gameState);
 		m_trucks.push_back(base);
 		spritebatch->addChild(base, 1);
-	}
 	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
 }
 

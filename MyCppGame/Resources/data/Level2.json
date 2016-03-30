@@ -1,0 +1,95 @@
+{
+  "global_settings": {
+    "texture_background_file": "GameScreen/roadbackground.png",
+    "texture_atlas_image_file": "GameScreen/sprite.png",
+    "texture_atlas_plist_file": "GameScreen/sprite.plist",
+    "tower": {
+      "tower_base_file": "Car.png",
+      "tower_gun_file": "Tower.png",
+      "coin_file": "coin.png",
+      "police_file": "Police.png",
+      "truck_file": "truck.png",
+      "ambulance_file": "Ambulance.png",
+      "mini_truck_file": "Mini_truck.png",
+      "mini_van_file": "Mini_van.png",
+      "taxi_file": "taxi.png",
+      "tower_width": 76,
+      "tower_height": 136,
+      "coin_width": 47,
+      "coin_height": 46,
+      "firing_delay": 800,
+      "tower_rotation_speed": 6,
+      "tower_rotation_origin": {
+        "x": 31,
+        "y": 55
+      },
+      "number_of_tower_bases": 2,
+      "tower_bases": [
+        {
+          "x": 195,
+          "y": 400
+        },
+        {
+          "x": 60,
+          "y": 1400
+        }
+      ],
+      "number_of_police": 2,
+      "my_police": [
+        {
+          "x": 340,
+          "y": 400
+        },
+        {
+          "x": 340,
+          "y": 800
+        }
+      ],
+      "number_of_truck": 2,
+      "my_truck": [
+        {
+          "x": 195,
+          "y": 600
+        },
+        {
+          "x": 340,
+          "y": 1000
+        }
+      ],
+      "number_of_ambulance": 2,
+      "my_ambulance": [
+        {
+          "x": 340,
+          "y": 600
+        },
+        {
+          "x": 195,
+          "y": 1000
+        }
+      ],
+      "number_of_minitruck": 2,
+      "my_minitruck": [
+        {
+          "x": 195,
+          "y": 800
+        },
+        {
+          "x": 340,
+          "y": 800
+        }
+      ],
+      "number_of_coins": 2,
+      "my_coins": [
+        {
+          "x": 60,
+          "y": 450
+        },
+        {
+          "x": 60,
+          "y": 540
+        }": 3590
+        }
+      ]
+    }
+  } 
+}

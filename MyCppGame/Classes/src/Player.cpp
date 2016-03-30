@@ -17,7 +17,7 @@ Player * Player::create()
 		playerBody->setContactTestBitmask(true);
 		playerBody->setDynamic(false);
 
-		player->setPhysicsBody(playerBody);
+		//player->setPhysicsBody(playerBody);
 		return player;
 	}
 

@@ -31,6 +31,7 @@ public:
 	int yPos;
 	int	xPos;
 	int tempRand;
+	int randCar;
 	float temp;
 	Player * player;
 	HUD * hud;
@@ -50,17 +51,17 @@ public:
 	GameStates m_gameState;
 	bool powerUpBool;
 	std::vector<TowerBase *> m_towerBases;  // add this
-	void createTowerBases();    // add this
+	void createTowerBases(int x, int y);    // add this
 	std::vector<Coin *> m_coins;  // add this
 	void createCoins();    // add this
 	std::vector<Police *> m_polices;  // add this
-	void createPolice();    // add this
+	void createPolice(int x, int y);    // add this
 	std::vector<Ambulance *> m_ambulances;  // add this
-	void createAmbulances();    // add this
+	void createAmbulances(int x, int y);    // add this
 	std::vector<Truck *> m_trucks;  // add this
-	void createTrucks();    // add this
+	void createTrucks(int x, int y);    // add this
 	std::vector<MiniTruck *> m_miniTrucks;  // add this
-	void createMTrucks();    // add this
+	void createMTrucks(int x, int y);    // add this
 	void ScrollBackground(float dt);
 	// Called when user pauses gameplay.
 	void activatePauseScene(Ref *pSender);
