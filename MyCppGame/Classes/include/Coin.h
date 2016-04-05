@@ -15,5 +15,7 @@ public:
 
 	void initOptions(cocos2d::Vec2 position);
 
+	void setPositionCoin();
+
 	void addEvents();
 };

@@ -43,20 +43,78 @@ void Endless::addBackGroundSprite(cocos2d::Size const & visibleSize, cocos2d::Po
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 
-	backgroundSprite = Sprite::create
-		(ptr->m_backgroundTextureFile);
-	backgroundSprite->setPosition(Point((visibleSize.width / 2) +
-		origin.x, (visibleSize.height) + 500));
+	int i = cocos2d::RandomHelper::random_int(1, 4);
+	if (i == 1)
+	{
+		backgroundSprite = Sprite::create
+			(ptr->m_backgroundTextureFile);
+		backgroundSprite->setPosition(Point((visibleSize.width / 2) +
+			origin.x, (visibleSize.height) + 500));
 
-	backgroundSprite2 = Sprite::create
-		(ptr->m_backgroundTextureFile);
-	backgroundSprite2->setPosition(Point((visibleSize.width / 2) +
-		origin.x, (visibleSize.height) + 2596));
+		backgroundSprite2 = Sprite::create
+			(ptr->m_backgroundTextureFile);
+		backgroundSprite2->setPosition(Point((visibleSize.width / 2) +
+			origin.x, (visibleSize.height) + 2596));
 
-	backgroundSprite3 = Sprite::create
-		(ptr->m_backgroundTextureFile);
-	backgroundSprite3->setPosition(Point((visibleSize.width / 2) +
-		origin.x, (visibleSize.height) + 4596));
+		backgroundSprite3 = Sprite::create
+			(ptr->m_backgroundTextureFile);
+		backgroundSprite3->setPosition(Point((visibleSize.width / 2) +
+			origin.x, (visibleSize.height) + 4596));
+	}
+
+	if (i == 2)
+	{
+		backgroundSprite = Sprite::create
+			(ptr->m_backgroundTextureFile1);
+		backgroundSprite->setPosition(Point((visibleSize.width / 2) +
+			origin.x, (visibleSize.height) + 500));
+
+		backgroundSprite2 = Sprite::create
+			(ptr->m_backgroundTextureFile1);
+		backgroundSprite2->setPosition(Point((visibleSize.width / 2) +
+			origin.x, (visibleSize.height) + 2596));
+
+		backgroundSprite3 = Sprite::create
+			(ptr->m_backgroundTextureFile1);
+		backgroundSprite3->setPosition(Point((visibleSize.width / 2) +
+			origin.x, (visibleSize.height) + 4596));
+	}
+
+	if (i == 3)
+	{
+		backgroundSprite = Sprite::create
+			(ptr->m_backgroundTextureFile2);
+		backgroundSprite->setPosition(Point((visibleSize.width / 2) +
+			origin.x, (visibleSize.height) + 500));
+
+		backgroundSprite2 = Sprite::create
+			(ptr->m_backgroundTextureFile2);
+		backgroundSprite2->setPosition(Point((visibleSize.width / 2) +
+			origin.x, (visibleSize.height) + 2596));
+
+		backgroundSprite3 = Sprite::create
+			(ptr->m_backgroundTextureFile2);
+		backgroundSprite3->setPosition(Point((visibleSize.width / 2) +
+			origin.x, (visibleSize.height) + 4596));
+	}
+
+	if (i == 4)
+	{
+		backgroundSprite = Sprite::create
+			(ptr->m_backgroundTextureFile3);
+		backgroundSprite->setPosition(Point((visibleSize.width / 2) +
+			origin.x, (visibleSize.height) + 500));
+
+		backgroundSprite2 = Sprite::create
+			(ptr->m_backgroundTextureFile3);
+		backgroundSprite2->setPosition(Point((visibleSize.width / 2) +
+			origin.x, (visibleSize.height) + 2596));
+
+		backgroundSprite3 = Sprite::create
+			(ptr->m_backgroundTextureFile3);
+		backgroundSprite3->setPosition(Point((visibleSize.width / 2) +
+			origin.x, (visibleSize.height) + 4596));
+	}
 
 	this->addChild(backgroundSprite, -1);
 	this->addChild(backgroundSprite2, -1);
@@ -83,6 +141,9 @@ bool Endless::init()
 	move = true;
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("audio/scoreSound.mp3");
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("audio/crashSound.mp3");
+
+	tempRand1 = 7;
+	tempRand2 = 8;
 
 	pauseItem =
 		MenuItemImage::create("GameScreen/Pause_Button.png",
@@ -180,7 +241,7 @@ bool Endless::init()
 	cameraTarget->setPositionY(player->getPosition().y - 115);
 	this->scheduleUpdate();
 	//this->schedule(schedule_selector(Endless::EndlessGame), 0.25f);
-	//this->schedule(schedule_selector(Endless::Timer), 1.0f);
+	this->schedule(schedule_selector(Endless::Timer), 1.0f);
 	this->addChild(cameraTarget);
 	camera = Follow::create(cameraTarget, Rect::ZERO);
 	camera->retain();
@@ -198,6 +259,31 @@ void Endless::update(float dt)
 		pauseItem->setPositionY(pauseItem->getPosition().y + 7.5);
 		player->setPositionY(player->getPosition().y + 7.5);
 	}
+	//if (player->getPosition().y > playerTemp1)
+	//{
+	//	Size visibleSize = Director::getInstance()->getVisibleSize();
+	//	Point origin = Director::getInstance()->getVisibleOrigin();
+	//	backgroundSprite->setPosition(Point((visibleSize.width / 2) +
+	//		origin.x, (visibleSize.height) + backTemp1));
+	//}
+
+	//if (player->getPosition().y > playerTemp2)
+	//{
+	//	Size visibleSize = Director::getInstance()->getVisibleSize();
+	//	Point origin = Director::getInstance()->getVisibleOrigin();
+	//	backgroundSprite2->setPosition(Point((visibleSize.width / 2) +
+	//		origin.x, (visibleSize.height) + backTemp2));
+	//	backTemp1 += 2000;
+	//}
+
+	//if (player->getPosition().y > playerTemp3)
+	//{
+	//	Size visibleSize = Director::getInstance()->getVisibleSize();
+	//	Point origin = Director::getInstance()->getVisibleOrigin();
+	//	backgroundSprite3->setPosition(Point((visibleSize.width / 2) +
+	//		origin.x, (visibleSize.height) + backTemp3));
+	//	backTemp2 += 2000;
+	//}
 	if (player->getPosition().x < 25)
 	{
 		player->setPositionX(26);
@@ -213,24 +299,69 @@ void Endless::update(float dt)
 
 void Endless::Timer(float dt)
 {
-	score = score + 1;
-	__String *tempScore = __String::createWithFormat("%i", score);
-	scoreLabel->setString(tempScore->getCString());
+	if (move == true)
+	{
+		score = score + 1;
+		__String *tempScore = __String::createWithFormat("%i", score);
+		scoreLabel->setString(tempScore->getCString());
+	}
 }
 
 void Endless::EndlessGame(float dt)
 {
-		randX = cocos2d::RandomHelper::random_int(1, 3);
-		tempRand = randX;
-		if (randX == 1)
+		randX1 = cocos2d::RandomHelper::random_int(1, 3);
+		if ((randX1 == tempRand1 || randX1 == tempRand2)&&(count == 1))
+		{
+			if (randX1 == 1)
+			{
+				randX1 = cocos2d::RandomHelper::random_int(2, 3);
+				if (randX1 == 2)
+				{
+					xPos = 195;
+				}
+				if (randX1 == 3)
+				{
+					xPos = 340;
+				}
+			}
+			if (randX1 == 2)
+			{
+				randX1 = cocos2d::RandomHelper::random_int(7, 8);
+				if (randX1 == 7)
+				{
+					xPos = 60;
+				}
+				if (randX1 == 8)
+				{
+					xPos = 340;
+				}
+			}
+			if (randX1 == 3)
+			{
+				randX1 = cocos2d::RandomHelper::random_int(1, 2);
+				if (randX1 == 1)
+				{
+					xPos = 60;
+				}
+				if (randX1 == 2)
+				{
+					xPos = 195;
+				}
+			}
+			cont = true;
+			preTemp2 = randX1;
+		}
+		tempRand1 = randX1;
+		preTemp = randX1;
+		if (randX1 == 1)
 		{
 			xPos = 60;
 		}
-		if (randX == 2)
+		if (randX1 == 2)
 		{
 			xPos = 195;
 		}
-		if (randX == 3)
+		if (randX1 == 3)
 		{
 			xPos = 340;
 		}
@@ -257,46 +388,48 @@ void Endless::EndlessGame(float dt)
 			createMTrucks(xPos, yPos);
 		}
 
-		randX = cocos2d::RandomHelper::random_int(1, 3);
-		if (randX == tempRand)
+		randX2 = cocos2d::RandomHelper::random_int(1, 3);
+
+		if (randX2 == tempRand1)
 		{
-			if (tempRand == 1)
+			if (tempRand1 == 1)
 			{
-				randX = cocos2d::RandomHelper::random_int(2, 3);
-				if (randX == 2)
+				randX2 = cocos2d::RandomHelper::random_int(2, 3);
+				if (randX2 == 2)
 				{
 					xPos = 195;
 				}
-				if (randX == 3)
+				if (randX2 == 3)
 				{
 					xPos = 340;
 				}
 			}
-			if (tempRand == 2)
+			if (tempRand1 == 2)
 			{
-				randX = cocos2d::RandomHelper::random_int(7, 8);
-				if (randX == 7)
+				randX2 = cocos2d::RandomHelper::random_int(7, 8);
+				if (randX2 == 7)
 				{
 					xPos = 60;
 				}
-				if (randX == 8)
+				if (randX2 == 8)
 				{
 					xPos = 340;
 				}
 			}
-			if (tempRand == 3)
+			if (tempRand1 == 3)
 			{
-				randX = cocos2d::RandomHelper::random_int(1, 2);
-				if (randX == 1)
+				randX2 = cocos2d::RandomHelper::random_int(1, 2);
+				if (randX2 == 1)
 				{
 					xPos = 60;
 				}
-				if (randX == 2)
+				if (randX2 == 2)
 				{
 					xPos = 195;
 				}
 			}
-			
+
+			tempRand2 = randX2;
 			randCar = cocos2d::RandomHelper::random_int(1, 5);
 			if (randCar == 1)
 			{
@@ -318,22 +451,62 @@ void Endless::EndlessGame(float dt)
 			{
 				createMTrucks(xPos, yPos);
 			}
+		}
+		else if (cont == true)
+		{
+			if (preTemp2 == 1)
+			{
+				randX1 = cocos2d::RandomHelper::random_int(2, 3);
+				if (randX1 == 2)
+				{
+					xPos = 195;
+				}
+				if (randX1 == 3)
+				{
+					xPos = 340;
+				}
+			}
+			if (preTemp2 == 2)
+			{
+				randX1 = cocos2d::RandomHelper::random_int(7, 8);
+				if (randX1 == 7)
+				{
+					xPos = 60;
+				}
+				if (randX1 == 8)
+				{
+					xPos = 340;
+				}
+			}
+			if (preTemp2 == 3)
+			{
+				randX1 = cocos2d::RandomHelper::random_int(1, 2);
+				if (randX1 == 1)
+				{
+					xPos = 60;
+				}
+				if (randX1 == 2)
+				{
+					xPos = 195;
+				}
+			}
+			cont = false;
 		}
 		else
 		{
-			if (randX == 1)
+			if (randX2 == 1)
 			{
 				xPos = 60;
 			}
-			if (randX == 2)
+			if (randX2 == 2)
 			{
 				xPos = 195;
 			}
-			if (randX == 3)
+			if (randX2 == 3)
 			{
 				xPos = 340;
 			}
-			
+			tempRand2 = randX2;
 			randCar = cocos2d::RandomHelper::random_int(1, 5);
 			if (randCar == 1)
 			{
@@ -356,8 +529,16 @@ void Endless::EndlessGame(float dt)
 				createMTrucks(xPos, yPos);
 			}
 		}
+
+		if (tempRand1 == randX1 && tempRand2 == randX2 || tempRand2 == randX1 && tempRand1 == randX2)
+		{
+			count = count + 1;
+		}
+		else
+		{
+			count = 0;
+		}
 		yPos = yPos + 500;
-		tempRand = 0;
 }
 
 bool Endless::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event * event)

@@ -76,6 +76,7 @@ bool GameScreen::init()
 	{
 		return false;
 	}
+	//loader.load("data/GeneralGameData.json");
 	m_gameState = GameStates::PlaceGunTower;
 	score = 0;
 	move = true;
@@ -195,7 +196,9 @@ void GameScreen::update(float dt)
 		float i = 2;
 		//activateGameOverScene(i);
 		activateLoadingScene(i);
+		//loader.load("data/Level2.json");
 	}
+
 	if (player->getPosition().x < 25)
 	{
 		player->setPositionX(26);
@@ -205,6 +208,11 @@ void GameScreen::update(float dt)
 		player->setPositionX(371);
 	}
 	cameraTarget->setPositionY(player->getPosition().y + 115);
+
+	/*if (CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying() == false)
+	{
+		CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("audio/background.mp3");
+	}*/
 	//Particles();
 }
 
@@ -405,6 +413,19 @@ bool GameScreen::onContactBegin(cocos2d::PhysicsContact &contact)
 				__String *tempScore = __String::createWithFormat("%i", score);
 				scoreLabel->setString(tempScore->getCString());
 				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/scoreSound.mp3");
+				//int x = nodeB->getPosition().x;
+				//int y = nodeB->getPosition().y;
+				//std::shared_ptr<GameData> ptr = GameData::sharedGameData();
+				//for (int i = 0; i < ptr->m_numberOfCoins; i++)
+				//{
+				//	if (m_coins[i]->getPosition().x == x && m_coins[i]->getPosition().y == y)
+				//	{
+				//		//m_coins[i]->setPositionX(4000);						
+				//		//nodeB->removeFromPhysicsWorld();
+				//		m_coins[i]->setPositionCoin();
+				//		//nodeB->removeFromParentAndCleanup(true);
+				//	}
+				//}
 				nodeB->removeFromParentAndCleanup(true);
 				if (SonarCocosHelper::GooglePlayServices::isSignedIn)
 				{
@@ -429,6 +450,22 @@ bool GameScreen::onContactBegin(cocos2d::PhysicsContact &contact)
 			__String *tempScore = __String::createWithFormat("%i", score);
 			scoreLabel->setString(tempScore->getCString());
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/scoreSound.mp3");
+			//int x = nodeA->getPosition().x;
+			//int y = nodeA->getPosition().y;
+			//std::shared_ptr<GameData> ptr = GameData::sharedGameData();
+			//for (int i = 0; i < ptr->m_numberOfCoins; i++)
+			//{
+			//	if (m_coins[i]->getPosition().x == x && m_coins[i]->getPosition().y == y)
+			//	{
+			//		/*m_coins[i]->setPositionX(4000);
+			//		m_coins[i]->setPositionY(4000);
+			//		m_coins[i]->getPhysicsBody()->setAngularVelocity(10);*/
+			//		//->removeFromParentAndCleanup(true);
+			//		//nodeA->removeFromPhysicsWorld();
+			//		m_coins[i]->setPositionCoin();
+			//		//nodeA->removeFromParentAndCleanup(true);
+			//	}
+			//}
 			nodeA->removeFromParentAndCleanup(true);
 			if (SonarCocosHelper::GooglePlayServices::isSignedIn)
 			{

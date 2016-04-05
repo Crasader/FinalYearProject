@@ -19,6 +19,7 @@ Coin * Coin::create(Vec2 position, GameStates & gameState)
 	if (pSprite->initWithSpriteFrameName(ptr->m_coinFile))
 	{
 		pSprite->autorelease();
+		
 
 		pSprite->initOptions(position);
 
@@ -44,6 +45,12 @@ void Coin::initOptions(Vec2 position)
 {
 	Point origin = Director::getInstance()->getVisibleOrigin();
 	this->setPosition(position.x + origin.x, position.y + origin.y);
+}
+
+void Coin::setPositionCoin()
+{
+	Point origin = Director::getInstance()->getVisibleOrigin();
+	this->setPosition(4000 + origin.x,4000 + origin.y);
 }
 
 void Coin::addEvents()

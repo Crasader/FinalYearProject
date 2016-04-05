@@ -27,10 +27,22 @@ class Endless : public cocos2d::Layer
 public:
 	static cocos2d::Scene* createScene();
 	virtual bool init();
-	int randX;
+	int randX1;
+	int randX2;
 	int yPos;
 	int	xPos;
-	int tempRand;
+	int playerTemp1 = 3000;
+	int playerTemp2 = 5000;
+	int playerTemp3 = 7000;
+	int backTemp1 = 6596;
+	int backTemp2 = 8596;
+	int backTemp3 = 10596;
+	int tempRand1;
+	int tempRand2;
+	int preTemp;
+	bool cont;
+	int preTemp2;
+	int count;
 	int randCar;
 	float temp;
 	Player * player;

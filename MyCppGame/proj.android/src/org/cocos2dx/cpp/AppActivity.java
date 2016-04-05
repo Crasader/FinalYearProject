@@ -28,6 +28,7 @@ package org.cocos2dx.cpp;
 
 import sonar.systems.framework.SonarFrameworkActivity;
 
+
 public class AppActivity extends SonarFrameworkActivity 
 {
 	

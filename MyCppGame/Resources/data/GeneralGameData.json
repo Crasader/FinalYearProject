@@ -1,6 +1,9 @@
 {
   "global_settings": {
     "texture_background_file": "GameScreen/roadbackground.png",
+    "texture_background1_file": "GameScreen/roadbackground1.png",
+    "texture_background2_file": "GameScreen/roadbackground2.png",
+    "texture_background3_file": "GameScreen/roadbackground3.png",
     "texture_atlas_image_file": "GameScreen/sprite.png",
     "texture_atlas_plist_file": "GameScreen/sprite.plist",
     "tower": {

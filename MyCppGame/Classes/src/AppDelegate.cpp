@@ -46,7 +46,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 		director->setOpenGLView(glview);
 	}
 	auto fileUtils = FileUtils::getInstance();
-
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("audio/background.mp3");
 
 	// Set the design resolution with the NO_BORDER policy.
 	glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
@@ -90,8 +90,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	//auto scene = MainMenu::createScene();
 	auto scene = Splash::createScene();
 	director->runWithScene(scene);
-	CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("audio/background.mp3");
-	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("audio/background.mp3");
+	
+	
+	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("audio/background.mp3",true);
 	//CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(1.0f);
 
 	return true;
