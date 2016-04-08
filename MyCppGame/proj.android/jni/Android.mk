@@ -33,6 +33,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
    ../../Classes/src/JNIHelpers.cpp \
    ../../Classes/src/SonarFrameworks.cpp \
    ../../Classes/src/EndlessMode.cpp \
+   ../../Classes/src/EndlessGameOver.cpp \
    ../../Classes/src/Truck.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes/include

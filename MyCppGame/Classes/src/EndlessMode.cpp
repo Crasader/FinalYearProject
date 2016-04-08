@@ -35,15 +35,49 @@ void Endless::activateLoadingScene(float dt)
 
 void Endless::activateGameOverScene(float dt)
 {
-	auto scene = GameOver::createScene();
+	auto scene = EndlessGameOver::createScene();
 	Director::getInstance()->replaceScene(scene);
 }
+
+//void Endless::moveBack(float dt)
+//{
+//
+//	/*if (backgroundSprite->getPosition().y < -backgroundSprite->boundingBox().size.height) {
+//		backgroundSprite->setPosition(ccp(backgroundSprite2->getPosition().x , backgroundSprite->getPosition().y + backgroundSprite2->boundingBox().size.height));
+//	}
+//	if (backgroundSprite2->getPosition().y < -backgroundSprite2->boundingBox().size.height) {
+//		backgroundSprite2->setPosition(ccp(backgroundSprite->getPosition().x , backgroundSprite2->getPosition().y + backgroundSprite->boundingBox().size.height));
+//	}*/
+//	/*Size visibleSize = Director::getInstance()->getVisibleSize();
+//	Point origin = Director::getInstance()->getVisibleOrigin();
+//	if (player->getPosition().y > playerTemp1)
+//	{
+//		backgroundSprite->setPosition(Point((visibleSize.width / 2) +
+//			origin.x, (visibleSize.height) + backTemp1));
+//	}
+//
+//	if (player->getPosition().y > playerTemp2)
+//	{
+//		backgroundSprite2->setPosition(Point((visibleSize.width / 2) +
+//			origin.x, (visibleSize.height) + backTemp2));
+//		backTemp1 += 6000;
+//		playerTemp1 += 6000;
+//	}
+//
+//	if (player->getPosition().y > playerTemp3)
+//	{
+//		backgroundSprite3->setPosition(Point((visibleSize.width / 2) +
+//			origin.x, (visibleSize.height) + backTemp3));
+//		backTemp2 += 6000;
+//		playerTemp2 += 6000;
+//	}*/
+//}
 
 void Endless::addBackGroundSprite(cocos2d::Size const & visibleSize, cocos2d::Point const & origin)
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 
-	int i = cocos2d::RandomHelper::random_int(1, 4);
+	int i = cocos2d::RandomHelper::random_int(1, 5);
 	if (i == 1)
 	{
 		backgroundSprite = Sprite::create
@@ -112,6 +146,23 @@ void Endless::addBackGroundSprite(cocos2d::Size const & visibleSize, cocos2d::Po
 
 		backgroundSprite3 = Sprite::create
 			(ptr->m_backgroundTextureFile3);
+		backgroundSprite3->setPosition(Point((visibleSize.width / 2) +
+			origin.x, (visibleSize.height) + 4596));
+	}
+	if (i == 5)
+	{
+		backgroundSprite = Sprite::create
+			(ptr->m_backgroundTextureFile4);
+		backgroundSprite->setPosition(Point((visibleSize.width / 2) +
+			origin.x, (visibleSize.height) + 500));
+
+		backgroundSprite2 = Sprite::create
+			(ptr->m_backgroundTextureFile4);
+		backgroundSprite2->setPosition(Point((visibleSize.width / 2) +
+			origin.x, (visibleSize.height) + 2596));
+
+		backgroundSprite3 = Sprite::create
+			(ptr->m_backgroundTextureFile4);
 		backgroundSprite3->setPosition(Point((visibleSize.width / 2) +
 			origin.x, (visibleSize.height) + 4596));
 	}
@@ -242,6 +293,7 @@ bool Endless::init()
 	this->scheduleUpdate();
 	//this->schedule(schedule_selector(Endless::EndlessGame), 0.25f);
 	this->schedule(schedule_selector(Endless::Timer), 1.0f);
+	//this->schedule(schedule_selector(Endless::moveBack), 0.1f);
 	this->addChild(cameraTarget);
 	camera = Follow::create(cameraTarget, Rect::ZERO);
 	camera->retain();
@@ -259,31 +311,6 @@ void Endless::update(float dt)
 		pauseItem->setPositionY(pauseItem->getPosition().y + 7.5);
 		player->setPositionY(player->getPosition().y + 7.5);
 	}
-	//if (player->getPosition().y > playerTemp1)
-	//{
-	//	Size visibleSize = Director::getInstance()->getVisibleSize();
-	//	Point origin = Director::getInstance()->getVisibleOrigin();
-	//	backgroundSprite->setPosition(Point((visibleSize.width / 2) +
-	//		origin.x, (visibleSize.height) + backTemp1));
-	//}
-
-	//if (player->getPosition().y > playerTemp2)
-	//{
-	//	Size visibleSize = Director::getInstance()->getVisibleSize();
-	//	Point origin = Director::getInstance()->getVisibleOrigin();
-	//	backgroundSprite2->setPosition(Point((visibleSize.width / 2) +
-	//		origin.x, (visibleSize.height) + backTemp2));
-	//	backTemp1 += 2000;
-	//}
-
-	//if (player->getPosition().y > playerTemp3)
-	//{
-	//	Size visibleSize = Director::getInstance()->getVisibleSize();
-	//	Point origin = Director::getInstance()->getVisibleOrigin();
-	//	backgroundSprite3->setPosition(Point((visibleSize.width / 2) +
-	//		origin.x, (visibleSize.height) + backTemp3));
-	//	backTemp2 += 2000;
-	//}
 	if (player->getPosition().x < 25)
 	{
 		player->setPositionX(26);

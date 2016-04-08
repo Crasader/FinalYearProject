@@ -28,7 +28,6 @@ bool Splash::init()
 	{
 		return false;
 	}
-
 	if (!SonarCocosHelper::GooglePlayServices::isSignedIn)
 	{
 		SonarCocosHelper::GooglePlayServices::signIn();

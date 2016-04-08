@@ -7,7 +7,7 @@ Scene* GameScreen::createScene()
 {
 	auto scene = Scene::createWithPhysics();
 	scene->getPhysicsWorld()->setGravity(Vec2(0, 0));
-	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	auto layer = GameScreen::create();
 	layer->SetPhysicsWorld(scene->getPhysicsWorld());
 
@@ -31,6 +31,8 @@ void GameScreen::activateLoadingScene(float dt)
 	}
 	auto scene = Loading::createScene();
 	Director::getInstance()->replaceScene(scene);
+	//auto scene = GameOver::createScene();
+	//Director::getInstance()->replaceScene(scene);
 }
 
 void GameScreen::activateGameOverScene(float dt)
@@ -41,6 +43,7 @@ void GameScreen::activateGameOverScene(float dt)
 
 void GameScreen::addBackGroundSprite(cocos2d::Size const & visibleSize, cocos2d::Point const & origin)
 {
+	//add all backgrounds to the scene
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 
 	backgroundSprite = Sprite::create
@@ -65,7 +68,6 @@ void GameScreen::addBackGroundSprite(cocos2d::Size const & visibleSize, cocos2d:
 
 void GameScreen::ScrollBackground(float dt)
 {
-	//player->createBody(player);
 	powerUpBool = false;
 	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/PowerUpOver.mp3");
 }
@@ -76,7 +78,8 @@ bool GameScreen::init()
 	{
 		return false;
 	}
-	//loader.load("data/GeneralGameData.json");
+	level = "data/Level2.json";
+	CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(1.0f);
 	m_gameState = GameStates::PlaceGunTower;
 	score = 0;
 	move = true;
@@ -91,20 +94,7 @@ bool GameScreen::init()
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Point origin = Director::getInstance()->getVisibleOrigin();
 
-	//auto edgeBody = PhysicsBody::createEdgeBox(visibleSize, PHYSICSBODY_MATERIAL_DEFAULT, 2);
-
-	//auto edgeNode = Node::create();
-	//edgeNode->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
-	//edgeNode->setPhysicsBody(edgeBody);
-
-	//this->addChild(edgeNode);
-
 	powerUpBool = false;
-
-	//pauseItem->setPosition(Point(pauseItem->getContentSize().width -
-	//	(pauseItem->getContentSize().width / 4) + origin.x,
-	//	visibleSize.height - pauseItem->getContentSize().height +
-	//	(pauseItem->getContentSize().width / 4) + origin.y));
 
 	pauseItem->setPosition(22, 520);
 
@@ -196,7 +186,6 @@ void GameScreen::update(float dt)
 		float i = 2;
 		//activateGameOverScene(i);
 		activateLoadingScene(i);
-		//loader.load("data/Level2.json");
 	}
 
 	if (player->getPosition().x < 25)
@@ -489,6 +478,7 @@ bool GameScreen::onContactBegin(cocos2d::PhysicsContact &contact)
 		if (powerUpBool == false)
 		{
 			this->scheduleOnce(schedule_selector(GameScreen::activateGameOverScene), 3.0f);
+			CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0.85f);
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/crashSound.mp3");
 			move = false;
 			Crash();
@@ -497,6 +487,7 @@ bool GameScreen::onContactBegin(cocos2d::PhysicsContact &contact)
 				SonarCocosHelper::GooglePlayServices::unlockAchievement(achievementID);
 			}
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/GameOver.mp3");
+			
 		}
 	}
 	return true;

@@ -26,6 +26,7 @@ public:
 	std::string m_backgroundTextureFile1;
 	std::string m_backgroundTextureFile2;
 	std::string m_backgroundTextureFile3;
+	std::string m_backgroundTextureFile4;
 	std::string m_textureAtlasImageFile;
 	std::string m_textureAtlasPlistFile;
 	// Tower base and tower related fields.

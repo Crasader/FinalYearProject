@@ -15,8 +15,8 @@ Scene* MainMenu::createScene()
 
 void MainMenu::activateGameScene(Ref *pSender)
 {
-	/*auto scene = Endless::createScene();
-	Director::getInstance()->replaceScene(scene);*/
+	//auto scene = Endless::createScene();
+	//Director::getInstance()->replaceScene(scene);
 	auto scene = GameScreen::createScene();
 	Director::getInstance()->replaceScene(scene);
 }

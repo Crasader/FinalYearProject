@@ -5,7 +5,7 @@
 #include "TowerBase.h"
 #include "GameStates.h"
 #include "PauseScene.h"
-#include "GameOverScene.h"
+#include "EndlessGameOver.h"
 #include "GameData.h"
 #include "Player.h"
 #include "PowerUp.h"
@@ -53,6 +53,7 @@ public:
 	cocos2d::Sprite *backgroundSprite2;
 	cocos2d::Sprite *backgroundSprite3;
 	cocos2d::Sprite *backgroundSprite4;
+	cocos2d::Sprite *backgroundSprite5;
 	cocos2d::Follow *camera;
 	cocos2d::Label *label;
 	cocos2d::Label *scoreLabel;

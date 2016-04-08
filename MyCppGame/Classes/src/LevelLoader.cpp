@@ -36,6 +36,8 @@ void LevelLoader::loadGameData()
 	// Get value of "texture_atlas_image_file" 
 	it1++;
 	ptr->m_backgroundTextureFile3 = it1->value.GetString();
+	it1++;
+	ptr->m_backgroundTextureFile4 = it1->value.GetString();
 	// Get value of "texture_atlas_image_file" 
 	it1++;
 	ptr->m_textureAtlasImageFile = it1->value.GetString();

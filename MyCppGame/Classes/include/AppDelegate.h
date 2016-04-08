@@ -11,7 +11,6 @@ private: // Add  this
 public:
 	AppDelegate();
 	virtual ~AppDelegate();
-
 	virtual bool applicationDidFinishLaunching();
 	virtual void applicationDidEnterBackground();
 	virtual void applicationWillEnterForeground();

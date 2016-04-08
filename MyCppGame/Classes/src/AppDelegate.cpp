@@ -61,12 +61,15 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	// if the frame's height is larger than the height of medium resource size, select large resource.
 	float scaleFactor = 1.0f;
 	if (frameSize.height > mediumResource.size.height) {
-		searchPath.push_back(largeResource.directory);
+		//searchPath.push_back(largeResource.directory);
+		//searchPath.push_back(mediumResource.directory);
+		searchPath.push_back(smallResource.directory);
 		scaleFactor = largeResource.size.height / designResolutionSize.height;
 	}
 	// if the frame's height is larger than the height of small resource size, select medium resource.
 	else if (frameSize.height > smallResource.size.height) {
-		searchPath.push_back(mediumResource.directory);
+		//searchPath.push_back(mediumResource.directory);
+		searchPath.push_back(smallResource.directory);
 		scaleFactor = mediumResource.size.height / designResolutionSize.height;
 	}
 	// if the frame's height is smaller than the height of medium resource size, select small resource.
@@ -93,6 +96,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	
 	
 	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("audio/background.mp3",true);
+	CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(1.0f);
 	//CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(1.0f);
 
 	return true;
