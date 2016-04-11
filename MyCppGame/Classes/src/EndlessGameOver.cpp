@@ -35,7 +35,7 @@ bool EndlessGameOver::init()
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-	auto backgroundSprite = Sprite::create("MainMenuScreen/background.png");
+	auto backgroundSprite = Sprite::create("GameOverScreen/background.png");
 	backgroundSprite->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
 
 	this->addChild(backgroundSprite);

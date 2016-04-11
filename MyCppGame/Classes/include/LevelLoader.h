@@ -17,6 +17,7 @@ using namespace rapidjson;
 
 class LevelLoader {
 private:	
+	LevelLoader();
 	Document m_document;	// A container for a JSON document
 	std::string m_JSONData;
 	
@@ -39,6 +40,7 @@ public:
 	///
 	////////////////////////////////////////////////////////////
 	LevelLoader(std::string const & filename);
+	static LevelLoader* getInstance();
 
 	
 	////////////////////////////////////////////////////////////

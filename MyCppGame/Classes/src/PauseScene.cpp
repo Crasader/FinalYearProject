@@ -42,10 +42,15 @@ bool PauseMenu::init()
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-	auto backgroundSprite = Sprite::create("MainMenuScreen/background.png");
+	auto backgroundSprite = Sprite::create("GameOverScreen/background.png");
 	backgroundSprite->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
 
 	this->addChild(backgroundSprite);
+
+	auto menuTitle =
+		Sprite::create("PauseScreen/Pauselogo.png");
+	menuTitle->setPosition(Point(visibleSize.width / 2, (visibleSize.height - 40)));
+	this->addChild(menuTitle);
 
 	auto resumeItem =
 		MenuItemImage::create("PauseScreen/resumebutton.png",
@@ -62,7 +67,8 @@ bool PauseMenu::init()
 	auto menu = Menu::create(resumeItem, retryItem, mainMenuItem,
 		NULL);
 
-	menu->alignItemsVerticallyWithPadding(visibleSize.height / 4);
+	menu->alignItemsVerticallyWithPadding(visibleSize.height / 15);
+	menu->setPosition(Point(visibleSize.width / 2, (visibleSize.height - 245)));
 	this->addChild(menu);
 
 	return true;

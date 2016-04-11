@@ -35,14 +35,16 @@ bool GameOver::init()
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-	auto backgroundSprite = Sprite::create("MainMenuScreen/background.png");
+	auto backgroundSprite = Sprite::create("GameOverScreen/background.png");
 	backgroundSprite->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
 
 	this->addChild(backgroundSprite);
 
 	auto menuTitle =
-		MenuItemImage::create("GameOverScreen/Game_Over.png",
-			"GameOverScreen/Game_Over.png");
+		Sprite::create("GameOverScreen/Game_Over.png");
+	menuTitle->setPosition(Point(visibleSize.width / 2, (visibleSize.height - 40)));
+	this->addChild(menuTitle);
+
 	auto retryItem =
 		MenuItemImage::create("GameOverScreen/retrybutton.png",
 			"GameOverScreen/retrybutton.png",
@@ -51,10 +53,12 @@ bool GameOver::init()
 		MenuItemImage::create("GameOverScreen/mainmenubutton.png",
 			"GameOverScreen/mainmenubutton.png",
 			CC_CALLBACK_1(GameOver::activateMainMenuScene, this));
-	auto menu = Menu::create(menuTitle, retryItem, mainMenuItem,
+	auto menu = Menu::create(retryItem, mainMenuItem,
 		NULL);
-
-	menu->alignItemsVerticallyWithPadding(visibleSize.height / 10);
+	retryItem->setScale(2.0f);
+	mainMenuItem->setScale(2.0f);
+	menu->alignItemsVerticallyWithPadding(visibleSize.height / 15);
+	menu->setPosition(Point(visibleSize.width / 2, (visibleSize.height - 245)));
 	this->addChild(menu);
 
 	return true;

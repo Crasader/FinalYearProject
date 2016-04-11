@@ -12,7 +12,6 @@ Scene* GameScreen::createScene()
 	layer->SetPhysicsWorld(scene->getPhysicsWorld());
 
 	scene->addChild(layer);
-
 	return scene;
 }
 
@@ -78,7 +77,7 @@ bool GameScreen::init()
 	{
 		return false;
 	}
-	level = "data/Level2.json";
+	//LevelLoader::getInstance()->load("data/Level2.json");
 	CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(1.0f);
 	m_gameState = GameStates::PlaceGunTower;
 	score = 0;
@@ -430,7 +429,7 @@ bool GameScreen::onContactBegin(cocos2d::PhysicsContact &contact)
 				scoreLabel->setString(tempScore->getCString());
 				nodeB->removeFromParentAndCleanup(true);
 				powerUpBool = true;
-				this->scheduleOnce(schedule_selector(GameScreen::ScrollBackground), 5.0f);
+				this->scheduleOnce(schedule_selector(GameScreen::ScrollBackground), 4.0f);
 			}
 		}
 		else if (nodeA->getTag() == 30)
@@ -469,7 +468,7 @@ bool GameScreen::onContactBegin(cocos2d::PhysicsContact &contact)
 			scoreLabel->setString(tempScore->getCString());
 			nodeA->removeFromParentAndCleanup(true);
 			powerUpBool = true;
-			this->scheduleOnce(schedule_selector(GameScreen::ScrollBackground), 3.0f);
+			this->scheduleOnce(schedule_selector(GameScreen::ScrollBackground), 4.0f);
 		}
 	}
 
@@ -486,8 +485,7 @@ bool GameScreen::onContactBegin(cocos2d::PhysicsContact &contact)
 			{
 				SonarCocosHelper::GooglePlayServices::unlockAchievement(achievementID);
 			}
-			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/GameOver.mp3");
-			
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/GameOver.mp3");	
 		}
 	}
 	return true;

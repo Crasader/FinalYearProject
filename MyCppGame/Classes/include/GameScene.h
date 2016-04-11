@@ -9,6 +9,7 @@
 #include "GameData.h"
 #include "Player.h"
 #include "PowerUp.h"
+#include "LevelLoader.h"
 #include "Coin.h"
 #include "Police.h"
 #include "Truck.h"
@@ -27,6 +28,7 @@ class GameScreen : public cocos2d::Layer
 public:
 	static cocos2d::Scene* createScene();
 	virtual bool init();
+	std::shared_ptr<GameData> m_ptr;
 	Player * player;
 	HUD * hud;
 	PowerUp * powerUp;

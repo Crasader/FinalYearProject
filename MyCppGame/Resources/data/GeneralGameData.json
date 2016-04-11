@@ -5,6 +5,8 @@
     "texture_background2_file": "GameScreen/roadbackground2.png",
     "texture_background3_file": "GameScreen/roadbackground3.png",
     "texture_background4_file": "GameScreen/roadbackground4.png",
+    "texture_background5_file": "GameScreen/roadbackground5.png",
+    "texture_background6_file": "GameScreen/roadbackground6.png",
     "texture_atlas_image_file": "GameScreen/sprite.png",
     "texture_atlas_plist_file": "GameScreen/sprite.plist",
     "tower": {

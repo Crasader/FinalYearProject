@@ -86,19 +86,17 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	m_ptr = GameData::sharedGameData();
 	// Create the level loader object to load general game data.
 	LevelLoader loader("data/GeneralGameData.json");
+	//std::shared_ptr<LevelLoader> loader("data/GeneralGameData.json");
 
 	// Set FPS. the default value is 1.0/60 if you don't call this
 	director->setAnimationInterval(1.0 / 60);
 	// Run
-	//auto scene = MainMenu::createScene();
 	auto scene = Splash::createScene();
 	director->runWithScene(scene);
 	
 	
 	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("audio/background.mp3",true);
 	CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(1.0f);
-	//CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(1.0f);
-
 	return true;
 }
 

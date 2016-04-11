@@ -77,95 +77,55 @@ void Endless::addBackGroundSprite(cocos2d::Size const & visibleSize, cocos2d::Po
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 
-	int i = cocos2d::RandomHelper::random_int(1, 5);
-	if (i == 1)
-	{
 		backgroundSprite = Sprite::create
-			(ptr->m_backgroundTextureFile);
+			(ptr->m_backgroundTextureFile6);
 		backgroundSprite->setPosition(Point((visibleSize.width / 2) +
 			origin.x, (visibleSize.height) + 500));
 
 		backgroundSprite2 = Sprite::create
-			(ptr->m_backgroundTextureFile);
+			(ptr->m_backgroundTextureFile6);
 		backgroundSprite2->setPosition(Point((visibleSize.width / 2) +
 			origin.x, (visibleSize.height) + 2596));
 
 		backgroundSprite3 = Sprite::create
-			(ptr->m_backgroundTextureFile);
+			(ptr->m_backgroundTextureFile6);
 		backgroundSprite3->setPosition(Point((visibleSize.width / 2) +
 			origin.x, (visibleSize.height) + 4596));
-	}
 
-	if (i == 2)
-	{
-		backgroundSprite = Sprite::create
-			(ptr->m_backgroundTextureFile1);
-		backgroundSprite->setPosition(Point((visibleSize.width / 2) +
-			origin.x, (visibleSize.height) + 500));
+	//if (i == 4)
+	//{
+	//	backgroundSprite = Sprite::create
+	//		(ptr->m_backgroundTextureFile3);
+	//	backgroundSprite->setPosition(Point((visibleSize.width / 2) +
+	//		origin.x, (visibleSize.height) + 500));
 
-		backgroundSprite2 = Sprite::create
-			(ptr->m_backgroundTextureFile1);
-		backgroundSprite2->setPosition(Point((visibleSize.width / 2) +
-			origin.x, (visibleSize.height) + 2596));
+	//	backgroundSprite2 = Sprite::create
+	//		(ptr->m_backgroundTextureFile3);
+	//	backgroundSprite2->setPosition(Point((visibleSize.width / 2) +
+	//		origin.x, (visibleSize.height) + 2596));
 
-		backgroundSprite3 = Sprite::create
-			(ptr->m_backgroundTextureFile1);
-		backgroundSprite3->setPosition(Point((visibleSize.width / 2) +
-			origin.x, (visibleSize.height) + 4596));
-	}
+	//	backgroundSprite3 = Sprite::create
+	//		(ptr->m_backgroundTextureFile3);
+	//	backgroundSprite3->setPosition(Point((visibleSize.width / 2) +
+	//		origin.x, (visibleSize.height) + 4596));
+	//}
+	//if (i == 5)
+	//{
+	//	backgroundSprite = Sprite::create
+	//		(ptr->m_backgroundTextureFile4);
+	//	backgroundSprite->setPosition(Point((visibleSize.width / 2) +
+	//		origin.x, (visibleSize.height) + 500));
 
-	if (i == 3)
-	{
-		backgroundSprite = Sprite::create
-			(ptr->m_backgroundTextureFile2);
-		backgroundSprite->setPosition(Point((visibleSize.width / 2) +
-			origin.x, (visibleSize.height) + 500));
+	//	backgroundSprite2 = Sprite::create
+	//		(ptr->m_backgroundTextureFile4);
+	//	backgroundSprite2->setPosition(Point((visibleSize.width / 2) +
+	//		origin.x, (visibleSize.height) + 2596));
 
-		backgroundSprite2 = Sprite::create
-			(ptr->m_backgroundTextureFile2);
-		backgroundSprite2->setPosition(Point((visibleSize.width / 2) +
-			origin.x, (visibleSize.height) + 2596));
-
-		backgroundSprite3 = Sprite::create
-			(ptr->m_backgroundTextureFile2);
-		backgroundSprite3->setPosition(Point((visibleSize.width / 2) +
-			origin.x, (visibleSize.height) + 4596));
-	}
-
-	if (i == 4)
-	{
-		backgroundSprite = Sprite::create
-			(ptr->m_backgroundTextureFile3);
-		backgroundSprite->setPosition(Point((visibleSize.width / 2) +
-			origin.x, (visibleSize.height) + 500));
-
-		backgroundSprite2 = Sprite::create
-			(ptr->m_backgroundTextureFile3);
-		backgroundSprite2->setPosition(Point((visibleSize.width / 2) +
-			origin.x, (visibleSize.height) + 2596));
-
-		backgroundSprite3 = Sprite::create
-			(ptr->m_backgroundTextureFile3);
-		backgroundSprite3->setPosition(Point((visibleSize.width / 2) +
-			origin.x, (visibleSize.height) + 4596));
-	}
-	if (i == 5)
-	{
-		backgroundSprite = Sprite::create
-			(ptr->m_backgroundTextureFile4);
-		backgroundSprite->setPosition(Point((visibleSize.width / 2) +
-			origin.x, (visibleSize.height) + 500));
-
-		backgroundSprite2 = Sprite::create
-			(ptr->m_backgroundTextureFile4);
-		backgroundSprite2->setPosition(Point((visibleSize.width / 2) +
-			origin.x, (visibleSize.height) + 2596));
-
-		backgroundSprite3 = Sprite::create
-			(ptr->m_backgroundTextureFile4);
-		backgroundSprite3->setPosition(Point((visibleSize.width / 2) +
-			origin.x, (visibleSize.height) + 4596));
-	}
+	//	backgroundSprite3 = Sprite::create
+	//		(ptr->m_backgroundTextureFile4);
+	//	backgroundSprite3->setPosition(Point((visibleSize.width / 2) +
+	//		origin.x, (visibleSize.height) + 4596));
+	//}
 
 	this->addChild(backgroundSprite, -1);
 	this->addChild(backgroundSprite2, -1);
@@ -310,6 +270,9 @@ void Endless::update(float dt)
 		hud->setPositionY(hud->getPosition().y + 7.5);
 		pauseItem->setPositionY(pauseItem->getPosition().y + 7.5);
 		player->setPositionY(player->getPosition().y + 7.5);
+		backgroundSprite->setPositionY(backgroundSprite->getPosition().y + 7.5);
+		backgroundSprite2->setPositionY(backgroundSprite->getPosition().y + 7.5);
+		backgroundSprite3->setPositionY(backgroundSprite->getPosition().y + 7.5);
 	}
 	if (player->getPosition().x < 25)
 	{
@@ -337,7 +300,7 @@ void Endless::Timer(float dt)
 void Endless::EndlessGame(float dt)
 {
 		randX1 = cocos2d::RandomHelper::random_int(1, 3);
-		if ((randX1 == tempRand1 || randX1 == tempRand2)&&(count == 1))
+	/*	if ((randX1 == tempRand1 || randX1 == tempRand2)&&(count == 1))
 		{
 			if (randX1 == 1)
 			{
@@ -377,21 +340,24 @@ void Endless::EndlessGame(float dt)
 			}
 			cont = true;
 			preTemp2 = randX1;
-		}
+		}*/
+		//else {
+			if (randX1 == 1)
+			{
+				xPos = 60;
+			}
+			if (randX1 == 2)
+			{
+				xPos = 195;
+			}
+			if (randX1 == 3)
+			{
+				xPos = 340;
+			}
+		//}
 		tempRand1 = randX1;
 		preTemp = randX1;
-		if (randX1 == 1)
-		{
-			xPos = 60;
-		}
-		if (randX1 == 2)
-		{
-			xPos = 195;
-		}
-		if (randX1 == 3)
-		{
-			xPos = 340;
-		}
+
 		
 		randCar = cocos2d::RandomHelper::random_int(1, 5);
 		if (randCar == 1)
@@ -479,7 +445,7 @@ void Endless::EndlessGame(float dt)
 				createMTrucks(xPos, yPos);
 			}
 		}
-		else if (cont == true)
+		/*else if (cont == true)
 		{
 			if (preTemp2 == 1)
 			{
@@ -518,7 +484,7 @@ void Endless::EndlessGame(float dt)
 				}
 			}
 			cont = false;
-		}
+		}*/
 		else
 		{
 			if (randX2 == 1)
@@ -557,14 +523,14 @@ void Endless::EndlessGame(float dt)
 			}
 		}
 
-		if (tempRand1 == randX1 && tempRand2 == randX2 || tempRand2 == randX1 && tempRand1 == randX2)
+		/*if (tempRand1 == randX1 && tempRand2 == randX2 || tempRand2 == randX1 && tempRand1 == randX2)
 		{
 			count = count + 1;
 		}
 		else
 		{
 			count = 0;
-		}
+		}*/
 		yPos = yPos + 500;
 }
 
@@ -584,69 +550,121 @@ void Endless::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event * event)
 
 void Endless::Particles()
 {
-	auto size = Director::getInstance()->getWinSize();
-	auto m_emitter = ParticleSmoke::createWithTotalParticles(900);
-	//m_emitter->setTexture(Director::getInstance()->getTextureCache()->addImage("smoke.png"));
-	m_emitter->setDuration(0.015f);
-	m_emitter->setGravity(Point(0, -240));
-	m_emitter->setAngle(0);
-	m_emitter->setAngleVar(360);
-	m_emitter->setRadialAccel(50);
-	m_emitter->setRadialAccelVar(0);
-	m_emitter->setTangentialAccel(0);
-	m_emitter->setTangentialAccelVar(0);
-	m_emitter->setPosVar(Point(1, 0));
-	m_emitter->setLife(0.15f);
-	m_emitter->setLifeVar(0.15f);
-	m_emitter->setStartSpin(0);
-	m_emitter->setStartSpinVar(0);
-	m_emitter->setEndSpin(0);
-	m_emitter->setEndSpinVar(0);
-	m_emitter->setStartColor(Color4F(0, 0, 0, 1));
-	m_emitter->setStartColorVar(Color4F(0, 0, 0, 0));
-	m_emitter->setEndColor(Color4F(0, 0, 0, 1));
-	m_emitter->setEndColorVar(Color4F(0, 0, 0, 0));
-	m_emitter->setStartSize(7.5f);
-	m_emitter->setStartSizeVar(0);
-	m_emitter->setEndSize(2.0f);
-	m_emitter->setEndSizeVar(0);
-	m_emitter->setEmissionRate(80);
-	m_emitter->setPosition(Vec2(player->getPosition().x + 15, player->getPosition().y - 72));
-	addChild(m_emitter, 10);
+	//std::string path = CCFileUtils::sharedFileUtils()->getWriteablePath() + "\\file.ext";
+	std::string path = CCFileUtils::sharedFileUtils()->getWritablePath() + "\\file.ext";
+	FILE* f = fopen(path.c_str(), "wb");
+
+	int size = 1; //number of items to save
+	fwrite(&size, sizeof(int), 1, f);
+	//for (unsigned int i = 0; i
+
+	//auto size = Director::getInstance()->getWinSize();
+	//auto m_emitter = ParticleSmoke::createWithTotalParticles(900);
+	////m_emitter->setTexture(Director::getInstance()->getTextureCache()->addImage("smoke.png"));
+	//m_emitter->setDuration(0.015f);
+	//m_emitter->setGravity(Point(0, -240));
+	//m_emitter->setAngle(0);
+	//m_emitter->setAngleVar(360);
+	//m_emitter->setRadialAccel(50);
+	//m_emitter->setRadialAccelVar(0);
+	//m_emitter->setTangentialAccel(0);
+	//m_emitter->setTangentialAccelVar(0);
+	//m_emitter->setPosVar(Point(1, 0));
+	//m_emitter->setLife(0.15f);
+	//m_emitter->setLifeVar(0.15f);
+	//m_emitter->setStartSpin(0);
+	//m_emitter->setStartSpinVar(0);
+	//m_emitter->setEndSpin(0);
+	//m_emitter->setEndSpinVar(0);
+	//m_emitter->setStartColor(Color4F(0, 0, 0, 1));
+	//m_emitter->setStartColorVar(Color4F(0, 0, 0, 0));
+	//m_emitter->setEndColor(Color4F(0, 0, 0, 1));
+	//m_emitter->setEndColorVar(Color4F(0, 0, 0, 0));
+	//m_emitter->setStartSize(7.5f);
+	//m_emitter->setStartSizeVar(0);
+	//m_emitter->setEndSize(2.0f);
+	//m_emitter->setEndSizeVar(0);
+	//m_emitter->setEmissionRate(80);
+	//m_emitter->setPosition(Vec2(player->getPosition().x + 15, player->getPosition().y - 72));
+	//addChild(m_emitter, 10);
 }
 
 void Endless::Crash()
 {
-	auto size = Director::getInstance()->getWinSize();
-	auto m_emitter = ParticleExplosion::createWithTotalParticles(900);
-	//m_emitter->setTexture(Director::getInstance()->getTextureCache()->addImage("smoke.png"));
+	//SpriteBatchNode* spritebatch = SpriteBatchNode::create("fireanimation.png");
+	//SpriteFrameCache* cache = SpriteFrameCache::getInstance();
+	//cache->addSpriteFramesWithFile("animations/grossini.plist");
+	//auto Sprite1 = Sprite::createWithSpriteFrameName("fireanimation.png");
+	//spritebatch->addChild(Sprite1);
+	//addChild(spritebatch);
 
-	m_emitter->setDuration(-1);
-	m_emitter->setGravity(Point(0, -240));
-	m_emitter->setAngle(0);
-	m_emitter->setAngleVar(180);
-	m_emitter->setRadialAccel(25);
-	m_emitter->setRadialAccelVar(0);
-	m_emitter->setTangentialAccel(10);
-	m_emitter->setTangentialAccelVar(0);
-	m_emitter->setPosVar(Point(1, 0));
-	m_emitter->setLife(0.25);
-	m_emitter->setLifeVar(0.50);
-	m_emitter->setStartSpin(0);
-	m_emitter->setStartSpinVar(0);
-	m_emitter->setEndSpin(0);
-	m_emitter->setEndSpinVar(0);
-	m_emitter->setStartColor(Color4F(212, 73, 0, 1));
-	m_emitter->setStartColorVar(Color4F(0, 0, 0, 0));
-	m_emitter->setEndColor(Color4F(212, 73, 0, 1));
-	m_emitter->setEndColorVar(Color4F(0, 0, 0, 0));
-	m_emitter->setStartSize(20.0f);
-	m_emitter->setStartSizeVar(0);
-	m_emitter->setEndSize(15.0f);
-	m_emitter->setEndSizeVar(0);
-	m_emitter->setEmissionRate(275);
-	m_emitter->setPosition(Vec2(player->getPosition().x, player->getPosition().y - 15));
-	addChild(m_emitter, 10);
+	//Vector<SpriteFrame*> animFrames(15);
+	//char str[100] = { 0 };
+	//for (int i = 1; i < 15; i++)
+	//{
+	//	sprintf(str, "grossini_dance_%02d.png", i);
+	//	SpriteFrame* frame = cache->getSpriteFrameByName(str);
+	//	animFrames.pushBack(frame);
+	//}
+
+	//Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
+	//Sprite1->runAction(RepeatForever::create(Animate::create(animation)));
+
+	auto spritecache = SpriteFrameCache::getInstance();
+	spritecache->addSpriteFramesWithFile("GameScreen/explosion.plist");
+	cocos2d::SpriteFrame* spriteFrame = spritecache->getSpriteFrameByName("fireanimation0.png");
+	cocos2d::Vector<cocos2d::Sprite *> m_aiSprites;
+	cocos2d::Vector<cocos2d::SpriteFrame*> m_animFrames;
+
+
+	for (int i = 0; i < 4; i++)
+	{
+		// Get a SpriteFrame using a name from the spritesheet .plist file.
+		m_animFrames.pushBack(spritecache->getSpriteFrameByName("fireanimation" + std::to_string(i) + ".png"));
+	}
+	// Create the animation out of the frames.
+	Animation* animation = Animation::createWithSpriteFrames(m_animFrames, 0.5f);
+	Animate* animate = Animate::create(animation);
+	// Create a sprite using any one of the SpriteFrames
+	// This is so we get a sprite of the correct dimensions.
+	auto sprite = Sprite::createWithSpriteFrame(m_animFrames.at(0));
+	// Run and repeat the animation.
+	sprite->setScale(3.0f);
+	sprite->runAction(RepeatForever::create(animate));
+	sprite->setPosition(Vec2(player->getPosition().x, player->getPosition().y - 5));
+	this->addChild(sprite, 10);
+	m_aiSprites.pushBack(sprite);
+
+	//auto size = Director::getInstance()->getWinSize();
+	//auto m_emitter = ParticleExplosion::createWithTotalParticles(900);
+	////m_emitter->setTexture(Director::getInstance()->getTextureCache()->addImage("smoke.png"));
+
+	//m_emitter->setDuration(-1);
+	//m_emitter->setGravity(Point(0, -240));
+	//m_emitter->setAngle(0);
+	//m_emitter->setAngleVar(180);
+	//m_emitter->setRadialAccel(25);
+	//m_emitter->setRadialAccelVar(0);
+	//m_emitter->setTangentialAccel(10);
+	//m_emitter->setTangentialAccelVar(0);
+	//m_emitter->setPosVar(Point(1, 0));
+	//m_emitter->setLife(0.25);
+	//m_emitter->setLifeVar(0.50);
+	//m_emitter->setStartSpin(0);
+	//m_emitter->setStartSpinVar(0);
+	//m_emitter->setEndSpin(0);
+	//m_emitter->setEndSpinVar(0);
+	//m_emitter->setStartColor(Color4F(212, 73, 0, 1));
+	//m_emitter->setStartColorVar(Color4F(0, 0, 0, 0));
+	//m_emitter->setEndColor(Color4F(212, 73, 0, 1));
+	//m_emitter->setEndColorVar(Color4F(0, 0, 0, 0));
+	//m_emitter->setStartSize(20.0f);
+	//m_emitter->setStartSizeVar(0);
+	//m_emitter->setEndSize(15.0f);
+	//m_emitter->setEndSizeVar(0);
+	//m_emitter->setEmissionRate(275);
+	//m_emitter->setPosition(Vec2(player->getPosition().x, player->getPosition().y - 15));
+	//addChild(m_emitter, 10);
 }
 
 void Endless::OnAcceleration(cocos2d::CCAcceleration* pAcceleration, cocos2d::Event * event)
@@ -795,6 +813,7 @@ bool Endless::onContactBegin(cocos2d::PhysicsContact &contact)
 		{
 			this->scheduleOnce(schedule_selector(Endless::activateGameOverScene), 3.0f);
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/crashSound.mp3");
+			Particles();
 			move = false;
 			Crash();
 			if (SonarCocosHelper::GooglePlayServices::isSignedIn)
