@@ -15,29 +15,35 @@ Scene* MainMenu::createScene()
 
 void MainMenu::activateGameScene(Ref *pSender)
 {
-	//auto scene = Endless::createScene();
-	//Director::getInstance()->replaceScene(scene);
 	auto scene = GameScreen::createScene();
 	Director::getInstance()->replaceScene(scene);
 }
 
-void MainMenu::activateOptionsScene(Ref *pSender)
+void MainMenu::activateTrialScene(Ref *pSender)
 {
-	/*auto scene = Options::createScene();
-	Director::getInstance()->replaceScene(TransitionFade::create(1.0, scene));*/
+	auto scene = Endless::createScene();
+	Director::getInstance()->replaceScene(scene);
+}
+
+void MainMenu::activateTrophies(Ref *pSender)
+{
 	if (SonarCocosHelper::GooglePlayServices::isSignedIn)
 	{
 		SonarCocosHelper::GooglePlayServices::showAchievements();
 	}
 }
 
-void MainMenu::activateQuitScene(Ref *pSender)
+void MainMenu::activateLeaderboards(Ref *pSender)
 {
-	//Director::getInstance()->end();
 	if (SonarCocosHelper::GooglePlayServices::isSignedIn)
 	{
 		SonarCocosHelper::GooglePlayServices::showLeaderboard("CgkI69-MotMIEAIQAg");
 	}
+}
+
+void MainMenu::activateQuitScene(Ref *pSender)
+{
+	Director::getInstance()->end();
 }
 
 bool MainMenu::init()
@@ -59,7 +65,7 @@ bool MainMenu::init()
 			"MainMenuScreen/horizonlogo.png");*/
 	auto menuTitle =
 		Sprite::create("MainMenuScreen/horizonlogo.png");
-	menuTitle->setPosition(Point(visibleSize.width / 2 , (visibleSize.height - 30 )));
+	menuTitle->setPosition(Point(visibleSize.width / 2 , (visibleSize.height - 20 )));
 	this->addChild(menuTitle);
 
 	auto playItem =
@@ -67,28 +73,28 @@ bool MainMenu::init()
 			"MainMenuScreen/playbutton.png",
 			CC_CALLBACK_1(MainMenu::activateGameScene, this));
 	auto optionsItem1 =
-		MenuItemImage::create("MainMenuScreen/optionsbutton.png",
-			"MainMenuScreen/optionsbutton.png",
-			CC_CALLBACK_1(MainMenu::activateOptionsScene, this));
+		MenuItemImage::create("MainMenuScreen/timebutton.png",
+			"MainMenuScreen/timebutton.png",
+			CC_CALLBACK_1(MainMenu::activateTrialScene, this));
 	auto quitItem1 =
-		MenuItemImage::create("MainMenuScreen/quitbutton.png",
-			"MainMenuScreen/quitbutton.png",
-			CC_CALLBACK_1(MainMenu::activateQuitScene, this));
+		MenuItemImage::create("MainMenuScreen/leadbutton.png",
+			"MainMenuScreen/leadbutton.png",
+			CC_CALLBACK_1(MainMenu::activateLeaderboards, this));
 	auto optionsItem =
-		MenuItemImage::create("MainMenuScreen/optionsbutton.png",
-			"MainMenuScreen/optionsbutton.png",
-			CC_CALLBACK_1(MainMenu::activateOptionsScene, this));
+		MenuItemImage::create("MainMenuScreen/trophybutton.png",
+			"MainMenuScreen/trophybutton.png",
+			CC_CALLBACK_1(MainMenu::activateTrophies, this));
 	auto quitItem =
 		MenuItemImage::create("MainMenuScreen/quitbutton.png",
 			"MainMenuScreen/quitbutton.png",
 			CC_CALLBACK_1(MainMenu::activateQuitScene, this));
 	//auto menu = Menu::create(menuTitle, playItem,optionsItem,quitItem, NULL);
-	playItem->setScale(2.0f);
-	optionsItem1->setScale(2.0f);
-	quitItem1->setScale(2.0f);
-	optionsItem->setScale(2.0f);
-	quitItem->setScale(2.0f);
-	auto menu = Menu::create(playItem, optionsItem, optionsItem1, quitItem1, quitItem, NULL);
+	playItem->setScale(1.28f);
+	optionsItem1->setScale(1.28f);
+	quitItem1->setScale(1.28f);
+	optionsItem->setScale(1.28f);
+	quitItem->setScale(1.28f);
+	auto menu = Menu::create(playItem, optionsItem1, optionsItem, quitItem1, quitItem, NULL);
 
 	// Returns visible size of OpenGL window in points.
 	//Size visibleSize = Director::getInstance()->getVisibleSize();

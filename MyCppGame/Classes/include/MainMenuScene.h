@@ -18,7 +18,9 @@ public:
 	static cocos2d::Scene* createScene();
 	virtual bool init();
 	void activateGameScene(Ref * pSender);
-	void activateOptionsScene(Ref *pSender);
+	void activateTrialScene(Ref *pSender);
+	void activateTrophies(Ref *pSender);
+	void activateLeaderboards(Ref *pSender);
 	void activateQuitScene(Ref *pSender);
 
 	CREATE_FUNC(MainMenu);

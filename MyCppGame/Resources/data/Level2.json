@@ -1,6 +1,12 @@
 {
   "global_settings": {
-    "texture_background_file": "GameScreen/roadbackground3.png",
+    "texture_background_file": "GameScreen/roadbackground.png",
+    "texture_background1_file": "GameScreen/roadbackground1.png",
+    "texture_background2_file": "GameScreen/roadbackground2.png",
+    "texture_background3_file": "GameScreen/roadbackground3.png",
+    "texture_background4_file": "GameScreen/roadbackground4.png",
+    "texture_background5_file": "GameScreen/roadbackground5.png",
+    "texture_background6_file": "GameScreen/roadbackground6.png",
     "texture_atlas_image_file": "GameScreen/sprite.png",
     "texture_atlas_plist_file": "GameScreen/sprite.plist",
     "tower": {
@@ -23,40 +29,84 @@
         "x": 31,
         "y": 55
       },
-      "number_of_tower_bases": 2,
+      "number_of_tower_bases": 6,
       "tower_bases": [
         {
-          "x": 195,
+          "x": 60,
           "y": 400
         },
         {
-          "x": 60,
-          "y": 1400
+          "x": 195,
+          "y": 1350
+        },
+        {
+          "x": 340,
+          "y": 2100
+        },
+        {
+          "x": 340,
+          "y": 2525
+        },
+        {
+          "x": 340,
+          "y": 3250
+        },
+        {
+          "x": 340,
+          "y": 4475
         }
       ],
-      "number_of_police": 2,
+      "number_of_police": 6,
       "my_police": [
         {
           "x": 340,
           "y": 400
         },
         {
-          "x": 340,
+          "x": 60,
           "y": 800
+        },
+        {
+          "x": 60,
+          "y": 1900
+        },
+        {
+          "x": 340,
+          "y": 2300
+        },
+        {
+          "x": 60,
+          "y": 3700
+        },
+        {
+          "x": 60,
+          "y": 4275
         }
       ],
-      "number_of_truck": 2,
+      "number_of_truck": 5,
       "my_truck": [
         {
-          "x": 195,
+          "x": 60,
           "y": 600
         },
         {
           "x": 340,
-          "y": 1000
+          "y": 1900
+        },
+        {
+          "x": 195,
+          "y": 2475
+        },
+        {
+          "x": 340,
+          "y": 2800
+        },
+        {
+          "x": 340,
+          "y": 4275
         }
       ],
-      "number_of_ambulance": 2,
+      "number_of_ambulance": 7,
       "my_ambulance": [
         {
           "x": 340,
@@ -64,29 +114,57 @@
         },
         {
           "x": 195,
-          "y": 1000
+          "y": 1550
+        },
+        {
+          "x": 60,
+          "y": 2900
+        },
+        {
+          "x": 340,
+          "y": 3000
+        },
+        {
+          "x": 195,
+          "y": 3850
+        },
+        {
+          "x": 60,
+          "y": 4500
+        },
+        {
+          "x": 195,
+          "y": 5075
         }
       ],
-      "number_of_minitruck": 2,
+      "number_of_minitruck": 5,
       "my_minitruck": [
         {
           "x": 195,
-          "y": 800
+          "y": 1150
         },
         {
           "x": 340,
           "y": 800
-        }
-      ],
-      "number_of_coins": 2,
-      "my_coins": [
-        {
-          "x": 60,
-          "y": 450
         },
         {
           "x": 60,
-          "y": 540
+          "y": 2100
+        },
+        {
+          "x": 195,
+          "y": 3300
+        },
+        {
+          "x": 195,
+          "y": 4850
+        }
+      ],
+      "number_of_coins": 1,
+      "my_coins": [
+        {
+          "x": 4000,
+          "y": 4000
         }
       ]
     },

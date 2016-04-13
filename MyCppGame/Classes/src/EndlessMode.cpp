@@ -591,39 +591,20 @@ void Endless::Particles()
 
 void Endless::Crash()
 {
-	//SpriteBatchNode* spritebatch = SpriteBatchNode::create("fireanimation.png");
-	//SpriteFrameCache* cache = SpriteFrameCache::getInstance();
-	//cache->addSpriteFramesWithFile("animations/grossini.plist");
-	//auto Sprite1 = Sprite::createWithSpriteFrameName("fireanimation.png");
-	//spritebatch->addChild(Sprite1);
-	//addChild(spritebatch);
-
-	//Vector<SpriteFrame*> animFrames(15);
-	//char str[100] = { 0 };
-	//for (int i = 1; i < 15; i++)
-	//{
-	//	sprintf(str, "grossini_dance_%02d.png", i);
-	//	SpriteFrame* frame = cache->getSpriteFrameByName(str);
-	//	animFrames.pushBack(frame);
-	//}
-
-	//Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
-	//Sprite1->runAction(RepeatForever::create(Animate::create(animation)));
-
 	auto spritecache = SpriteFrameCache::getInstance();
 	spritecache->addSpriteFramesWithFile("GameScreen/explosion.plist");
-	cocos2d::SpriteFrame* spriteFrame = spritecache->getSpriteFrameByName("fireanimation0.png");
+	cocos2d::SpriteFrame* spriteFrame = spritecache->getSpriteFrameByName("explosion0.png");
 	cocos2d::Vector<cocos2d::Sprite *> m_aiSprites;
 	cocos2d::Vector<cocos2d::SpriteFrame*> m_animFrames;
 
 
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 23; i++)
 	{
 		// Get a SpriteFrame using a name from the spritesheet .plist file.
-		m_animFrames.pushBack(spritecache->getSpriteFrameByName("fireanimation" + std::to_string(i) + ".png"));
+		m_animFrames.pushBack(spritecache->getSpriteFrameByName("explosion" + std::to_string(i) + ".png"));
 	}
 	// Create the animation out of the frames.
-	Animation* animation = Animation::createWithSpriteFrames(m_animFrames, 0.5f);
+	Animation* animation = Animation::createWithSpriteFrames(m_animFrames, 0.065);
 	Animate* animate = Animate::create(animation);
 	// Create a sprite using any one of the SpriteFrames
 	// This is so we get a sprite of the correct dimensions.
@@ -811,7 +792,7 @@ bool Endless::onContactBegin(cocos2d::PhysicsContact &contact)
 	{
 		if (powerUpBool == false)
 		{
-			this->scheduleOnce(schedule_selector(Endless::activateGameOverScene), 3.0f);
+			this->scheduleOnce(schedule_selector(Endless::activateGameOverScene), 1.5f);
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/crashSound.mp3");
 			Particles();
 			move = false;

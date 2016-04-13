@@ -42,7 +42,7 @@ bool GameOver::init()
 
 	auto menuTitle =
 		Sprite::create("GameOverScreen/Game_Over.png");
-	menuTitle->setPosition(Point(visibleSize.width / 2, (visibleSize.height - 40)));
+	menuTitle->setPosition(Point(visibleSize.width / 2, (visibleSize.height - 32)));
 	this->addChild(menuTitle);
 
 	auto retryItem =
@@ -55,10 +55,10 @@ bool GameOver::init()
 			CC_CALLBACK_1(GameOver::activateMainMenuScene, this));
 	auto menu = Menu::create(retryItem, mainMenuItem,
 		NULL);
-	retryItem->setScale(2.0f);
-	mainMenuItem->setScale(2.0f);
+	retryItem->setScale(1.18f);
+	mainMenuItem->setScale(1.18f);
 	menu->alignItemsVerticallyWithPadding(visibleSize.height / 15);
-	menu->setPosition(Point(visibleSize.width / 2, (visibleSize.height - 245)));
+	menu->setPosition(Point(visibleSize.width / 2, (visibleSize.height - 235)));
 	this->addChild(menu);
 
 	return true;

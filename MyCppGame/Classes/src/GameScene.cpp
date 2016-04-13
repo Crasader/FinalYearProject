@@ -104,7 +104,7 @@ bool GameScreen::init()
 
 	powerUp = PowerUp::create();
 	powerUp->setPosition(195,1500);
-	this->addChild(powerUp);
+	//this->addChild(powerUp);
 
 	hud = HUD::create();
 	hud->setPosition(340, 530);

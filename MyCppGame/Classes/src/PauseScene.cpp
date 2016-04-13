@@ -23,6 +23,13 @@ void PauseMenu::activateMainMenuScene(Ref *pSender)
 	auto scene = MainMenu::createScene();
 	Director::getInstance()->popScene();
 	Director::getInstance()->replaceScene(scene);
+	//if (CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying())
+	//{
+	//	CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+	//}
+	//else
+	//	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("audio/background.mp3", true);
+	
 }
 
 void PauseMenu::retry(Ref *pSender)
@@ -66,7 +73,9 @@ bool PauseMenu::init()
 			CC_CALLBACK_1(PauseMenu::activateMainMenuScene, this));
 	auto menu = Menu::create(resumeItem, retryItem, mainMenuItem,
 		NULL);
-
+	resumeItem->setScale(1.1f);
+	retryItem->setScale(1.1f);
+	mainMenuItem->setScale(1.1f);
 	menu->alignItemsVerticallyWithPadding(visibleSize.height / 15);
 	menu->setPosition(Point(visibleSize.width / 2, (visibleSize.height - 245)));
 	this->addChild(menu);
