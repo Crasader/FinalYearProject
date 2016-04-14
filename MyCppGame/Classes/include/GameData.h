@@ -42,8 +42,8 @@ public:
 	float m_towerRotationOriginY;
 	int m_numberOfTowerBases;
 
-	float m_towerBaseX[10];
-	float m_towerBaseY[10];
+	float m_towerBaseX[20];
+	float m_towerBaseY[20];
 
 	//all the coin variables
 	std::string m_coinFile;
@@ -73,6 +73,11 @@ public:
 	int m_numberOfMiniVan;
 	float m_minivanPosX[25];
 	float m_minivanPosY[25];
+
+	std::string m_bike;
+	int m_numberOfBike;
+	float m_bikePosX[25];
+	float m_bikePosY[25];
 
 	std::string m_mini_truck;
 	int m_numberOfMiniTruck;

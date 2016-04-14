@@ -17,6 +17,8 @@ void MainMenu::activateGameScene(Ref *pSender)
 {
 	auto scene = GameScreen::createScene();
 	Director::getInstance()->replaceScene(scene);
+	//auto scene = Level2::createScene();
+	//Director::getInstance()->replaceScene(scene);
 }
 
 void MainMenu::activateTrialScene(Ref *pSender)

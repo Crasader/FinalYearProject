@@ -134,6 +134,14 @@ void LevelLoader::loadGameData()
 		ptr->m_minitruckPosY[i] = minitruckBases[i]["y"].GetInt();
 	}
 
+	ptr->m_numberOfBike = tower["number_of_bike"].GetInt();
+	Value const & bikeBases = tower["my_bike"];
+	//// Iterate through the array.
+	for (int i = 0; i < bikeBases.Size(); i++) {
+		ptr->m_bikePosX[i] = bikeBases[i]["x"].GetInt();
+		ptr->m_bikePosY[i] = bikeBases[i]["y"].GetInt();
+	}
+
 	ptr->m_numberOfAmbulance = tower["number_of_ambulance"].GetInt();
 	Value const & ambulanceBases = tower["my_ambulance"];
 	//// Iterate through the array.

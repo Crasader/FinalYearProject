@@ -6,7 +6,6 @@
 #include "GameStates.h"
 #include "PauseScene.h"
 #include "GameOverScene.h"
-#include "Bike.h"
 #include "GameData.h"
 #include "Player.h"
 #include "PowerUp.h"
@@ -24,7 +23,7 @@
 #include "SonarFrameworks.h"
 
 
-class GameScreen : public cocos2d::Layer
+class Level2 : public cocos2d::Layer
 {
 public:
 	static cocos2d::Scene* createScene();
@@ -60,8 +59,6 @@ public:
 	void createTrucks();    // add this
 	std::vector<MiniTruck *> m_miniTrucks;  // add this
 	void createMTrucks();    // add this
-	std::vector<Bike *> m_bikes;  // add this
-	void createBikes();    // add this
 	void ScrollBackground(float dt);
 	// Called when user pauses gameplay.
 	void activatePauseScene(Ref *pSender);
@@ -82,5 +79,5 @@ public:
 	void SetPhysicsWorld(cocos2d::PhysicsWorld * world) { sceneWorld = world; };
 	//void OnAcceleration(cocos2d::Acceleration * acc, cocos2d::Event * event);
 	virtual void OnAcceleration(cocos2d::CCAcceleration* pAccelerationValue, cocos2d::Event * event);
-	CREATE_FUNC(GameScreen);
+	CREATE_FUNC(Level2);
 };

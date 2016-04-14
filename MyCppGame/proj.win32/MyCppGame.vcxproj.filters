@@ -81,6 +81,12 @@
     <ClCompile Include="..\Classes\src\EndlessGameOver.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\src\Level2.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\src\Bike.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -153,6 +159,12 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\include\EndlessGameOver.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\include\Level2.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\include\Bike.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

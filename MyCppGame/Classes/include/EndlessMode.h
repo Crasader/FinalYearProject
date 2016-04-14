@@ -41,6 +41,7 @@ public:
 	int tempRand2;
 	int preTemp;
 	bool cont;
+	bool speed;
 	int preTemp2;
 	int count;
 	int randCar;
@@ -83,6 +84,8 @@ public:
 	std::vector<Police *> m_cars;  // add this
 	void EndlessGame(float dt);
 	void Timer(float dt);
+	void StopSpeed(float dt);
+	void UpdateScore(float dt);
 	// Called at game over 
 	void activateGameOverScene(float dt);
 	void activateLoadingScene(float dt);

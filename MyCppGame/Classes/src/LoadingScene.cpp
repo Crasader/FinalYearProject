@@ -16,7 +16,7 @@ Scene* Loading::createScene()
 
 void Loading::activateGameScene(float dt)
 {
-	auto scene = GameScreen::createScene();
+	auto scene = Level2::createScene();
 	Director::getInstance()->replaceScene(scene);
 }
 

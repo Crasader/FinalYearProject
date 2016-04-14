@@ -85,7 +85,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	// Create the GameData singleton.
 	m_ptr = GameData::sharedGameData();
 	// Create the level loader object to load general game data.
-	LevelLoader loader("data/Level2.json");
+	LevelLoader loader("data/GeneralGameData.json");
+	//LevelLoader loader("data/Level2.json");
 	//std::shared_ptr<LevelLoader> loader("data/GeneralGameData.json");
 
 	// Set FPS. the default value is 1.0/60 if you don't call this

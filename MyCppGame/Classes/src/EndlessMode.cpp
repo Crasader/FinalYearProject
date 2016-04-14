@@ -139,6 +139,12 @@ void Endless::ScrollBackground(float dt)
 	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/PowerUpOver.mp3");
 }
 
+void Endless::StopSpeed(float dt)
+{
+	speed = false;
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/PowerUpOver.mp3");
+}
+
 bool Endless::init()
 {
 	if (!Layer::init())
@@ -186,8 +192,8 @@ bool Endless::init()
 	player->setAnchorPoint(Point(0.5f, 0.55f));
 	this->addChild(player, 5);
 
-	powerUp = PowerUp::create();
-	powerUp->setPosition(195, 1500);
+	powerUp = PowerUp::create(2);
+	powerUp->setPosition(195, 1380);
 	this->addChild(powerUp);
 
 	hud = HUD::create();
@@ -253,6 +259,7 @@ bool Endless::init()
 	this->scheduleUpdate();
 	//this->schedule(schedule_selector(Endless::EndlessGame), 0.25f);
 	this->schedule(schedule_selector(Endless::Timer), 1.0f);
+	this->schedule(schedule_selector(Endless::UpdateScore), 1.0f);
 	//this->schedule(schedule_selector(Endless::moveBack), 0.1f);
 	this->addChild(cameraTarget);
 	camera = Follow::create(cameraTarget, Rect::ZERO);
@@ -282,6 +289,17 @@ void Endless::update(float dt)
 	{
 		player->setPositionX(371);
 	}
+	if (speed == true && move == true)
+	{
+		scoreLabel->setPositionY(scoreLabel->getPosition().y + 1.8);
+		label->setPositionY(label->getPosition().y + 1.8);
+		hud->setPositionY(hud->getPosition().y + 1.8);
+		pauseItem->setPositionY(pauseItem->getPosition().y + 1.8);
+		player->setPositionY(player->getPosition().y + 1.8);
+		backgroundSprite->setPositionY(backgroundSprite->getPosition().y + 1.8);
+		backgroundSprite2->setPositionY(backgroundSprite->getPosition().y + 1.8);
+		backgroundSprite3->setPositionY(backgroundSprite->getPosition().y + 1.8);
+	}
 	cameraTarget->setPositionY(player->getPosition().y + 115);
 	//EndlessGame(temp);
 	//Particles();
@@ -290,6 +308,16 @@ void Endless::update(float dt)
 void Endless::Timer(float dt)
 {
 	if (move == true)
+	{
+		score = score + 1;
+		__String *tempScore = __String::createWithFormat("%i", score);
+		scoreLabel->setString(tempScore->getCString());
+	}
+}
+
+void Endless::UpdateScore(float dt)
+{
+	if (speed == true)
 	{
 		score = score + 1;
 		__String *tempScore = __String::createWithFormat("%i", score);
@@ -616,36 +644,36 @@ void Endless::Crash()
 	this->addChild(sprite, 10);
 	m_aiSprites.pushBack(sprite);
 
-	//auto size = Director::getInstance()->getWinSize();
-	//auto m_emitter = ParticleExplosion::createWithTotalParticles(900);
-	////m_emitter->setTexture(Director::getInstance()->getTextureCache()->addImage("smoke.png"));
+	auto size = Director::getInstance()->getWinSize();
+	auto m_emitter = ParticleExplosion::createWithTotalParticles(900);
+	//m_emitter->setTexture(Director::getInstance()->getTextureCache()->addImage("smoke.png"));
 
-	//m_emitter->setDuration(-1);
-	//m_emitter->setGravity(Point(0, -240));
-	//m_emitter->setAngle(0);
-	//m_emitter->setAngleVar(180);
-	//m_emitter->setRadialAccel(25);
-	//m_emitter->setRadialAccelVar(0);
-	//m_emitter->setTangentialAccel(10);
-	//m_emitter->setTangentialAccelVar(0);
-	//m_emitter->setPosVar(Point(1, 0));
-	//m_emitter->setLife(0.25);
-	//m_emitter->setLifeVar(0.50);
-	//m_emitter->setStartSpin(0);
-	//m_emitter->setStartSpinVar(0);
-	//m_emitter->setEndSpin(0);
-	//m_emitter->setEndSpinVar(0);
-	//m_emitter->setStartColor(Color4F(212, 73, 0, 1));
-	//m_emitter->setStartColorVar(Color4F(0, 0, 0, 0));
-	//m_emitter->setEndColor(Color4F(212, 73, 0, 1));
-	//m_emitter->setEndColorVar(Color4F(0, 0, 0, 0));
-	//m_emitter->setStartSize(20.0f);
-	//m_emitter->setStartSizeVar(0);
-	//m_emitter->setEndSize(15.0f);
-	//m_emitter->setEndSizeVar(0);
-	//m_emitter->setEmissionRate(275);
-	//m_emitter->setPosition(Vec2(player->getPosition().x, player->getPosition().y - 15));
-	//addChild(m_emitter, 10);
+	m_emitter->setDuration(-1);
+	m_emitter->setGravity(Point(0, -240));
+	m_emitter->setAngle(0);
+	m_emitter->setAngleVar(180);
+	m_emitter->setRadialAccel(25);
+	m_emitter->setRadialAccelVar(0);
+	m_emitter->setTangentialAccel(10);
+	m_emitter->setTangentialAccelVar(0);
+	m_emitter->setPosVar(Point(1, 0));
+	m_emitter->setLife(0.25);
+	m_emitter->setLifeVar(0.50);
+	m_emitter->setStartSpin(0);
+	m_emitter->setStartSpinVar(0);
+	m_emitter->setEndSpin(0);
+	m_emitter->setEndSpinVar(0);
+	m_emitter->setStartColor(Color4F(212, 73, 0, 1));
+	m_emitter->setStartColorVar(Color4F(0, 0, 0, 0));
+	m_emitter->setEndColor(Color4F(212, 73, 0, 1));
+	m_emitter->setEndColorVar(Color4F(0, 0, 0, 0));
+	m_emitter->setStartSize(20.0f);
+	m_emitter->setStartSizeVar(0);
+	m_emitter->setEndSize(15.0f);
+	m_emitter->setEndSizeVar(0);
+	m_emitter->setEmissionRate(275);
+	m_emitter->setPosition(Vec2(player->getPosition().x, player->getPosition().y - 15));
+	addChild(m_emitter, 10);
 }
 
 void Endless::OnAcceleration(cocos2d::CCAcceleration* pAcceleration, cocos2d::Event * event)
@@ -756,12 +784,17 @@ bool Endless::onContactBegin(cocos2d::PhysicsContact &contact)
 			else if (nodeB->getTag() == 40)
 			{
 				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/PowerUpCollected.mp3");
-				score = score + 1000;
-				__String *tempScore = __String::createWithFormat("%i", score);
-				scoreLabel->setString(tempScore->getCString());
 				nodeB->removeFromParentAndCleanup(true);
 				powerUpBool = true;
 				this->scheduleOnce(schedule_selector(Endless::ScrollBackground), 5.0f);
+			}
+
+			else if (nodeB->getTag() == 50)
+			{
+				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/PowerUpCollected.mp3");
+				nodeB->removeFromParentAndCleanup(true);
+				speed -= true;
+				this->scheduleOnce(schedule_selector(Endless::StopSpeed), 4.0f);
 			}
 		}
 		else if (nodeA->getTag() == 30)
@@ -779,12 +812,16 @@ bool Endless::onContactBegin(cocos2d::PhysicsContact &contact)
 		else if (nodeA->getTag() == 40)
 		{
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/PowerUpCollected.mp3");
-			score = score + 1000;
-			__String *tempScore = __String::createWithFormat("%i", score);
-			scoreLabel->setString(tempScore->getCString());
 			nodeA->removeFromParentAndCleanup(true);
 			powerUpBool = true;
 			this->scheduleOnce(schedule_selector(Endless::ScrollBackground), 3.0f);
+		}
+		else if (nodeA->getTag() == 50)
+		{
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/PowerUpCollected.mp3");
+			speed = true;
+			nodeA->removeFromParentAndCleanup(true);
+			this->scheduleOnce(schedule_selector(Endless::StopSpeed), 4.0f);
 		}
 	}
 

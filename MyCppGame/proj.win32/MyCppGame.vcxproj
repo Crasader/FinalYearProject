@@ -146,6 +146,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
   <ItemGroup>
     <ClCompile Include="..\Classes\src\Ambulance.cpp" />
     <ClCompile Include="..\Classes\src\AppDelegate.cpp" />
+    <ClCompile Include="..\Classes\src\Bike.cpp" />
     <ClCompile Include="..\Classes\src\Coin.cpp" />
     <ClCompile Include="..\Classes\src\EndlessGameOver.cpp" />
     <ClCompile Include="..\Classes\src\EndlessMode.cpp" />
@@ -153,6 +154,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\src\GameOverScene.cpp" />
     <ClCompile Include="..\Classes\src\GameScene.cpp" />
     <ClCompile Include="..\Classes\src\HUD.cpp" />
+    <ClCompile Include="..\Classes\src\Level2.cpp" />
     <ClCompile Include="..\Classes\src\LevelLoader.cpp" />
     <ClCompile Include="..\Classes\src\LoadingScene.cpp" />
     <ClCompile Include="..\Classes\src\MainMenuScene.cpp" />
@@ -171,6 +173,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
   <ItemGroup>
     <ClInclude Include="..\Classes\include\Ambulance.h" />
     <ClInclude Include="..\Classes\include\AppDelegate.h" />
+    <ClInclude Include="..\Classes\include\Bike.h" />
     <ClInclude Include="..\Classes\include\Coin.h" />
     <ClInclude Include="..\Classes\include\EndlessGameOver.h" />
     <ClInclude Include="..\Classes\include\EndlessMode.h" />
@@ -179,6 +182,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\include\GameScene.h" />
     <ClInclude Include="..\Classes\include\GameStates.h" />
     <ClInclude Include="..\Classes\include\HUD.h" />
+    <ClInclude Include="..\Classes\include\Level2.h" />
     <ClInclude Include="..\Classes\include\LevelLoader.h" />
     <ClInclude Include="..\Classes\include\LoadingScene.h" />
     <ClInclude Include="..\Classes\include\MainMenuScene.h" />

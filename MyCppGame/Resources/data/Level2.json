@@ -83,7 +83,7 @@
           "y": 4275
         }
       ],
-      "number_of_truck": 5,
+      "number_of_truck": 6,
       "my_truck": [
         {
           "x": 60,
@@ -104,6 +104,10 @@
         {
           "x": 340,
           "y": 4275
+        },
+        {
+          "x": 60,
+          "y": 5475
         }
       ],
       "number_of_ambulance": 7,
@@ -137,7 +141,7 @@
           "y": 5075
         }
       ],
-      "number_of_minitruck": 5,
+      "number_of_minitruck": 6,
       "my_minitruck": [
         {
           "x": 195,
@@ -158,6 +162,10 @@
         {
           "x": 195,
           "y": 4850
+        },
+        {
+          "x": 340,
+          "y": 5475
         }
       ],
       "number_of_coins": 1,
