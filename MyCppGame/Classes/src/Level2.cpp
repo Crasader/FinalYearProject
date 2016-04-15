@@ -60,9 +60,21 @@ void Level2::addBackGroundSprite(cocos2d::Size const & visibleSize, cocos2d::Poi
 	backgroundSprite3->setPosition(Point((visibleSize.width / 2) +
 		origin.x, (visibleSize.height) + 4596));
 
+	backgroundSprite4 = Sprite::create
+		(ptr->m_backgroundTextureFile);
+	backgroundSprite4->setPosition(Point((visibleSize.width / 2) +
+		origin.x, (visibleSize.height) + 6596));
+
+	backgroundSprite5 = Sprite::create
+		(ptr->m_backgroundTextureFile);
+	backgroundSprite5->setPosition(Point((visibleSize.width / 2) +
+		origin.x, (visibleSize.height) + 8596));
+
 	this->addChild(backgroundSprite, -1);
 	this->addChild(backgroundSprite2, -1);
 	this->addChild(backgroundSprite3, -1);
+	this->addChild(backgroundSprite4, -1);
+	this->addChild(backgroundSprite5, -1);
 }
 
 void Level2::ScrollBackground(float dt)
@@ -120,7 +132,7 @@ bool Level2::init()
 
 	auto menu = Menu::create(pauseItem, NULL);
 	menu->setPosition(Point::ZERO);
-	this->addChild(menu);
+	this->addChild(menu,100);
 
 	addBackGroundSprite(visibleSize, origin);
 	createTowerBases();
@@ -180,7 +192,7 @@ void Level2::update(float dt)
 		pauseItem->setPositionY(pauseItem->getPosition().y + 7.5);
 		player->setPositionY(player->getPosition().y + 7.5);
 	}
-	if (player->getPosition().y > 6050)
+	if (player->getPosition().y > 7500)
 	{
 		float i = 2;
 		//activateGameOverScene(i);
@@ -333,7 +345,7 @@ void Level2::createTowerBases()
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 8; i < ptr->m_numberOfTowerBases; i++)
+	for (int i = 9; i < ptr->m_numberOfTowerBases; i++)
 	{
 		TowerBase * base = TowerBase::create(Vec2(ptr->m_towerBaseX[i], ptr->m_towerBaseY[i]), m_gameState);
 		m_towerBases.push_back(base);
@@ -361,7 +373,7 @@ void Level2::createPolice()
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 9; i < ptr->m_numberOfPolice; i++)
+	for (int i = 10; i < ptr->m_numberOfPolice; i++)
 	{
 		Police * base = Police::create(Vec2(ptr->m_policePosX[i], ptr->m_policePosY[i]), m_gameState);
 		m_polices.push_back(base);
@@ -389,7 +401,7 @@ void Level2::createMTrucks()
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 5; i < ptr->m_numberOfMiniTruck; i++)
+	for (int i = 6; i < ptr->m_numberOfMiniTruck; i++)
 	{
 		MiniTruck * base = MiniTruck::create(Vec2(ptr->m_minitruckPosX[i], ptr->m_minitruckPosY[i]), m_gameState);
 		m_miniTrucks.push_back(base);
@@ -403,7 +415,7 @@ void Level2::createTrucks()
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 9; i < ptr->m_numberOfTruck; i++)
+	for (int i = 10; i < ptr->m_numberOfTruck; i++)
 	{
 		Truck * base = Truck::create(Vec2(ptr->m_truckPosX[i], ptr->m_truckPosY[i]), m_gameState);
 		m_trucks.push_back(base);
@@ -503,7 +515,7 @@ bool Level2::onContactBegin(cocos2d::PhysicsContact &contact)
 	{
 		if (powerUpBool == false)
 		{
-			this->scheduleOnce(schedule_selector(Level2::activateGameOverScene), 1.5f);
+			this->scheduleOnce(schedule_selector(Level2::activateGameOverScene), 1.491f);
 			CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0.85f);
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/crashSound.mp3");
 			move = false;
