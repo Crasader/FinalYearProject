@@ -23,13 +23,6 @@ void PauseMenu::activateMainMenuScene(Ref *pSender)
 	auto scene = MainMenu::createScene();
 	Director::getInstance()->popScene();
 	Director::getInstance()->replaceScene(scene);
-	//if (CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying())
-	//{
-	//	CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-	//}
-	//else
-	//	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("audio/background.mp3", true);
-	
 }
 
 void PauseMenu::retry(Ref *pSender)
@@ -37,6 +30,16 @@ void PauseMenu::retry(Ref *pSender)
 	auto scene = GameScreen::createScene();
 	Director::getInstance()->popScene();
 	Director::getInstance()->replaceScene(scene);
+}
+
+void PauseMenu::ToggleMusic(Ref *pSender)
+{
+	if (CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying())
+	{
+		CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+	}
+	else
+		CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("audio/background.mp3", true);
 }
 
 bool PauseMenu::init()
@@ -67,16 +70,23 @@ bool PauseMenu::init()
 		MenuItemImage::create("PauseScreen/retrybutton.png",
 			"PauseScreen/retrybutton.png",
 			CC_CALLBACK_1(PauseMenu::retry, this));
+	auto musicItem =
+		MenuItemImage::create("PauseScreen/musicbutton.png",
+			"PauseScreen/musicbutton.png",
+			CC_CALLBACK_1(PauseMenu::ToggleMusic, this));
 	auto mainMenuItem =
 		MenuItemImage::create("PauseScreen/mainmenubutton.png",
 			"PauseScreen/mainmenubutton.png",
 			CC_CALLBACK_1(PauseMenu::activateMainMenuScene, this));
-	auto menu = Menu::create(resumeItem, retryItem, mainMenuItem,
+	auto menu = Menu::create(resumeItem, retryItem, musicItem, mainMenuItem,
 		NULL);
-	resumeItem->setScale(1.1f);
-	retryItem->setScale(1.1f);
-	mainMenuItem->setScale(1.1f);
-	menu->alignItemsVerticallyWithPadding(visibleSize.height / 15);
+	/*auto menu = Menu::create(resumeItem, retryItem, mainMenuItem,
+		NULL);*/
+	resumeItem->setScale(1.25f);
+	retryItem->setScale(1.25f);
+	musicItem->setScale(1.25f);
+	mainMenuItem->setScale(1.25f);
+	menu->alignItemsVerticallyWithPadding(visibleSize.height / 35);
 	menu->setPosition(Point(visibleSize.width / 2, (visibleSize.height - 245)));
 	this->addChild(menu);
 

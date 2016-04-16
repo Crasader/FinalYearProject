@@ -16,7 +16,7 @@
 #include "Truck.h"
 #include "MiniTruck.h"
 #include "Ambulance.h"
-#include "LoadingLevel3.h"
+#include "LoadingScene.h"
 #include "2d/CCParticleSystemQuad.h"
 #include <algorithm>
 #include <vector>
@@ -24,7 +24,7 @@
 #include "SonarFrameworks.h"
 
 
-class Level2 : public cocos2d::Layer
+class Level3 : public cocos2d::Layer
 {
 public:
 	static cocos2d::Scene* createScene();
@@ -83,5 +83,5 @@ public:
 	void SetPhysicsWorld(cocos2d::PhysicsWorld * world) { sceneWorld = world; };
 	//void OnAcceleration(cocos2d::Acceleration * acc, cocos2d::Event * event);
 	virtual void OnAcceleration(cocos2d::CCAcceleration* pAccelerationValue, cocos2d::Event * event);
-	CREATE_FUNC(Level2);
+	CREATE_FUNC(Level3);
 };

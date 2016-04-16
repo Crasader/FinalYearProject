@@ -791,9 +791,11 @@ bool Endless::onContactBegin(cocos2d::PhysicsContact &contact)
 
 			else if (nodeB->getTag() == 50)
 			{
-				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/PowerUpCollected.mp3");
+				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/speedboost.mp3");
 				nodeB->removeFromParentAndCleanup(true);
 				speed -= true;
+				powerUpBool = true;
+				this->scheduleOnce(schedule_selector(Endless::ScrollBackground), 1.5f);
 				this->scheduleOnce(schedule_selector(Endless::StopSpeed), 4.0f);
 			}
 		}
@@ -818,9 +820,11 @@ bool Endless::onContactBegin(cocos2d::PhysicsContact &contact)
 		}
 		else if (nodeA->getTag() == 50)
 		{
-			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/PowerUpCollected.mp3");
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/speedboost.mp3");
 			speed = true;
 			nodeA->removeFromParentAndCleanup(true);
+			powerUpBool = true;
+			this->scheduleOnce(schedule_selector(Endless::ScrollBackground), 1.5f);
 			this->scheduleOnce(schedule_selector(Endless::StopSpeed), 4.0f);
 		}
 	}

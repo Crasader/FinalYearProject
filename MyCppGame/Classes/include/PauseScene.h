@@ -16,6 +16,7 @@ public:
 	void activateMainMenuScene(Ref *pSender);
 	// Called when retry is selected.
 	void retry(Ref *pSender);
+	void ToggleMusic(Ref *pSender);
 
 	CREATE_FUNC(PauseMenu);
 };

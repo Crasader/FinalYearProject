@@ -7,7 +7,7 @@ Scene* Level2::createScene()
 {
 	auto scene = Scene::createWithPhysics();
 	scene->getPhysicsWorld()->setGravity(Vec2(0, 0));
-	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	auto layer = Level2::create();
 	layer->SetPhysicsWorld(scene->getPhysicsWorld());
 
@@ -28,7 +28,7 @@ void Level2::activateLoadingScene(float dt)
 	{
 		SonarCocosHelper::GooglePlayServices::submitScore("CgkI69-MotMIEAIQAg", score);
 	}
-	auto scene = Loading::createScene();
+	auto scene = LoadingLevel3::createScene();
 	Director::getInstance()->replaceScene(scene);
 	//auto scene = GameOver::createScene();
 	//Director::getInstance()->replaceScene(scene);
@@ -141,6 +141,8 @@ bool Level2::init()
 	createAmbulances();
 	createMTrucks();
 	createTrucks();
+	createBikes();
+
 
 	/*auto listener = EventListenerTouchOneByOne::create();
 	listener->setSwallowTouches(true);
@@ -192,7 +194,7 @@ void Level2::update(float dt)
 		pauseItem->setPositionY(pauseItem->getPosition().y + 7.5);
 		player->setPositionY(player->getPosition().y + 7.5);
 	}
-	if (player->getPosition().y > 7500)
+	if (player->getPosition().y > 7870)
 	{
 		float i = 2;
 		//activateGameOverScene(i);
@@ -208,11 +210,6 @@ void Level2::update(float dt)
 		player->setPositionX(371);
 	}
 	cameraTarget->setPositionY(player->getPosition().y + 115);
-
-	/*if (CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying() == false)
-	{
-		CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("audio/background.mp3");
-	}*/
 	//Particles();
 }
 
@@ -345,7 +342,7 @@ void Level2::createTowerBases()
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 9; i < ptr->m_numberOfTowerBases; i++)
+	for (int i = 9; i < 17; i++)
 	{
 		TowerBase * base = TowerBase::create(Vec2(ptr->m_towerBaseX[i], ptr->m_towerBaseY[i]), m_gameState);
 		m_towerBases.push_back(base);
@@ -359,7 +356,7 @@ void Level2::createCoins()
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 23; i < ptr->m_numberOfCoins; i++)
+	for (int i = 23; i < 24; i++)
 	{
 		Coin * base = Coin::create(Vec2(ptr->m_coinPosX[i], ptr->m_coinPosY[i]), m_gameState);
 		m_coins.push_back(base);
@@ -373,7 +370,7 @@ void Level2::createPolice()
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 10; i < ptr->m_numberOfPolice; i++)
+	for (int i = 10; i < 17; i++)
 	{
 		Police * base = Police::create(Vec2(ptr->m_policePosX[i], ptr->m_policePosY[i]), m_gameState);
 		m_polices.push_back(base);
@@ -387,7 +384,7 @@ void Level2::createAmbulances()
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 4; i < ptr->m_numberOfAmbulance; i++)
+	for (int i = 4; i < 13; i++)
 	{
 		Ambulance * base = Ambulance::create(Vec2(ptr->m_ambulancePosX[i], ptr->m_ambulancePosY[i]), m_gameState);
 		m_ambulances.push_back(base);
@@ -401,7 +398,7 @@ void Level2::createMTrucks()
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 6; i < ptr->m_numberOfMiniTruck; i++)
+	for (int i = 6; i < 14; i++)
 	{
 		MiniTruck * base = MiniTruck::create(Vec2(ptr->m_minitruckPosX[i], ptr->m_minitruckPosY[i]), m_gameState);
 		m_miniTrucks.push_back(base);
@@ -415,13 +412,26 @@ void Level2::createTrucks()
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 10; i < ptr->m_numberOfTruck; i++)
+	for (int i = 10; i < 17; i++)
 	{
 		Truck * base = Truck::create(Vec2(ptr->m_truckPosX[i], ptr->m_truckPosY[i]), m_gameState);
 		m_trucks.push_back(base);
 		spritebatch->addChild(base, 1);
 	}
 	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
+}
+
+void Level2::createBikes()
+{
+	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
+
+	for (int i = 3; i < 5; i++)
+	{
+		Bike * base = Bike::create(Vec2(ptr->m_bikePosX[i], ptr->m_bikePosY[i]), m_gameState);
+		m_bikes.push_back(base);
+		this->addChild(base, 1);
+	}
+	//this->addChild(base, 1, COINS_SPRITE_BATCH);
 }
 
 bool Level2::onContactBegin(cocos2d::PhysicsContact &contact)
@@ -462,13 +472,21 @@ bool Level2::onContactBegin(cocos2d::PhysicsContact &contact)
 
 			else if (nodeB->getTag() == 40)
 			{
-				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/PowerUpCollected.mp3");
+				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/invisCollected.mp3");
 				score = score + 1000;
 				__String *tempScore = __String::createWithFormat("%i", score);
 				scoreLabel->setString(tempScore->getCString());
 				nodeB->removeFromParentAndCleanup(true);
 				powerUpBool = true;
 				this->scheduleOnce(schedule_selector(Level2::ScrollBackground), 4.0f);
+			}
+			else if (nodeA->getTag() == 60)
+			{
+				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ScoreBoost.mp3");
+				score = score + 100;
+				__String *tempScore = __String::createWithFormat("%i", score);
+				scoreLabel->setString(tempScore->getCString());
+				nodeA->removeFromParentAndCleanup(true);
 			}
 		}
 		else if (nodeA->getTag() == 30)
@@ -501,13 +519,21 @@ bool Level2::onContactBegin(cocos2d::PhysicsContact &contact)
 		}
 		else if (nodeA->getTag() == 40)
 		{
-			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/PowerUpCollected.mp3");
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/invisCollected.mp3");
 			score = score + 1000;
 			__String *tempScore = __String::createWithFormat("%i", score);
 			scoreLabel->setString(tempScore->getCString());
 			nodeA->removeFromParentAndCleanup(true);
 			powerUpBool = true;
 			this->scheduleOnce(schedule_selector(Level2::ScrollBackground), 4.0f);
+		}
+		else if (nodeA->getTag() == 60)
+		{
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ScoreBoost.mp3");
+			score = score + 100;
+			__String *tempScore = __String::createWithFormat("%i", score);
+			scoreLabel->setString(tempScore->getCString());
+			nodeA->removeFromParentAndCleanup(true);
 		}
 	}
 

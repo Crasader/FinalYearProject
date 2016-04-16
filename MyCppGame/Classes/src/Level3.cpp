@@ -1,27 +1,27 @@
-#include "GameScene.h"
+#include "Level3.h"
 #include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 
-Scene* GameScreen::createScene()
+Scene* Level3::createScene()
 {
 	auto scene = Scene::createWithPhysics();
 	scene->getPhysicsWorld()->setGravity(Vec2(0, 0));
-	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
-	auto layer = GameScreen::create();
+	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	auto layer = Level3::create();
 	layer->SetPhysicsWorld(scene->getPhysicsWorld());
 
 	scene->addChild(layer);
 	return scene;
 }
 
-void GameScreen::activatePauseScene(Ref *pSender)
+void Level3::activatePauseScene(Ref *pSender)
 {
 	auto scene = PauseMenu::createScene();
 	Director::getInstance()->pushScene(scene);
 }
 
-void GameScreen::activateLoadingScene(float dt)
+void Level3::activateLoadingScene(float dt)
 {
 	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/LevelCompleted.mp3");
 	if (SonarCocosHelper::GooglePlayServices::isSignedIn)
@@ -34,13 +34,13 @@ void GameScreen::activateLoadingScene(float dt)
 	//Director::getInstance()->replaceScene(scene);
 }
 
-void GameScreen::activateGameOverScene(float dt)
+void Level3::activateGameOverScene(float dt)
 {
 	auto scene = GameOver::createScene();
 	Director::getInstance()->replaceScene(scene);
 }
 
-void GameScreen::addBackGroundSprite(cocos2d::Size const & visibleSize, cocos2d::Point const & origin)
+void Level3::addBackGroundSprite(cocos2d::Size const & visibleSize, cocos2d::Point const & origin)
 {
 	//add all backgrounds to the scene
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
@@ -77,13 +77,13 @@ void GameScreen::addBackGroundSprite(cocos2d::Size const & visibleSize, cocos2d:
 	this->addChild(backgroundSprite5, -1);
 }
 
-void GameScreen::ScrollBackground(float dt)
+void Level3::ScrollBackground(float dt)
 {
 	powerUpBool = false;
 	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/PowerUpOver.mp3");
 }
 
-bool GameScreen::init()
+bool Level3::init()
 {
 	if (!Layer::init())
 	{
@@ -100,7 +100,7 @@ bool GameScreen::init()
 	pauseItem =
 		MenuItemImage::create("GameScreen/Pause_Button.png",
 			"GameScreen/Pause_Button(Click).png",
-			CC_CALLBACK_1(GameScreen::activatePauseScene, this));
+			CC_CALLBACK_1(Level3::activatePauseScene, this));
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Point origin = Director::getInstance()->getVisibleOrigin();
@@ -110,13 +110,13 @@ bool GameScreen::init()
 	pauseItem->setPosition(22, 520);
 
 	player = Player::create();
-	player->setPosition(100, 125);
+	player->setPosition(195, 125);
 	player->setAnchorPoint(Point(0.5f, 0.55f));
 	this->addChild(player,5);
 
-	powerUp = PowerUp::create(3);
+	powerUp = PowerUp::create(1);
 	powerUp->setPosition(195,1500);
-	this->addChild(powerUp);
+	//this->addChild(powerUp);
 
 	hud = HUD::create();
 	hud->setPosition(340, 530);
@@ -143,11 +143,12 @@ bool GameScreen::init()
 	createTrucks();
 	createBikes();
 
+
 	/*auto listener = EventListenerTouchOneByOne::create();
 	listener->setSwallowTouches(true);
 
-	listener->onTouchBegan = CC_CALLBACK_2(GameScreen::onTouchBegan, this);
-	listener->onTouchMoved = CC_CALLBACK_2(GameScreen::onTouchMoved, this);*/
+	listener->onTouchBegan = CC_CALLBACK_2(Level2::onTouchBegan, this);
+	listener->onTouchMoved = CC_CALLBACK_2(Level2::onTouchMoved, this);*/
 
 	auto director = Director::getInstance();
 	auto glview = director->getOpenGLView();
@@ -163,13 +164,13 @@ bool GameScreen::init()
 	}
 
 	Device::setAccelerometerEnabled(true);
-	auto listener = EventListenerAcceleration::create(CC_CALLBACK_2(GameScreen::OnAcceleration, this));
+	auto listener = EventListenerAcceleration::create(CC_CALLBACK_2(Level3::OnAcceleration, this));
 	
 	
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
 	auto contactListener = EventListenerPhysicsContact::create();
-	contactListener->onContactBegin = CC_CALLBACK_1(GameScreen::onContactBegin, this);
+	contactListener->onContactBegin = CC_CALLBACK_1(Level3::onContactBegin, this);
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);
 
 	cameraTarget = Sprite::create();
@@ -183,7 +184,7 @@ bool GameScreen::init()
 	return true;
 }
 
-void GameScreen::update(float dt)
+void Level3::update(float dt)
 {
 	if (move == true)
 	{
@@ -193,7 +194,7 @@ void GameScreen::update(float dt)
 		pauseItem->setPositionY(pauseItem->getPosition().y + 7.5);
 		player->setPositionY(player->getPosition().y + 7.5);
 	}
-	if (player->getPosition().y > 7500)
+	if (player->getPosition().y > 7870)
 	{
 		float i = 2;
 		//activateGameOverScene(i);
@@ -209,21 +210,16 @@ void GameScreen::update(float dt)
 		player->setPositionX(371);
 	}
 	cameraTarget->setPositionY(player->getPosition().y + 115);
-
-	/*if (CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying() == false)
-	{
-		CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("audio/background.mp3");
-	}*/
 	//Particles();
 }
 
-bool GameScreen::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event * event)
+bool Level3::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event * event)
 {
 	CCLOG("onTouchBegan x = %f, y = %f", touch->getLocation().x, touch->getLocation().y);
 	return true;
 }
 
-void GameScreen::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event * event)
+void Level3::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event * event)
 {
 	if (move == true)
 	{
@@ -231,7 +227,7 @@ void GameScreen::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event * event)
 	}
 }
 
-void GameScreen::Particles()
+void Level3::Particles()
 {
 	auto size = Director::getInstance()->getWinSize();
 	auto m_emitter = ParticleSmoke::createWithTotalParticles(900);
@@ -264,7 +260,7 @@ void GameScreen::Particles()
 	addChild(m_emitter, 10);
 }
 
-void GameScreen::Crash()
+void Level3::Crash()
 {
 	auto spritecache = SpriteFrameCache::getInstance();
 	spritecache->addSpriteFramesWithFile("GameScreen/explosion.plist");
@@ -325,7 +321,7 @@ void GameScreen::Crash()
 	addChild(m_emitter, 10);
 }
 
-void GameScreen::OnAcceleration(cocos2d::CCAcceleration* pAcceleration, cocos2d::Event * event)
+void Level3::OnAcceleration(cocos2d::CCAcceleration* pAcceleration, cocos2d::Event * event)
 {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
@@ -341,12 +337,12 @@ void GameScreen::OnAcceleration(cocos2d::CCAcceleration* pAcceleration, cocos2d:
 	}
 }
 
-void GameScreen::createTowerBases()
+void Level3::createTowerBases()
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 0; i < 9; i++)
+	for (int i = 17; i < ptr->m_numberOfTowerBases; i++)
 	{
 		TowerBase * base = TowerBase::create(Vec2(ptr->m_towerBaseX[i], ptr->m_towerBaseY[i]), m_gameState);
 		m_towerBases.push_back(base);
@@ -355,12 +351,12 @@ void GameScreen::createTowerBases()
 	this->addChild(spritebatch, 1, TOWERS_SPRITE_BATCH);
 }
 
-void GameScreen::createCoins()
+void Level3::createCoins()
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 0; i < 23; i++)
+	for (int i = 24; i < ptr->m_numberOfCoins; i++)
 	{
 		Coin * base = Coin::create(Vec2(ptr->m_coinPosX[i], ptr->m_coinPosY[i]), m_gameState);
 		m_coins.push_back(base);
@@ -369,12 +365,12 @@ void GameScreen::createCoins()
 	this->addChild(spritebatch, 4, COINS_SPRITE_BATCH);
 }
 
-void GameScreen::createPolice()
+void Level3::createPolice()
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 17; i < ptr->m_numberOfPolice; i++)
 	{
 		Police * base = Police::create(Vec2(ptr->m_policePosX[i], ptr->m_policePosY[i]), m_gameState);
 		m_polices.push_back(base);
@@ -383,12 +379,12 @@ void GameScreen::createPolice()
 	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
 }
 
-void GameScreen::createAmbulances()
+void Level3::createAmbulances()
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 0; i < 4; i++)
+	for (int i = 13; i < ptr->m_numberOfAmbulance; i++)
 	{
 		Ambulance * base = Ambulance::create(Vec2(ptr->m_ambulancePosX[i], ptr->m_ambulancePosY[i]), m_gameState);
 		m_ambulances.push_back(base);
@@ -397,12 +393,12 @@ void GameScreen::createAmbulances()
 	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
 }
 
-void GameScreen::createMTrucks()
+void Level3::createMTrucks()
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 0; i < 6; i++)
+	for (int i = 14; i < ptr->m_numberOfMiniTruck; i++)
 	{
 		MiniTruck * base = MiniTruck::create(Vec2(ptr->m_minitruckPosX[i], ptr->m_minitruckPosY[i]), m_gameState);
 		m_miniTrucks.push_back(base);
@@ -411,12 +407,12 @@ void GameScreen::createMTrucks()
 	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
 }
 
-void GameScreen::createTrucks()
+void Level3::createTrucks()
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 17; i < ptr->m_numberOfTruck; i++)
 	{
 		Truck * base = Truck::create(Vec2(ptr->m_truckPosX[i], ptr->m_truckPosY[i]), m_gameState);
 		m_trucks.push_back(base);
@@ -425,11 +421,11 @@ void GameScreen::createTrucks()
 	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
 }
 
-void GameScreen::createBikes()
+void Level3::createBikes()
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 5; i < ptr->m_numberOfBike; i++)
 	{
 		Bike * base = Bike::create(Vec2(ptr->m_bikePosX[i], ptr->m_bikePosY[i]), m_gameState);
 		m_bikes.push_back(base);
@@ -438,7 +434,7 @@ void GameScreen::createBikes()
 	//this->addChild(base, 1, COINS_SPRITE_BATCH);
 }
 
-bool GameScreen::onContactBegin(cocos2d::PhysicsContact &contact)
+bool Level3::onContactBegin(cocos2d::PhysicsContact &contact)
 {
 	PhysicsBody *a = contact.getShapeA()->getBody();
 	PhysicsBody *b = contact.getShapeB()->getBody();
@@ -482,15 +478,15 @@ bool GameScreen::onContactBegin(cocos2d::PhysicsContact &contact)
 				scoreLabel->setString(tempScore->getCString());
 				nodeB->removeFromParentAndCleanup(true);
 				powerUpBool = true;
-				this->scheduleOnce(schedule_selector(GameScreen::ScrollBackground), 4.0f);
+				this->scheduleOnce(schedule_selector(Level3::ScrollBackground), 4.0f);
 			}
-			else if (nodeB->getTag() == 60)
+			else if (nodeA->getTag() == 60)
 			{
 				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ScoreBoost.mp3");
 				score = score + 100;
 				__String *tempScore = __String::createWithFormat("%i", score);
 				scoreLabel->setString(tempScore->getCString());
-				nodeB->removeFromParentAndCleanup(true);
+				nodeA->removeFromParentAndCleanup(true);
 			}
 		}
 		else if (nodeA->getTag() == 30)
@@ -529,7 +525,7 @@ bool GameScreen::onContactBegin(cocos2d::PhysicsContact &contact)
 			scoreLabel->setString(tempScore->getCString());
 			nodeA->removeFromParentAndCleanup(true);
 			powerUpBool = true;
-			this->scheduleOnce(schedule_selector(GameScreen::ScrollBackground), 4.0f);
+			this->scheduleOnce(schedule_selector(Level3::ScrollBackground), 4.0f);
 		}
 		else if (nodeA->getTag() == 60)
 		{
@@ -545,7 +541,7 @@ bool GameScreen::onContactBegin(cocos2d::PhysicsContact &contact)
 	{
 		if (powerUpBool == false)
 		{
-			this->scheduleOnce(schedule_selector(GameScreen::activateGameOverScene), 1.491f);
+			this->scheduleOnce(schedule_selector(Level3::activateGameOverScene), 1.491f);
 			CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0.85f);
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/crashSound.mp3");
 			move = false;
