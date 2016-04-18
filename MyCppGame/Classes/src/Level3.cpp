@@ -28,10 +28,12 @@ void Level3::activateLoadingScene(float dt)
 	{
 		SonarCocosHelper::GooglePlayServices::submitScore("CgkI69-MotMIEAIQAg", score);
 	}
-	auto scene = Loading::createScene();
-	Director::getInstance()->replaceScene(scene);
+	//auto scene = Loading::createScene();
+	//Director::getInstance()->replaceScene(scene);
 	//auto scene = GameOver::createScene();
 	//Director::getInstance()->replaceScene(scene);
+	auto scene = GameComplete::createScene();
+	Director::getInstance()->replaceScene(scene);
 }
 
 void Level3::activateGameOverScene(float dt)
@@ -110,7 +112,7 @@ bool Level3::init()
 	pauseItem->setPosition(22, 520);
 
 	player = Player::create();
-	player->setPosition(195, 125);
+	player->setPosition(340, 125);
 	player->setAnchorPoint(Point(0.5f, 0.55f));
 	this->addChild(player,5);
 
@@ -194,7 +196,7 @@ void Level3::update(float dt)
 		pauseItem->setPositionY(pauseItem->getPosition().y + 7.5);
 		player->setPositionY(player->getPosition().y + 7.5);
 	}
-	if (player->getPosition().y > 7870)
+	if (player->getPosition().y > 9000)
 	{
 		float i = 2;
 		//activateGameOverScene(i);
@@ -356,7 +358,7 @@ void Level3::createCoins()
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 24; i < ptr->m_numberOfCoins; i++)
+	for (int i = 59; i < ptr->m_numberOfCoins; i++)
 	{
 		Coin * base = Coin::create(Vec2(ptr->m_coinPosX[i], ptr->m_coinPosY[i]), m_gameState);
 		m_coins.push_back(base);

@@ -29,8 +29,11 @@ public:
 	virtual bool init();
 	int randX1;
 	int randX2;
+	int randCoinX;
 	int yPos;
 	int	xPos;
+	int coinX;
+	int coinY;
 	int playerTemp1 = 3000;
 	int playerTemp2 = 5000;
 	int playerTemp3 = 7000;
@@ -67,7 +70,7 @@ public:
 	std::vector<TowerBase *> m_towerBases;  // add this
 	void createTowerBases(int x, int y);    // add this
 	std::vector<Coin *> m_coins;  // add this
-	void createCoins();    // add this
+	void createCoins(int x, int y);    // add this
 	std::vector<Police *> m_polices;  // add this
 	void createPolice(int x, int y);    // add this
 	std::vector<Ambulance *> m_ambulances;  // add this
@@ -83,6 +86,8 @@ public:
 	void createCars(int x, int y);    // add this
 	std::vector<Police *> m_cars;  // add this
 	void EndlessGame(float dt);
+	void RandomCoins(float dt);
+	void RandomPowerUps(float dt);
 	void Timer(float dt);
 	void StopSpeed(float dt);
 	void UpdateScore(float dt);

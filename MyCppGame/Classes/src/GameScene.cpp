@@ -7,7 +7,7 @@ Scene* GameScreen::createScene()
 {
 	auto scene = Scene::createWithPhysics();
 	scene->getPhysicsWorld()->setGravity(Vec2(0, 0));
-	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	auto layer = GameScreen::create();
 	layer->SetPhysicsWorld(scene->getPhysicsWorld());
 
@@ -110,7 +110,7 @@ bool GameScreen::init()
 	pauseItem->setPosition(22, 520);
 
 	player = Player::create();
-	player->setPosition(100, 125);
+	player->setPosition(60, 125);
 	player->setAnchorPoint(Point(0.5f, 0.55f));
 	this->addChild(player,5);
 

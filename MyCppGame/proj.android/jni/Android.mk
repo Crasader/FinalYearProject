@@ -16,6 +16,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
    ../../Classes/src/Coin.cpp \
    ../../Classes/src/GameData.cpp \
    ../../Classes/src/GameOverScene.cpp \
+   ../../Classes/src/GameCompleteScene.cpp \
    ../../Classes/src/GameScene.cpp \
    ../../Classes/src/HUD.cpp \
    ../../Classes/src/LevelLoader.cpp \
@@ -38,6 +39,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
    ../../Classes/src/Level3.cpp \
     ../../Classes/src/LoadingLevel3.cpp \
    ../../Classes/src/Bike.cpp \
+   ../../Classes/src/Global.cpp \
    ../../Classes/src/Truck.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes/include

@@ -17,7 +17,6 @@
 #include "MiniTruck.h"
 #include "Ambulance.h"
 #include "LoadingScene.h"
-#include "2d/CCParticleSystemQuad.h"
 #include <algorithm>
 #include <vector>
 #include <string>

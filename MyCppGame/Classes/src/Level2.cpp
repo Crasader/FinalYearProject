@@ -7,7 +7,7 @@ Scene* Level2::createScene()
 {
 	auto scene = Scene::createWithPhysics();
 	scene->getPhysicsWorld()->setGravity(Vec2(0, 0));
-	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	auto layer = Level2::create();
 	layer->SetPhysicsWorld(scene->getPhysicsWorld());
 
@@ -114,9 +114,9 @@ bool Level2::init()
 	player->setAnchorPoint(Point(0.5f, 0.55f));
 	this->addChild(player,5);
 
-	powerUp = PowerUp::create(1);
-	powerUp->setPosition(195,1500);
-	//this->addChild(powerUp);
+	powerUp = PowerUp::create(3);
+	powerUp->setPosition(340,5055);
+	this->addChild(powerUp);
 
 	hud = HUD::create();
 	hud->setPosition(340, 530);
@@ -356,7 +356,7 @@ void Level2::createCoins()
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 23; i < 24; i++)
+	for (int i = 23; i < 59; i++)
 	{
 		Coin * base = Coin::create(Vec2(ptr->m_coinPosX[i], ptr->m_coinPosY[i]), m_gameState);
 		m_coins.push_back(base);

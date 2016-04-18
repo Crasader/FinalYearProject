@@ -153,6 +153,7 @@ bool Endless::init()
 	}
 	this->scheduleOnce(schedule_selector(Endless::EndlessGame), 0.0f);
 	yPos = 550;
+	coinY = 800;
 	m_gameState = GameStates::PlaceGunTower;
 	score = 0;
 	move = true;
@@ -230,6 +231,11 @@ bool Endless::init()
 		EndlessGame(temp);
 	}
 
+	for (int i = 0; i < 50; i++)
+	{
+		RandomCoins(temp);
+	}
+
 	auto director = Director::getInstance();
 	auto glview = director->getOpenGLView();
 	auto screenSize = glview->getFrameSize();
@@ -272,14 +278,14 @@ void Endless::update(float dt)
 {
 	if (move == true)
 	{
-		scoreLabel->setPositionY(scoreLabel->getPosition().y + 7.5);
-		label->setPositionY(label->getPosition().y + 7.5);
-		hud->setPositionY(hud->getPosition().y + 7.5);
-		pauseItem->setPositionY(pauseItem->getPosition().y + 7.5);
-		player->setPositionY(player->getPosition().y + 7.5);
-		backgroundSprite->setPositionY(backgroundSprite->getPosition().y + 7.5);
-		backgroundSprite2->setPositionY(backgroundSprite->getPosition().y + 7.5);
-		backgroundSprite3->setPositionY(backgroundSprite->getPosition().y + 7.5);
+		scoreLabel->setPositionY(scoreLabel->getPosition().y + 8.5);
+		label->setPositionY(label->getPosition().y + 8.5);
+		hud->setPositionY(hud->getPosition().y + 8.5);
+		pauseItem->setPositionY(pauseItem->getPosition().y + 8.5);
+		player->setPositionY(player->getPosition().y + 8.5);
+		backgroundSprite->setPositionY(backgroundSprite->getPosition().y + 8.5);
+		backgroundSprite2->setPositionY(backgroundSprite->getPosition().y + 8.5);
+		backgroundSprite3->setPositionY(backgroundSprite->getPosition().y + 8.5);
 	}
 	if (player->getPosition().x < 25)
 	{
@@ -562,6 +568,30 @@ void Endless::EndlessGame(float dt)
 		yPos = yPos + 500;
 }
 
+void Endless::RandomCoins(float dt)
+{
+	randCoinX = cocos2d::RandomHelper::random_int(1, 3);
+	if (randCoinX == 1)
+	{
+		coinX = 60;
+	}
+	if (randCoinX == 2)
+	{
+		coinX = 195;
+	}
+	if (randCoinX == 3)
+	{
+		coinX = 340;
+	}
+	createCoins(coinX, coinY);
+	coinY += 1000;
+}
+
+void Endless::RandomPowerUps(float dt)
+{
+	
+}
+
 bool Endless::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event * event)
 {
 	CCLOG("onTouchBegan x = %f, y = %f", touch->getLocation().x, touch->getLocation().y);
@@ -703,17 +733,13 @@ void Endless::createTowerBases(int x, int y)
 	this->addChild(spritebatch, 1, TOWERS_SPRITE_BATCH);
 }
 
-void Endless::createCoins()
+void Endless::createCoins(int x, int y)
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
-
-	for (int i = 0; i < ptr->m_numberOfCoins; i++)
-	{
-		Coin * base = Coin::create(Vec2(ptr->m_coinPosX[i], ptr->m_coinPosY[i]), m_gameState);
-		m_coins.push_back(base);
-		spritebatch->addChild(base, 1);
-	}
+	Coin * base = Coin::create(Vec2(x,y), m_gameState);
+	m_coins.push_back(base);
+	spritebatch->addChild(base, 1);
 	this->addChild(spritebatch, 4, COINS_SPRITE_BATCH);
 }
 
@@ -770,7 +796,7 @@ bool Endless::onContactBegin(cocos2d::PhysicsContact &contact)
 		{
 			if (nodeB->getTag() == 30)
 			{
-				score = score + 10;
+				score = score + 1;
 				__String *tempScore = __String::createWithFormat("%i", score);
 				scoreLabel->setString(tempScore->getCString());
 				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/scoreSound.mp3");
@@ -801,7 +827,7 @@ bool Endless::onContactBegin(cocos2d::PhysicsContact &contact)
 		}
 		else if (nodeA->getTag() == 30)
 		{
-			score = score + 10;
+			score = score + 1;
 			__String *tempScore = __String::createWithFormat("%i", score);
 			scoreLabel->setString(tempScore->getCString());
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/scoreSound.mp3");

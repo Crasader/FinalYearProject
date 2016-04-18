@@ -150,9 +150,11 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\src\Coin.cpp" />
     <ClCompile Include="..\Classes\src\EndlessGameOver.cpp" />
     <ClCompile Include="..\Classes\src\EndlessMode.cpp" />
+    <ClCompile Include="..\Classes\src\GameCompleteScene.cpp" />
     <ClCompile Include="..\Classes\src\GameData.cpp" />
     <ClCompile Include="..\Classes\src\GameOverScene.cpp" />
     <ClCompile Include="..\Classes\src\GameScene.cpp" />
+    <ClCompile Include="..\Classes\src\Global.cpp" />
     <ClCompile Include="..\Classes\src\HUD.cpp" />
     <ClCompile Include="..\Classes\src\Level2.cpp" />
     <ClCompile Include="..\Classes\src\LevelLoader.cpp" />
@@ -177,10 +179,12 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\include\Coin.h" />
     <ClInclude Include="..\Classes\include\EndlessGameOver.h" />
     <ClInclude Include="..\Classes\include\EndlessMode.h" />
+    <ClInclude Include="..\Classes\include\GameCompleteScene.h" />
     <ClInclude Include="..\Classes\include\GameData.h" />
     <ClInclude Include="..\Classes\include\GameOverScene.h" />
     <ClInclude Include="..\Classes\include\GameScene.h" />
     <ClInclude Include="..\Classes\include\GameStates.h" />
+    <ClInclude Include="..\Classes\include\Global.h" />
     <ClInclude Include="..\Classes\include\HUD.h" />
     <ClInclude Include="..\Classes\include\Level2.h" />
     <ClInclude Include="..\Classes\include\LevelLoader.h" />

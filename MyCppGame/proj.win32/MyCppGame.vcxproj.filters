@@ -87,6 +87,12 @@
     <ClCompile Include="..\Classes\src\Bike.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\src\Global.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\src\GameCompleteScene.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -165,6 +171,12 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\include\Bike.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\include\Global.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\include\GameCompleteScene.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

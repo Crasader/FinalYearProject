@@ -42,8 +42,8 @@ public:
 	float m_towerRotationOriginY;
 	int m_numberOfTowerBases;
 
-	float m_towerBaseX[20];
-	float m_towerBaseY[20];
+	float m_towerBaseX[30];
+	float m_towerBaseY[30];
 
 	//all the coin variables
 	std::string m_coinFile;
@@ -51,43 +51,43 @@ public:
 	int m_coinHeight;
 	int m_numberOfCoins;
 
-	float m_coinPosX[35];
-	float m_coinPosY[35];
+	float m_coinPosX[60];
+	float m_coinPosY[60];
 
 	std::string m_police;
 	int m_numberOfPolice;
-	float m_policePosX[25];
-	float m_policePosY[25];
+	float m_policePosX[30];
+	float m_policePosY[30];
 
 	std::string m_truck;
 	int m_numberOfTruck;
-	float m_truckPosX[25];
-	float m_truckPosY[25];
+	float m_truckPosX[30];
+	float m_truckPosY[30];
 
 	std::string m_ambulance;
 	int m_numberOfAmbulance;
-	float m_ambulancePosX[25];
-	float m_ambulancePosY[25];
+	float m_ambulancePosX[30];
+	float m_ambulancePosY[30];
 
 	std::string m_mini_van;
 	int m_numberOfMiniVan;
-	float m_minivanPosX[25];
-	float m_minivanPosY[25];
+	float m_minivanPosX[30];
+	float m_minivanPosY[30];
 
 	std::string m_bike;
 	int m_numberOfBike;
-	float m_bikePosX[25];
-	float m_bikePosY[25];
+	float m_bikePosX[30];
+	float m_bikePosY[30];
 
 	std::string m_mini_truck;
 	int m_numberOfMiniTruck;
-	float m_minitruckPosX[25];
-	float m_minitruckPosY[25];
+	float m_minitruckPosX[30];
+	float m_minitruckPosY[30];
 
 	std::string m_taxi;
 	int m_numberOfTaxi;
-	float m_taxiPosX[25];
-	float m_taxiPosY[25];
+	float m_taxiPosX[30];
+	float m_taxiPosY[30];
 
 
 	// Projectile related fields.

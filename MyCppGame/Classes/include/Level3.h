@@ -6,6 +6,7 @@
 #include "GameStates.h"
 #include "PauseScene.h"
 #include "GameOverScene.h"
+#include "GameCompleteScene.h"
 #include "GameData.h"
 #include "Player.h"
 #include "Bike.h"

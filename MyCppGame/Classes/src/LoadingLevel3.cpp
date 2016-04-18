@@ -35,8 +35,14 @@ bool LoadingLevel3::init()
 
 	this->addChild(backgroundSprite);
 
-	sprite = Sprite::create("Loading.png");
-	sprite->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+
+	auto loadingTitle =
+		Sprite::create("loadingHeader.png");
+	loadingTitle->setPosition(Point(visibleSize.width / 2, (visibleSize.height - 50)));
+	this->addChild(loadingTitle);
+
+	sprite = Sprite::create("Loading1.png");
+	sprite->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height - 270));
 
 	this->addChild(sprite);
 
