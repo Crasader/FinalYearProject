@@ -19,7 +19,9 @@ void MainMenu::activateGameScene(Ref *pSender)
 	//Director::getInstance()->replaceScene(scene);
 	//auto scene = Level2::createScene();
 	//Director::getInstance()->replaceScene(scene);
-	auto scene = Level3::createScene();
+	/*auto scene = Level3::createScene();
+	Director::getInstance()->replaceScene(scene);*/
+	auto scene = Tutorial::createScene();
 	Director::getInstance()->replaceScene(scene);
 }
 

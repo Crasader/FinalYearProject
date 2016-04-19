@@ -51,8 +51,8 @@ public:
 	int m_coinHeight;
 	int m_numberOfCoins;
 
-	float m_coinPosX[95];
-	float m_coinPosY[95];
+	float m_coinPosX[105];
+	float m_coinPosY[105];
 
 	std::string m_police;
 	int m_numberOfPolice;
