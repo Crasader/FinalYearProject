@@ -12,6 +12,7 @@ public:
 	static Global* getInstance();
 	int getScore();
 	void setScore(int s);
+	void resetScore();
 
 	//_SYNTHESIZE(int, scoreValue, ScoreValue);
 };

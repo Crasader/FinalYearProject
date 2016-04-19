@@ -93,6 +93,7 @@ bool GameScreen::init()
 	CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(1.0f);
 	m_gameState = GameStates::PlaceGunTower;
 	score = 0;
+	Global::getInstance()->resetScore();
 	move = true;
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("audio/scoreSound.mp3");
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("audio/crashSound.mp3");
@@ -125,7 +126,8 @@ bool GameScreen::init()
 	label = Label::createWithTTF("Score:", "fonts/Marker Felt.ttf", 32);
 	label->setPosition(320, 522);
 	this->addChild(label,7);
-	__String *tempScore = __String::createWithFormat("%i", score);
+
+	__String *tempScore = __String::createWithFormat("%i", Global::getInstance()->getScore());
 	scoreLabel = Label::createWithTTF(tempScore->getCString(), "fonts/Marker Felt.ttf",32);
 	scoreLabel->setPosition(377, 522);
 	this->addChild(scoreLabel,7);
@@ -450,8 +452,8 @@ bool GameScreen::onContactBegin(cocos2d::PhysicsContact &contact)
 		{
 			if (nodeB->getTag() == 30)
 			{
-				score = score + 10;
-				__String *tempScore = __String::createWithFormat("%i", score);
+				Global::getInstance()->setScore(10);
+				__String *tempScore = __String::createWithFormat("%i", Global::getInstance()->getScore());
 				scoreLabel->setString(tempScore->getCString());
 				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/scoreSound.mp3");
 				//int x = nodeB->getPosition().x;
@@ -477,8 +479,8 @@ bool GameScreen::onContactBegin(cocos2d::PhysicsContact &contact)
 			else if (nodeB->getTag() == 40)
 			{
 				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/invisCollected.mp3");
-				score = score + 1000;
-				__String *tempScore = __String::createWithFormat("%i", score);
+				Global::getInstance()->setScore(100);
+				__String *tempScore = __String::createWithFormat("%i", Global::getInstance()->getScore());
 				scoreLabel->setString(tempScore->getCString());
 				nodeB->removeFromParentAndCleanup(true);
 				powerUpBool = true;
@@ -487,16 +489,16 @@ bool GameScreen::onContactBegin(cocos2d::PhysicsContact &contact)
 			else if (nodeB->getTag() == 60)
 			{
 				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ScoreBoost.mp3");
-				score = score + 100;
-				__String *tempScore = __String::createWithFormat("%i", score);
+				Global::getInstance()->setScore(100);
+				__String *tempScore = __String::createWithFormat("%i", Global::getInstance()->getScore());
 				scoreLabel->setString(tempScore->getCString());
 				nodeB->removeFromParentAndCleanup(true);
 			}
 		}
 		else if (nodeA->getTag() == 30)
 		{
-			score = score + 10;
-			__String *tempScore = __String::createWithFormat("%i", score);
+			Global::getInstance()->setScore(10);
+			__String *tempScore = __String::createWithFormat("%i", Global::getInstance()->getScore());
 			scoreLabel->setString(tempScore->getCString());
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/scoreSound.mp3");
 			//int x = nodeA->getPosition().x;
@@ -524,8 +526,8 @@ bool GameScreen::onContactBegin(cocos2d::PhysicsContact &contact)
 		else if (nodeA->getTag() == 40)
 		{
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/invisCollected.mp3");
-			score = score + 1000;
-			__String *tempScore = __String::createWithFormat("%i", score);
+			Global::getInstance()->setScore(100);
+			__String *tempScore = __String::createWithFormat("%i", Global::getInstance()->getScore());
 			scoreLabel->setString(tempScore->getCString());
 			nodeA->removeFromParentAndCleanup(true);
 			powerUpBool = true;
@@ -534,8 +536,8 @@ bool GameScreen::onContactBegin(cocos2d::PhysicsContact &contact)
 		else if (nodeA->getTag() == 60)
 		{
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ScoreBoost.mp3");
-			score = score + 100;
-			__String *tempScore = __String::createWithFormat("%i", score);
+			Global::getInstance()->setScore(100);
+			__String *tempScore = __String::createWithFormat("%i", Global::getInstance()->getScore());
 			scoreLabel->setString(tempScore->getCString());
 			nodeA->removeFromParentAndCleanup(true);
 		}

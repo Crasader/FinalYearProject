@@ -125,7 +125,7 @@ bool Level2::init()
 	label = Label::createWithTTF("Score:", "fonts/Marker Felt.ttf", 32);
 	label->setPosition(320, 522);
 	this->addChild(label,7);
-	__String *tempScore = __String::createWithFormat("%i", score);
+	__String *tempScore = __String::createWithFormat("%i", Global::getInstance()->getScore());
 	scoreLabel = Label::createWithTTF(tempScore->getCString(), "fonts/Marker Felt.ttf",32);
 	scoreLabel->setPosition(377, 522);
 	this->addChild(scoreLabel,7);
@@ -446,8 +446,8 @@ bool Level2::onContactBegin(cocos2d::PhysicsContact &contact)
 		{
 			if (nodeB->getTag() == 30)
 			{
-				score = score + 10;
-				__String *tempScore = __String::createWithFormat("%i", score);
+				Global::getInstance()->setScore(10);
+				__String *tempScore = __String::createWithFormat("%i", Global::getInstance()->getScore());
 				scoreLabel->setString(tempScore->getCString());
 				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/scoreSound.mp3");
 				//int x = nodeB->getPosition().x;
@@ -466,33 +466,33 @@ bool Level2::onContactBegin(cocos2d::PhysicsContact &contact)
 				nodeB->removeFromParentAndCleanup(true);
 				if (SonarCocosHelper::GooglePlayServices::isSignedIn)
 				{
-					SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQAA",1);
+					SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQAA", 1);
 				}
 			}
 
 			else if (nodeB->getTag() == 40)
 			{
 				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/invisCollected.mp3");
-				score = score + 1000;
-				__String *tempScore = __String::createWithFormat("%i", score);
+				Global::getInstance()->setScore(100);
+				__String *tempScore = __String::createWithFormat("%i", Global::getInstance()->getScore());
 				scoreLabel->setString(tempScore->getCString());
 				nodeB->removeFromParentAndCleanup(true);
 				powerUpBool = true;
-				this->scheduleOnce(schedule_selector(Level2::ScrollBackground), 4.0f);
+				this->scheduleOnce(schedule_selector(GameScreen::ScrollBackground), 4.0f);
 			}
-			else if (nodeA->getTag() == 60)
+			else if (nodeB->getTag() == 60)
 			{
 				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ScoreBoost.mp3");
-				score = score + 100;
-				__String *tempScore = __String::createWithFormat("%i", score);
+				Global::getInstance()->setScore(100);
+				__String *tempScore = __String::createWithFormat("%i", Global::getInstance()->getScore());
 				scoreLabel->setString(tempScore->getCString());
-				nodeA->removeFromParentAndCleanup(true);
+				nodeB->removeFromParentAndCleanup(true);
 			}
 		}
 		else if (nodeA->getTag() == 30)
 		{
-			score = score + 10;
-			__String *tempScore = __String::createWithFormat("%i", score);
+			Global::getInstance()->setScore(10);
+			__String *tempScore = __String::createWithFormat("%i", Global::getInstance()->getScore());
 			scoreLabel->setString(tempScore->getCString());
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/scoreSound.mp3");
 			//int x = nodeA->getPosition().x;
@@ -520,18 +520,18 @@ bool Level2::onContactBegin(cocos2d::PhysicsContact &contact)
 		else if (nodeA->getTag() == 40)
 		{
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/invisCollected.mp3");
-			score = score + 1000;
-			__String *tempScore = __String::createWithFormat("%i", score);
+			Global::getInstance()->setScore(100);
+			__String *tempScore = __String::createWithFormat("%i", Global::getInstance()->getScore());
 			scoreLabel->setString(tempScore->getCString());
 			nodeA->removeFromParentAndCleanup(true);
 			powerUpBool = true;
-			this->scheduleOnce(schedule_selector(Level2::ScrollBackground), 4.0f);
+			this->scheduleOnce(schedule_selector(GameScreen::ScrollBackground), 4.0f);
 		}
 		else if (nodeA->getTag() == 60)
 		{
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ScoreBoost.mp3");
-			score = score + 100;
-			__String *tempScore = __String::createWithFormat("%i", score);
+			Global::getInstance()->setScore(100);
+			__String *tempScore = __String::createWithFormat("%i", Global::getInstance()->getScore());
 			scoreLabel->setString(tempScore->getCString());
 			nodeA->removeFromParentAndCleanup(true);
 		}

@@ -30,10 +30,13 @@ public:
 	int randX1;
 	int randX2;
 	int randCoinX;
+	int randPowerX;
 	int yPos;
 	int	xPos;
 	int coinX;
 	int coinY;
+	int powerX;
+	int powerY;
 	int playerTemp1 = 3000;
 	int playerTemp2 = 5000;
 	int playerTemp3 = 7000;

@@ -16,6 +16,7 @@
 #include "Truck.h"
 #include "MiniTruck.h"
 #include "Ambulance.h"
+#include "Global.h"
 #include "LoadingScene.h"
 #include <algorithm>
 #include <vector>

@@ -5,12 +5,12 @@ USING_NS_CC;
 Player * Player::create()
 {
 	Player * player = new Player();
-	if (player && player->initWithFile("GameScreen/Audi.png"))
+	if (player && player->initWithFile("GameScreen/Audi1.png"))
 	{
 		player->autorelease();
 		player->initPlayer();
 		player->setTag(10);
-		cocos2d::Size size(70, 150);
+		cocos2d::Size size(70, 155);
 		auto playerBody = PhysicsBody::createBox(size);
 		playerBody->setCollisionBitmask(0x000001);
 		playerBody->setTag(10);

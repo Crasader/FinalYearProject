@@ -154,6 +154,7 @@ bool Endless::init()
 	this->scheduleOnce(schedule_selector(Endless::EndlessGame), 0.0f);
 	yPos = 550;
 	coinY = 800;
+	powerY = 4400;
 	m_gameState = GameStates::PlaceGunTower;
 	score = 0;
 	move = true;
@@ -193,10 +194,6 @@ bool Endless::init()
 	player->setAnchorPoint(Point(0.5f, 0.55f));
 	this->addChild(player, 5);
 
-	powerUp = PowerUp::create(2);
-	powerUp->setPosition(195, 1380);
-	this->addChild(powerUp);
-
 	hud = HUD::create();
 	hud->setPosition(340, 530);
 	this->addChild(hud, 6);
@@ -234,6 +231,11 @@ bool Endless::init()
 	for (int i = 0; i < 50; i++)
 	{
 		RandomCoins(temp);
+	}
+
+	for (int i = 0; i < 4; i++)
+	{
+		RandomPowerUps(temp);
 	}
 
 	auto director = Director::getInstance();
@@ -589,7 +591,25 @@ void Endless::RandomCoins(float dt)
 
 void Endless::RandomPowerUps(float dt)
 {
+	randPowerX = cocos2d::RandomHelper::random_int(1, 3);
+	if (randPowerX == 1)
+	{
+		powerX = 60;
+	}
+	if (randPowerX == 2)
+	{
+		powerX = 195;
+	}
+	if (randPowerX == 3)
+	{
+		powerX = 340;
+	}
 	
+	int randPower = cocos2d::RandomHelper::random_int(1, 3);
+	auto powerUp1 = PowerUp::create(3);
+	powerUp1->setPosition(powerX, powerY);
+	this->addChild(powerUp1);
+	powerY += 5000;
 }
 
 bool Endless::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event * event)
@@ -820,9 +840,15 @@ bool Endless::onContactBegin(cocos2d::PhysicsContact &contact)
 				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/speedboost.mp3");
 				nodeB->removeFromParentAndCleanup(true);
 				speed -= true;
-				powerUpBool = true;
-				this->scheduleOnce(schedule_selector(Endless::ScrollBackground), 1.5f);
 				this->scheduleOnce(schedule_selector(Endless::StopSpeed), 4.0f);
+			}
+			else if (nodeB->getTag() == 60)
+			{
+				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ScoreBoost.mp3");
+				score = score + 2;
+				__String *tempScore = __String::createWithFormat("%i", score);
+				scoreLabel->setString(tempScore->getCString());
+				nodeB->removeFromParentAndCleanup(true);
 			}
 		}
 		else if (nodeA->getTag() == 30)
@@ -849,9 +875,15 @@ bool Endless::onContactBegin(cocos2d::PhysicsContact &contact)
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/speedboost.mp3");
 			speed = true;
 			nodeA->removeFromParentAndCleanup(true);
-			powerUpBool = true;
-			this->scheduleOnce(schedule_selector(Endless::ScrollBackground), 1.5f);
 			this->scheduleOnce(schedule_selector(Endless::StopSpeed), 4.0f);
+		}
+		else if (nodeA->getTag() == 60)
+		{
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ScoreBoost.mp3");
+			score = score + 2;
+			__String *tempScore = __String::createWithFormat("%i", score);
+			scoreLabel->setString(tempScore->getCString());
+			nodeA->removeFromParentAndCleanup(true);
 		}
 	}
 

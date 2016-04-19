@@ -22,6 +22,12 @@ void Global::setScore(int s)
 {
 	scoreValue = scoreValue + s;
 }
+
+void Global::resetScore()
+{
+	scoreValue = 0;
+}
+
 int Global::getScore()
 {
 	return scoreValue;

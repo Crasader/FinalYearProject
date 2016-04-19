@@ -85,6 +85,12 @@ void Level3::ScrollBackground(float dt)
 	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/PowerUpOver.mp3");
 }
 
+void Level3::StopSpeed(float dt)
+{
+	speed = false;
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/PowerUpOver.mp3");
+}
+
 bool Level3::init()
 {
 	if (!Layer::init())
@@ -116,9 +122,9 @@ bool Level3::init()
 	player->setAnchorPoint(Point(0.5f, 0.55f));
 	this->addChild(player,5);
 
-	powerUp = PowerUp::create(1);
-	powerUp->setPosition(195,1500);
-	//this->addChild(powerUp);
+	powerUp = PowerUp::create(2);
+	powerUp->setPosition(340,4050);
+	this->addChild(powerUp);
 
 	hud = HUD::create();
 	hud->setPosition(340, 530);
@@ -127,7 +133,7 @@ bool Level3::init()
 	label = Label::createWithTTF("Score:", "fonts/Marker Felt.ttf", 32);
 	label->setPosition(320, 522);
 	this->addChild(label,7);
-	__String *tempScore = __String::createWithFormat("%i", score);
+	__String *tempScore = __String::createWithFormat("%i", Global::getInstance()->getScore());
 	scoreLabel = Label::createWithTTF(tempScore->getCString(), "fonts/Marker Felt.ttf",32);
 	scoreLabel->setPosition(377, 522);
 	this->addChild(scoreLabel,7);
@@ -195,6 +201,14 @@ void Level3::update(float dt)
 		hud->setPositionY(hud->getPosition().y + 7.5);
 		pauseItem->setPositionY(pauseItem->getPosition().y + 7.5);
 		player->setPositionY(player->getPosition().y + 7.5);
+	}
+	if (speed == true && move == true)
+	{
+		scoreLabel->setPositionY(scoreLabel->getPosition().y + 1.8);
+		label->setPositionY(label->getPosition().y + 1.8);
+		hud->setPositionY(hud->getPosition().y + 1.8);
+		pauseItem->setPositionY(pauseItem->getPosition().y + 1.8);
+		player->setPositionY(player->getPosition().y + 1.8);
 	}
 	if (player->getPosition().y > 9000)
 	{
@@ -448,8 +462,8 @@ bool Level3::onContactBegin(cocos2d::PhysicsContact &contact)
 		{
 			if (nodeB->getTag() == 30)
 			{
-				score = score + 10;
-				__String *tempScore = __String::createWithFormat("%i", score);
+				Global::getInstance()->setScore(10);
+				__String *tempScore = __String::createWithFormat("%i", Global::getInstance()->getScore());
 				scoreLabel->setString(tempScore->getCString());
 				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/scoreSound.mp3");
 				//int x = nodeB->getPosition().x;
@@ -468,33 +482,40 @@ bool Level3::onContactBegin(cocos2d::PhysicsContact &contact)
 				nodeB->removeFromParentAndCleanup(true);
 				if (SonarCocosHelper::GooglePlayServices::isSignedIn)
 				{
-					SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQAA",1);
+					SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQAA", 1);
 				}
 			}
 
 			else if (nodeB->getTag() == 40)
 			{
 				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/invisCollected.mp3");
-				score = score + 1000;
-				__String *tempScore = __String::createWithFormat("%i", score);
+				Global::getInstance()->setScore(100);
+				__String *tempScore = __String::createWithFormat("%i", Global::getInstance()->getScore());
 				scoreLabel->setString(tempScore->getCString());
 				nodeB->removeFromParentAndCleanup(true);
 				powerUpBool = true;
-				this->scheduleOnce(schedule_selector(Level3::ScrollBackground), 4.0f);
+				this->scheduleOnce(schedule_selector(GameScreen::ScrollBackground), 4.0f);
 			}
-			else if (nodeA->getTag() == 60)
+			else if (nodeB->getTag() == 50)
+			{
+				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/speedboost.mp3");
+				nodeB->removeFromParentAndCleanup(true);
+				speed -= true;
+				this->scheduleOnce(schedule_selector(Endless::StopSpeed), 3.0f);
+			}
+			else if (nodeB->getTag() == 60)
 			{
 				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ScoreBoost.mp3");
-				score = score + 100;
-				__String *tempScore = __String::createWithFormat("%i", score);
+				Global::getInstance()->setScore(100);
+				__String *tempScore = __String::createWithFormat("%i", Global::getInstance()->getScore());
 				scoreLabel->setString(tempScore->getCString());
-				nodeA->removeFromParentAndCleanup(true);
+				nodeB->removeFromParentAndCleanup(true);
 			}
 		}
 		else if (nodeA->getTag() == 30)
 		{
-			score = score + 10;
-			__String *tempScore = __String::createWithFormat("%i", score);
+			Global::getInstance()->setScore(10);
+			__String *tempScore = __String::createWithFormat("%i", Global::getInstance()->getScore());
 			scoreLabel->setString(tempScore->getCString());
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/scoreSound.mp3");
 			//int x = nodeA->getPosition().x;
@@ -522,18 +543,27 @@ bool Level3::onContactBegin(cocos2d::PhysicsContact &contact)
 		else if (nodeA->getTag() == 40)
 		{
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/invisCollected.mp3");
-			score = score + 1000;
-			__String *tempScore = __String::createWithFormat("%i", score);
+			Global::getInstance()->setScore(100);
+			__String *tempScore = __String::createWithFormat("%i", Global::getInstance()->getScore());
 			scoreLabel->setString(tempScore->getCString());
 			nodeA->removeFromParentAndCleanup(true);
 			powerUpBool = true;
-			this->scheduleOnce(schedule_selector(Level3::ScrollBackground), 4.0f);
+			this->scheduleOnce(schedule_selector(GameScreen::ScrollBackground), 4.0f);
 		}
+
+		else if (nodeB->getTag() == 50)
+		{
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/speedboost.mp3");
+			nodeB->removeFromParentAndCleanup(true);
+			speed -= true;
+			this->scheduleOnce(schedule_selector(Endless::StopSpeed), 3.0f);
+		}
+
 		else if (nodeA->getTag() == 60)
 		{
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ScoreBoost.mp3");
-			score = score + 100;
-			__String *tempScore = __String::createWithFormat("%i", score);
+			Global::getInstance()->setScore(100);
+			__String *tempScore = __String::createWithFormat("%i", Global::getInstance()->getScore());
 			scoreLabel->setString(tempScore->getCString());
 			nodeA->removeFromParentAndCleanup(true);
 		}

@@ -35,6 +35,9 @@ public:
 	HUD * hud;
 	PowerUp * powerUp;
 	std::string level;
+	bool speed;
+	bool powerUpBool1;
+	void StopSpeed(float dt);
 	cocos2d::Sprite *cameraTarget;
 	cocos2d::Sprite *backgroundSprite;
 	cocos2d::Sprite *backgroundSprite2;
