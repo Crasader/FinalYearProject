@@ -147,6 +147,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\src\Ambulance.cpp" />
     <ClCompile Include="..\Classes\src\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\src\Bike.cpp" />
+    <ClCompile Include="..\Classes\src\ChooseModeScene.cpp" />
     <ClCompile Include="..\Classes\src\Coin.cpp" />
     <ClCompile Include="..\Classes\src\EndlessGameOver.cpp" />
     <ClCompile Include="..\Classes\src\EndlessMode.cpp" />
@@ -170,12 +171,19 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\src\Taxi.cpp" />
     <ClCompile Include="..\Classes\src\TowerBase.cpp" />
     <ClCompile Include="..\Classes\src\Truck.cpp" />
+    <ClCompile Include="..\Classes\src\TutorialInfo1.cpp" />
+    <ClCompile Include="..\Classes\src\TutorialInfo2.cpp" />
+    <ClCompile Include="..\Classes\src\TutorialInfo3.cpp" />
+    <ClCompile Include="..\Classes\src\TutorialInfo4.cpp" />
+    <ClCompile Include="..\Classes\src\TutorialOverScene.cpp" />
+    <ClCompile Include="..\Classes\src\TutorialPauseScene.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\include\Ambulance.h" />
     <ClInclude Include="..\Classes\include\AppDelegate.h" />
     <ClInclude Include="..\Classes\include\Bike.h" />
+    <ClInclude Include="..\Classes\include\ChooseModeScene.h" />
     <ClInclude Include="..\Classes\include\Coin.h" />
     <ClInclude Include="..\Classes\include\EndlessGameOver.h" />
     <ClInclude Include="..\Classes\include\EndlessMode.h" />
@@ -200,6 +208,12 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\include\Taxi.h" />
     <ClInclude Include="..\Classes\include\TowerBase.h" />
     <ClInclude Include="..\Classes\include\Truck.h" />
+    <ClInclude Include="..\Classes\include\TutorialInfo1.h" />
+    <ClInclude Include="..\Classes\include\TutorialInfo2.h" />
+    <ClInclude Include="..\Classes\include\TutorialInfo3.h" />
+    <ClInclude Include="..\Classes\include\TutorialInfo4.h" />
+    <ClInclude Include="..\Classes\include\TutorialOverScene.h" />
+    <ClInclude Include="..\Classes\include\TutorialPauseScene.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>

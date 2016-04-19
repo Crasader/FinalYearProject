@@ -4,9 +4,15 @@
 #include "TowerBase.h"
 #include "GameStates.h"
 #include "GameOverScene.h"
+#include "TutorialOverScene.h"
+#include "TutorialPauseScene.h"
 #include "Bike.h"
 #include "HUD.h"
 #include "GameData.h"
+#include "TutorialInfo1.h"
+#include "TutorialInfo2.h"
+#include "TutorialInfo3.h"
+#include "TutorialInfo4.h"
 #include "Player.h"
 #include "PowerUp.h"
 #include "LevelLoader.h"
@@ -67,6 +73,10 @@ public:
 	// Called at game over 
 	void activateGameOverScene(float dt);
 	void activatePauseScene(Ref *pSender);
+	void activateTutorialInfo1(Ref *pSender);
+	void activateTutorialInfo2(Ref *pSender);
+	void activateTutorialInfo3(Ref *pSender);
+	void activateTutorialInfo4(Ref *pSender);
 	void addBackGroundSprite(cocos2d::Size const & visibleSize, cocos2d::Point const & origin);
 	bool move;
 	const char* achievementID = "CgkI69-MotMIEAIQAQ";

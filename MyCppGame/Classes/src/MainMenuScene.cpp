@@ -19,10 +19,12 @@ void MainMenu::activateGameScene(Ref *pSender)
 	//Director::getInstance()->replaceScene(scene);
 	//auto scene = Level2::createScene();
 	//Director::getInstance()->replaceScene(scene);
-	/*auto scene = Level3::createScene();
-	Director::getInstance()->replaceScene(scene);*/
-	auto scene = Tutorial::createScene();
+	auto scene = Level3::createScene();
 	Director::getInstance()->replaceScene(scene);
+	//auto scene = Tutorial::createScene();
+	//Director::getInstance()->replaceScene(scene);
+	//auto scene = ChooseMode::createScene();
+	//Director::getInstance()->replaceScene(scene);
 }
 
 void MainMenu::activateTrialScene(Ref *pSender)

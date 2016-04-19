@@ -14,15 +14,40 @@ Scene* Tutorial::createScene()
 	scene->addChild(layer);
 	return scene;
 }
+
+void Tutorial::activateTutorialInfo1(Ref *pSender)
+{
+	auto scene = TutorialInfo1::createScene();
+	Director::getInstance()->pushScene(scene);
+}
+
+void Tutorial::activateTutorialInfo2(Ref *pSender)
+{
+	auto scene = TutorialInfo2::createScene();
+	Director::getInstance()->pushScene(scene);
+}
+
+void Tutorial::activateTutorialInfo3(Ref *pSender)
+{
+	auto scene = TutorialInfo3::createScene();
+	Director::getInstance()->pushScene(scene);
+}
+
+void Tutorial::activateTutorialInfo4(Ref *pSender)
+{
+	auto scene = TutorialInfo4::createScene();
+	Director::getInstance()->pushScene(scene);
+}
+
 void Tutorial::activatePauseScene(Ref *pSender)
 {
-	auto scene = PauseMenu::createScene();
+	auto scene = TutorialPause::createScene();
 	Director::getInstance()->pushScene(scene);
 }
 
 void Tutorial::activateGameOverScene(float dt)
 {
-	auto scene = GameOver::createScene();
+	auto scene = TutorialOver::createScene();
 	Director::getInstance()->replaceScene(scene);
 }
 
@@ -93,8 +118,19 @@ bool Tutorial::init()
 
 	powerUpBool = false;
 
+	pauseItem =
+		MenuItemImage::create("GameScreen/Pause_Button.png",
+			"GameScreen/Pause_Button(Click).png",
+			CC_CALLBACK_1(Tutorial::activatePauseScene, this));
+
+	pauseItem->setPosition(22, 520);
+
+	auto menu = Menu::create(pauseItem, NULL);
+	menu->setPosition(Point::ZERO);
+	this->addChild(menu, 100);
+
 	player = Player::create();
-	player->setPosition(60, 125);
+	player->setPosition(195, 125);
 	player->setAnchorPoint(Point(0.5f, 0.55f));
 	this->addChild(player,5);
 
@@ -141,16 +177,40 @@ void Tutorial::update(float dt)
 	if (move == true)
 	{
 		player->setPositionY(player->getPosition().y + 7.5);
+		pauseItem->setPositionY(pauseItem->getPosition().y + 7.5);
 	}
 	if (speed == true && move == true)
 	{
-		player->setPositionY(player->getPosition().y + 1.8);
+		player->setPositionY(player->getPosition().y + 3.0);
+		pauseItem->setPositionY(pauseItem->getPosition().y + 3.0);
 	}
 	if (player->getPosition().y > 1500 && player->getPosition().y < 1525)
 	{
-		float i = 2;
-		activatePauseScene(this);
 		player->setPositionY(1526);
+		activateTutorialInfo1(this);
+	}
+
+	if (player->getPosition().y > 3300 && player->getPosition().y < 3325)
+	{
+		player->setPositionY(3326);
+		activateTutorialInfo2(this);
+	}
+
+	if (player->getPosition().y > 5150 && player->getPosition().y < 5160)
+	{
+		player->setPositionY(5161);
+		activateTutorialInfo3(this);
+	}
+
+	if (player->getPosition().y > 7150 && player->getPosition().y < 7175)
+	{
+		player->setPositionY(7176);
+		activateTutorialInfo4(this);
+	}
+
+	if (player->getPosition().y > 8350)
+	{
+		activateGameOverScene(1);
 	}
 
 	if (player->getPosition().x < 25)

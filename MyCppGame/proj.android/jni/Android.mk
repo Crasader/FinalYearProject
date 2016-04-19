@@ -37,6 +37,13 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
    ../../Classes/src/EndlessGameOver.cpp \
    ../../Classes/src/Level2.cpp \
    ../../Classes/src/Level3.cpp \
+   ../../Classes/src/TutorialInfo1.cpp \
+   ../../Classes/src/TutorialInfo2.cpp \
+   ../../Classes/src/TutorialInfo3.cpp \
+   ../../Classes/src/TutorialInfo4.cpp \
+   ../../Classes/src/TutorialOverScene.cpp \
+   ../../Classes/src/TutorialPauseScene.cpp \
+   ../../Classes/src/ChooseModeScene.cpp \
    ../../Classes/src/LoadingLevel3.cpp \
    ../../Classes/src/Bike.cpp \
    ../../Classes/src/Tutorial.cpp \

@@ -433,7 +433,7 @@
           "y": 7935
         }
       ],
-      "number_of_minitruck": 22,
+      "number_of_minitruck": 23,
       "my_minitruck": [
         {
           "x": 195,
@@ -522,6 +522,10 @@
         {
           "x": 60,
           "y": 7250
+        },
+        {
+          "x": 60,
+          "y": 7475
         }
       ],
       "number_of_bike": 14,
@@ -579,7 +583,7 @@
           "y": 6450
         }
       ],
-      "number_of_coins": 104,
+      "number_of_coins": 101,
       "my_coins": [
         {
           "x": 60,

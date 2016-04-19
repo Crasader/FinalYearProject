@@ -7,6 +7,7 @@
 #include "EndlessMode.h"
 #include "OptionsScene.h"
 #include "SonarFrameworks.h"
+#include "ChooseModeScene.h"
 #include "Tutorial.h"
 
 class MainMenu : public cocos2d::Layer

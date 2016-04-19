@@ -190,7 +190,7 @@ bool Endless::init()
 	pauseItem->setPosition(22, 520);
 
 	player = Player::create();
-	player->setPosition(100, 125);
+	player->setPosition(195, 125);
 	player->setAnchorPoint(Point(0.5f, 0.55f));
 	this->addChild(player, 5);
 

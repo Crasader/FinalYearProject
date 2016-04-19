@@ -46,27 +46,27 @@ void Level2::addBackGroundSprite(cocos2d::Size const & visibleSize, cocos2d::Poi
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 
 	backgroundSprite = Sprite::create
-		(ptr->m_backgroundTextureFile);
+		(ptr->m_backgroundTextureFile2);
 	backgroundSprite->setPosition(Point((visibleSize.width / 2) +
 		origin.x, (visibleSize.height) + 500));
 
 	backgroundSprite2 = Sprite::create
-		(ptr->m_backgroundTextureFile);
+		(ptr->m_backgroundTextureFile2);
 	backgroundSprite2->setPosition(Point((visibleSize.width / 2) +
 		origin.x, (visibleSize.height) + 2596));
 
 	backgroundSprite3 = Sprite::create
-		(ptr->m_backgroundTextureFile);
+		(ptr->m_backgroundTextureFile2);
 	backgroundSprite3->setPosition(Point((visibleSize.width / 2) +
 		origin.x, (visibleSize.height) + 4596));
 
 	backgroundSprite4 = Sprite::create
-		(ptr->m_backgroundTextureFile);
+		(ptr->m_backgroundTextureFile2);
 	backgroundSprite4->setPosition(Point((visibleSize.width / 2) +
 		origin.x, (visibleSize.height) + 6596));
 
 	backgroundSprite5 = Sprite::create
-		(ptr->m_backgroundTextureFile);
+		(ptr->m_backgroundTextureFile2);
 	backgroundSprite5->setPosition(Point((visibleSize.width / 2) +
 		origin.x, (visibleSize.height) + 8596));
 
@@ -539,7 +539,7 @@ bool Level2::onContactBegin(cocos2d::PhysicsContact &contact)
 
 	if ((0x000001 == a->getCollisionBitmask() && 0x000002 == b->getCollisionBitmask() || 0x000001 == b->getCollisionBitmask() && 0x000002 == a->getCollisionBitmask()))
 	{
-		if (powerUpBool == false)
+		/*if (powerUpBool == false)
 		{
 			this->scheduleOnce(schedule_selector(Level2::activateGameOverScene), 1.491f);
 			CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0.85f);
@@ -551,7 +551,7 @@ bool Level2::onContactBegin(cocos2d::PhysicsContact &contact)
 				SonarCocosHelper::GooglePlayServices::unlockAchievement(achievementID);
 			}
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/GameOver.mp3");	
-		}
+		}*/
 	}
 	return true;
 }

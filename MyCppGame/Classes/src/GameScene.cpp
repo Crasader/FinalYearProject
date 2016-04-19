@@ -211,12 +211,6 @@ void GameScreen::update(float dt)
 		player->setPositionX(371);
 	}
 	cameraTarget->setPositionY(player->getPosition().y + 115);
-
-	/*if (CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying() == false)
-	{
-		CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("audio/background.mp3");
-	}*/
-	//Particles();
 }
 
 bool GameScreen::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event * event)
@@ -545,19 +539,19 @@ bool GameScreen::onContactBegin(cocos2d::PhysicsContact &contact)
 
 	if ((0x000001 == a->getCollisionBitmask() && 0x000002 == b->getCollisionBitmask() || 0x000001 == b->getCollisionBitmask() && 0x000002 == a->getCollisionBitmask()))
 	{
-		if (powerUpBool == false)
-		{
-			this->scheduleOnce(schedule_selector(GameScreen::activateGameOverScene), 1.491f);
-			CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0.85f);
-			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/crashSound.mp3");
-			move = false;
-			Crash();
-			if (SonarCocosHelper::GooglePlayServices::isSignedIn)
-			{
-				SonarCocosHelper::GooglePlayServices::unlockAchievement(achievementID);
-			}
-			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/GameOver.mp3");	
-		}
+		//if (powerUpBool == false)
+		//{
+		//	/*this->scheduleOnce(schedule_selector(GameScreen::activateGameOverScene), 1.491f);
+		//	CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0.85f);
+		//	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/crashSound.mp3");
+		//	move = false;
+		//	Crash();
+		//	if (SonarCocosHelper::GooglePlayServices::isSignedIn)
+		//	{
+		//		SonarCocosHelper::GooglePlayServices::unlockAchievement(achievementID);
+		//	}
+		//	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/GameOver.mp3");	
+		//}*/
 	}
 	return true;
 }
