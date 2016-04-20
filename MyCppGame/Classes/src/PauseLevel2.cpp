@@ -18,9 +18,9 @@ void PauseLevel2::resume(Ref *pSender)
 	Director::getInstance()->popScene();
 }
 
-void PauseLevel2::ToggleMusic(Ref *pSender)
+void PauseLevel2::ToggleMusic(Ref *pSender)//turns the music on or off
 {
-	if (CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying())
+	if (CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying())//checks to see if its playing or not
 	{
 		if (SonarCocosHelper::GooglePlayServices::isSignedIn)
 		{
@@ -85,10 +85,12 @@ bool PauseLevel2::init()
 	auto menu = Menu::create(resumeItem, retryItem, musicItem, mainMenuItem,
 		NULL);
 	
+	//scales all the buttons in the scene
 	resumeItem->setScale(1.25f);
 	retryItem->setScale(1.25f);
 	musicItem->setScale(1.25f);
 	mainMenuItem->setScale(1.25f);
+
 	menu->alignItemsVerticallyWithPadding(visibleSize.height / 35);
 	menu->setPosition(Point(visibleSize.width / 2, (visibleSize.height - 245)));
 	this->addChild(menu);

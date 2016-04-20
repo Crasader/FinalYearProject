@@ -41,8 +41,10 @@ bool EndlessGameOver::init()
 	this->addChild(backgroundSprite);
 
 	auto menuTitle =
-		MenuItemImage::create("GameOverScreen/Game_Over.png",
-			"GameOverScreen/Game_Over.png");
+		Sprite::create("GameOverScreen/Game_Over.png");
+	menuTitle->setPosition(Point(visibleSize.width / 2, (visibleSize.height - 32)));//creates the game over header
+	this->addChild(menuTitle);
+
 	auto retryItem =
 		MenuItemImage::create("GameOverScreen/retrybutton.png",
 			"GameOverScreen/retrybutton.png",
@@ -51,10 +53,15 @@ bool EndlessGameOver::init()
 		MenuItemImage::create("GameOverScreen/mainmenubutton.png",
 			"GameOverScreen/mainmenubutton.png",
 			CC_CALLBACK_1(EndlessGameOver::activateMainMenuScene, this));
-	auto menu = Menu::create(menuTitle, retryItem, mainMenuItem,
+	auto menu = Menu::create(retryItem, mainMenuItem,
 		NULL);
 
-	menu->alignItemsVerticallyWithPadding(visibleSize.height / 10);
+	//scales all buttons in the scene
+	retryItem->setScale(1.18f);
+	mainMenuItem->setScale(1.18f);
+
+	menu->alignItemsVerticallyWithPadding(visibleSize.height / 15);
+	menu->setPosition(Point(visibleSize.width / 2, (visibleSize.height - 235)));
 	this->addChild(menu);
 
 	return true;

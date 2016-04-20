@@ -9,15 +9,15 @@ Player * Player::create()
 	{
 		player->autorelease();
 		player->initPlayer();
-		player->setTag(10);
+		player->setTag(10);//sets the tag for the object
 		cocos2d::Size size(70, 155);
-		auto playerBody = PhysicsBody::createBox(size);
+		auto playerBody = PhysicsBody::createBox(size);//sets tge size of the physics body
 		playerBody->setCollisionBitmask(0x000001);
-		playerBody->setTag(10);
+		playerBody->setTag(10);//sets the tag for the object
 		playerBody->setContactTestBitmask(true);
 		playerBody->setDynamic(false);
 
-		player->setPhysicsBody(playerBody);
+		player->setPhysicsBody(playerBody);//applys the physics body to the sprites
 		return player;
 	}
 
@@ -27,17 +27,8 @@ Player * Player::create()
 
 void Player::initPlayer()
 {
-
 }
 
 void Player::createBody(Player * p)
 {
-	//cocos2d::Size size(70, 150);
-	//auto playerBody = PhysicsBody::createBox(size);
-	//playerBody->setCollisionBitmask(0x000001);
-	//playerBody->setTag(10);
-	//playerBody->setContactTestBitmask(true);
-	//playerBody->setDynamic(false);
-
-	//p->setPhysicsBody(playerBody);
 }

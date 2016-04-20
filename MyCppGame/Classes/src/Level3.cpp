@@ -7,9 +7,8 @@ Scene* Level3::createScene()
 {
 	auto scene = Scene::createWithPhysics();
 	scene->getPhysicsWorld()->setGravity(Vec2(0, 0));
-	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	auto layer = Level3::create();
-	layer->SetPhysicsWorld(scene->getPhysicsWorld());
+	layer->SetPhysicsWorld(scene->getPhysicsWorld());//sets the scene up with a physics world
 
 	scene->addChild(layer);
 	return scene;
@@ -83,7 +82,7 @@ void Level3::DeactivatePowerUp(float dt)
 	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/PowerUpOver.mp3");
 }
 
-void Level3::StopSpeed(float dt)
+void Level3::StopSpeed(float dt)//stops the speed boost
 {
 	speed = false;
 	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/PowerUpOver.mp3");
@@ -95,11 +94,12 @@ bool Level3::init()
 	{
 		return false;
 	}
-	//LevelLoader::getInstance()->load("data/Level2.json");
 	CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(1.0f);
 	m_gameState = GameStates::PlaceGunTower;
 	score = 0;
 	move = true;
+	
+	//preload the sound effects
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("audio/scoreSound.mp3");
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("audio/crashSound.mp3");
 
@@ -115,19 +115,23 @@ bool Level3::init()
 
 	pauseItem->setPosition(22, 520);
 
+	//creates the player object
 	player = Player::create();
 	player->setPosition(340, 125);
 	player->setAnchorPoint(Point(0.5f, 0.55f));
 	this->addChild(player,5);
 
+	//creates the power up object
 	powerUp = PowerUp::create(2);
 	powerUp->setPosition(330,4050);
 	this->addChild(powerUp);
 
+	//creates the HUD object
 	hud = HUD::create();
 	hud->setPosition(333, 530);
 	this->addChild(hud,6);
 
+	//creates the label for the score thats displays in the top right hand corner
 	label = Label::createWithTTF("Score:", "fonts/Marker Felt.ttf", 32);
 	label->setPosition(312, 522);
 	this->addChild(label,7);
@@ -140,6 +144,7 @@ bool Level3::init()
 	menu->setPosition(Point::ZERO);
 	this->addChild(menu,100);
 
+	//methods that create the backgrounds and objects in the level
 	addBackGroundSprite(visibleSize, origin);
 	createTowerBases();
 	createCoins();
@@ -149,19 +154,12 @@ bool Level3::init()
 	createTrucks();
 	createBikes();
 
-
-	/*auto listener = EventListenerTouchOneByOne::create();
-	listener->setSwallowTouches(true);
-
-	listener->onTouchBegan = CC_CALLBACK_2(Level2::onTouchBegan, this);
-	listener->onTouchMoved = CC_CALLBACK_2(Level2::onTouchMoved, this);*/
-
 	auto director = Director::getInstance();
 	auto glview = director->getOpenGLView();
 	auto screenSize = glview->getFrameSize();
+
 	if (player->getPositionX() > 500)
 	{
-		//float temp = screenSize.width - 10;
 		player->setPositionX(499);
 	}
 	if (player->getPositionX() < 0)
@@ -169,16 +167,18 @@ bool Level3::init()
 		player->setPositionX(1);
 	}
 
+	//checks for movement on the device that will be use to move the car
 	Device::setAccelerometerEnabled(true);
 	auto listener = EventListenerAcceleration::create(CC_CALLBACK_2(Level3::OnAcceleration, this));
 	
-	
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
+	//checks for collisions between two objects with physics bodies
 	auto contactListener = EventListenerPhysicsContact::create();
 	contactListener->onContactBegin = CC_CALLBACK_1(Level3::onContactBegin, this);
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);
 
+	//sets up the camera that will follow the player as it moves up the screen
 	cameraTarget = Sprite::create();
 	cameraTarget->setPositionX(visibleSize.width / 2);
 	cameraTarget->setPositionY(player->getPosition().y - 115);
@@ -192,7 +192,7 @@ bool Level3::init()
 
 void Level3::update(float dt)
 {
-	if (move == true)
+	if (move == true)//moves everything up the screen at the same speed
 	{
 		scoreLabel->setPositionY(scoreLabel->getPosition().y + 7.5);
 		label->setPositionY(label->getPosition().y + 7.5);
@@ -208,13 +208,13 @@ void Level3::update(float dt)
 		pauseItem->setPositionY(pauseItem->getPosition().y + 1.8);
 		player->setPositionY(player->getPosition().y + 1.8);
 	}
-	if (player->getPosition().y > 9000)
+	if (player->getPosition().y > 9000)//checks to see if the player has finished the level
 	{
 		float i = 2;
-		//activateGameOverScene(i);
 		activateLoadingScene(i);
 	}
 
+	//checks to make sure the player stays withen the bounds of the screen
 	if (player->getPosition().x < 25)
 	{
 		player->setPositionX(26);
@@ -223,6 +223,8 @@ void Level3::update(float dt)
 	{
 		player->setPositionX(371);
 	}
+
+	//gets the camera to follow the players y postion  
 	cameraTarget->setPositionY(player->getPosition().y + 115);
 	//Particles();
 }
@@ -241,7 +243,7 @@ void Level3::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event * event)
 	}
 }
 
-void Level3::Particles()
+void Level3::Particles()//particles that are use for emissions from the car
 {
 	auto size = Director::getInstance()->getWinSize();
 	auto m_emitter = ParticleSmoke::createWithTotalParticles(900);
@@ -274,15 +276,14 @@ void Level3::Particles()
 	addChild(m_emitter, 10);
 }
 
-void Level3::Crash()
+void Level3::Crash()// draws the animation for a crash and pasticles that fly out from there
 {
+	//animation code
 	auto spritecache = SpriteFrameCache::getInstance();
 	spritecache->addSpriteFramesWithFile("GameScreen/explosion.plist");
 	cocos2d::SpriteFrame* spriteFrame = spritecache->getSpriteFrameByName("explosion0.png");
 	cocos2d::Vector<cocos2d::Sprite *> m_aiSprites;
 	cocos2d::Vector<cocos2d::SpriteFrame*> m_animFrames;
-
-
 	for (int i = 0; i < 23; i++)
 	{
 		// Get a SpriteFrame using a name from the spritesheet .plist file.
@@ -302,11 +303,9 @@ void Level3::Crash()
 	m_aiSprites.pushBack(sprite);
 
 
-
+	//code for the particles that will be coloured orange
 	auto size = Director::getInstance()->getWinSize();
 	auto m_emitter = ParticleExplosion::createWithTotalParticles(900);
-	//m_emitter->setTexture(Director::getInstance()->getTextureCache()->addImage("smoke.png"));
-
 	m_emitter->setDuration(-1);
 	m_emitter->setGravity(Point(0, -240));
 	m_emitter->setAngle(0);
@@ -339,24 +338,25 @@ void Level3::OnAcceleration(cocos2d::CCAcceleration* pAcceleration, cocos2d::Eve
 {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
+	//sets xA and yA to the players position
 	float xA = player->getPosition().x;
 	float yA = player->getPosition().y;
 
 	float w = visibleSize.width;
 
-	xA = xA + (pAcceleration->x * w * 0.05);
+	xA = xA + (pAcceleration->x * w * 0.05);// checks to see how much the device has been tilted
 	if (move == true)
 	{
 		player->setPosition(xA, yA);
 	}
 }
 
-void Level3::createTowerBases()
+void Level3::createTowerBases()//creates the taxis
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 17; i < 24; i++)
+	for (int i = 17; i < 24; i++)//loops thru the taxi for level 1
 	{
 		TowerBase * base = TowerBase::create(Vec2(ptr->m_towerBaseX[i], ptr->m_towerBaseY[i]), m_gameState);
 		m_towerBases.push_back(base);
@@ -365,12 +365,12 @@ void Level3::createTowerBases()
 	this->addChild(spritebatch, 1, TOWERS_SPRITE_BATCH);
 }
 
-void Level3::createCoins()
+void Level3::createCoins()//creates the coins
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 59; i < 92; i++)
+	for (int i = 59; i < 92; i++)//loops thru the coins for level 3
 	{
 		Coin * base = Coin::create(Vec2(ptr->m_coinPosX[i], ptr->m_coinPosY[i]), m_gameState);
 		m_coins.push_back(base);
@@ -379,12 +379,12 @@ void Level3::createCoins()
 	this->addChild(spritebatch, 4, COINS_SPRITE_BATCH);
 }
 
-void Level3::createPolice()
+void Level3::createPolice()//creates the police cars
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 17; i < 24; i++)
+	for (int i = 17; i < 24; i++)//loops thru the police cars for level 3
 	{
 		Police * base = Police::create(Vec2(ptr->m_policePosX[i], ptr->m_policePosY[i]), m_gameState);
 		m_polices.push_back(base);
@@ -393,12 +393,12 @@ void Level3::createPolice()
 	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
 }
 
-void Level3::createAmbulances()
+void Level3::createAmbulances()//creates the ambulances
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 13; i < 22; i++)
+	for (int i = 13; i < 22; i++)//loops thru the ambulances for level 3
 	{
 		Ambulance * base = Ambulance::create(Vec2(ptr->m_ambulancePosX[i], ptr->m_ambulancePosY[i]), m_gameState);
 		m_ambulances.push_back(base);
@@ -407,12 +407,12 @@ void Level3::createAmbulances()
 	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
 }
 
-void Level3::createMTrucks()
+void Level3::createMTrucks()//creates the mini trucks
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 14; i < ptr->m_numberOfMiniTruck; i++)
+	for (int i = 14; i < ptr->m_numberOfMiniTruck; i++)//loops thru the mini trucks for level 3
 	{
 		MiniTruck * base = MiniTruck::create(Vec2(ptr->m_minitruckPosX[i], ptr->m_minitruckPosY[i]), m_gameState);
 		m_miniTrucks.push_back(base);
@@ -421,12 +421,12 @@ void Level3::createMTrucks()
 	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
 }
 
-void Level3::createTrucks()
+void Level3::createTrucks()//creates the trucks
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 17; i < ptr->m_numberOfTruck; i++)
+	for (int i = 17; i < ptr->m_numberOfTruck; i++)//loops thru the trucks for level 3
 	{
 		Truck * base = Truck::create(Vec2(ptr->m_truckPosX[i], ptr->m_truckPosY[i]), m_gameState);
 		m_trucks.push_back(base);
@@ -435,11 +435,11 @@ void Level3::createTrucks()
 	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
 }
 
-void Level3::createBikes()
+void Level3::createBikes()//creates the bkes
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 
-	for (int i = 5; i < ptr->m_numberOfBike; i++)
+	for (int i = 5; i < ptr->m_numberOfBike; i++)//loops thru the bikes for level 3
 	{
 		Bike * base = Bike::create(Vec2(ptr->m_bikePosX[i], ptr->m_bikePosY[i]), m_gameState);
 		m_bikes.push_back(base);
@@ -503,7 +503,7 @@ bool Level3::onContactBegin(cocos2d::PhysicsContact &contact)
 					SonarCocosHelper::GooglePlayServices::unlockAchievement("CgkI69-MotMIEAIQEA");
 					SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQCA", 1);
 				}
-				this->scheduleOnce(schedule_selector(Level3::StopSpeed), 3.0f);
+				this->scheduleOnce(schedule_selector(Level3::StopSpeed), 2.0f);
 			}
 			else if (nodeB->getTag() == 60)
 			{
@@ -565,7 +565,7 @@ bool Level3::onContactBegin(cocos2d::PhysicsContact &contact)
 				SonarCocosHelper::GooglePlayServices::unlockAchievement("CgkI69-MotMIEAIQEA");
 				SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQCA", 1);
 			}
-			this->scheduleOnce(schedule_selector(Level3::StopSpeed), 3.0f);
+			this->scheduleOnce(schedule_selector(Level3::StopSpeed), 2.0f);
 		}
 
 		else if (nodeA->getTag() == 60)

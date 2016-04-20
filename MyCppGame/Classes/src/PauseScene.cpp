@@ -32,9 +32,9 @@ void PauseMenu::retry(Ref *pSender)
 	Director::getInstance()->replaceScene(scene);
 }
 
-void PauseMenu::ToggleMusic(Ref *pSender)
+void PauseMenu::ToggleMusic(Ref *pSender)//turns the background music on or off
 {
-	if (CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying())
+	if (CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying())//checks to see if its playing or not
 	{
 		if (SonarCocosHelper::GooglePlayServices::isSignedIn)
 		{
@@ -84,12 +84,13 @@ bool PauseMenu::init()
 			CC_CALLBACK_1(PauseMenu::activateMainMenuScene, this));
 	auto menu = Menu::create(resumeItem, retryItem, musicItem, mainMenuItem,
 		NULL);
-	/*auto menu = Menu::create(resumeItem, retryItem, mainMenuItem,
-		NULL);*/
+
+	//scales all the button in the scene
 	resumeItem->setScale(1.25f);
 	retryItem->setScale(1.25f);
 	musicItem->setScale(1.25f);
 	mainMenuItem->setScale(1.25f);
+
 	menu->alignItemsVerticallyWithPadding(visibleSize.height / 35);
 	menu->setPosition(Point(visibleSize.width / 2, (visibleSize.height - 245)));
 	this->addChild(menu);

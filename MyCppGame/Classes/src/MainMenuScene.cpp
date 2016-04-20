@@ -15,14 +15,6 @@ Scene* MainMenu::createScene()
 
 void MainMenu::activateGameScene(Ref *pSender)
 {
-	//auto scene = GameScreen::createScene();
-	//Director::getInstance()->replaceScene(scene);
-	//auto scene = Level2::createScene();
-	//Director::getInstance()->replaceScene(scene);
-	//auto scene = Level3::createScene();
-	//Director::getInstance()->replaceScene(scene);
-	//auto scene = Tutorial::createScene();
-	//Director::getInstance()->replaceScene(scene);
 	auto scene = ChooseMode::createScene();
 	Director::getInstance()->replaceScene(scene);
 }
@@ -31,13 +23,13 @@ void MainMenu::activateTrialScene(Ref *pSender)
 {
 	if (SonarCocosHelper::GooglePlayServices::isSignedIn)
 	{
-		SonarCocosHelper::GooglePlayServices::unlockAchievement("CgkI69-MotMIEAIQDA");
+		SonarCocosHelper::GooglePlayServices::unlockAchievement("CgkI69-MotMIEAIQDA");//gets a trophy for playing the modes
 	}
 	auto scene = Endless::createScene();
 	Director::getInstance()->replaceScene(scene);
 }
 
-void MainMenu::activateTrophies(Ref *pSender)
+void MainMenu::activateTrophies(Ref *pSender)//displays the google play trophies
 {
 	if (SonarCocosHelper::GooglePlayServices::isSignedIn)
 	{
@@ -45,11 +37,10 @@ void MainMenu::activateTrophies(Ref *pSender)
 	}
 }
 
-void MainMenu::activateLeaderboards(Ref *pSender)
+void MainMenu::activateLeaderboards(Ref *pSender)//displays the google play leaderboards
 {
 	if (SonarCocosHelper::GooglePlayServices::isSignedIn)
 	{
-		//SonarCocosHelper::GooglePlayServices::showLeaderboard("CgkI69-MotMIEAIQAg");
 		SonarCocosHelper::GooglePlayServices::showLeaderboards();
 	}
 }
@@ -73,9 +64,6 @@ bool MainMenu::init()
 	y = (visibleSize.height) + 500;
 	this->addChild(backgroundSprite);
 
-	/*auto menuTitle =
-		MenuItemImage::create("MainMenuScreen/horizonlogo.png",
-			"MainMenuScreen/horizonlogo.png");*/
 	auto menuTitle =
 		Sprite::create("MainMenuScreen/horizonlogo.png");
 	menuTitle->setPosition(Point(visibleSize.width / 2 , (visibleSize.height - 20 )));
@@ -101,7 +89,8 @@ bool MainMenu::init()
 		MenuItemImage::create("MainMenuScreen/quitbutton.png",
 			"MainMenuScreen/quitbutton.png",
 			CC_CALLBACK_1(MainMenu::activateQuitScene, this));
-	//auto menu = Menu::create(menuTitle, playItem,optionsItem,quitItem, NULL);
+
+	//scales all the buttons for the menu
 	playItem->setScale(1.28f);
 	optionsItem1->setScale(1.28f);
 	quitItem1->setScale(1.28f);
@@ -109,20 +98,10 @@ bool MainMenu::init()
 	quitItem->setScale(1.28f);
 	auto menu = Menu::create(playItem, optionsItem1, optionsItem, quitItem1, quitItem, NULL);
 
-	// Returns visible size of OpenGL window in points.
-	//Size visibleSize = Director::getInstance()->getVisibleSize();
 	menu->alignItemsVerticallyWithPadding(visibleSize.height / 15);
 	menu->setPosition(Point(visibleSize.width / 2, (visibleSize.height - 282)));
 	this->addChild(menu);
-
-	//cameraTarget = Sprite::create();
-	//cameraTarget->setPositionX(visibleSize.width / 2);
-	//cameraTarget->setPositionY(y);
 	this->scheduleUpdate();
-	//this->addChild(cameraTarget);
-	//camera = Follow::create(cameraTarget, Rect::ZERO);
-	//camera->retain();
-	//this->runAction(camera);
 
 	return true;
 }
@@ -130,10 +109,10 @@ bool MainMenu::init()
 void MainMenu::update(float dt)
 {
 	y = y - 5;
-	backgroundSprite->setPosition(backgroundSprite->getPosition().x, y);
+	backgroundSprite->setPosition(backgroundSprite->getPosition().x, y);//gets the road move in the background
 
 	if (y < -530)
 	{
-		y = (visibleSize.height) + 500;
+		y = (visibleSize.height) + 500;//restarts the road to the begining to make it look like it goes forever
 	}
 }

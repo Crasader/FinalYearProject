@@ -215,8 +215,6 @@ void Endless::update(float dt)
 		backgroundSprite3->setPositionY(backgroundSprite->getPosition().y + 1.8);
 	}
 	cameraTarget->setPositionY(player->getPosition().y + 115);
-	//EndlessGame(temp);
-	//Particles();
 }
 
 void Endless::Timer(float dt)
@@ -242,6 +240,7 @@ void Endless::UpdateScore(float dt)
 void Endless::EndlessGame(float dt)
 {
 	randX1 = cocos2d::RandomHelper::random_int(1, 3);
+	//generates a random number to determine what lane the car will be placed in 
 	if (randX1 == 1)
 	{
 		xPos = 60;
@@ -259,6 +258,7 @@ void Endless::EndlessGame(float dt)
 
 		
 	randCar = cocos2d::RandomHelper::random_int(1, 5);
+	//generates a random car type
 	if (randCar == 1)
 	{
 		createTrucks(xPos, yPos);
@@ -282,7 +282,7 @@ void Endless::EndlessGame(float dt)
 
 	randX2 = cocos2d::RandomHelper::random_int(1, 3);
 
-	if (randX2 == tempRand1)
+	if (randX2 == tempRand1)//checks to make sure the second car isn't drawing in the same lane as the first car
 	{
 		if (tempRand1 == 1)
 		{
@@ -323,6 +323,7 @@ void Endless::EndlessGame(float dt)
 
 		tempRand2 = randX2;
 		randCar = cocos2d::RandomHelper::random_int(1, 5);
+		//generates a random car type
 		if (randCar == 1)
 		{
 			createTrucks(xPos, yPos);
@@ -346,6 +347,7 @@ void Endless::EndlessGame(float dt)
 	}
 	else
 	{
+		//generates a random number to determine what lane the car will be placed in 
 		if (randX2 == 1)
 		{
 			xPos = 60;
@@ -360,6 +362,7 @@ void Endless::EndlessGame(float dt)
 		}
 		tempRand2 = randX2;
 		randCar = cocos2d::RandomHelper::random_int(1, 5);
+		//generates a random car type
 		if (randCar == 1)
 		{
 			createTrucks(xPos, yPos);
@@ -381,12 +384,13 @@ void Endless::EndlessGame(float dt)
 			createMTrucks(xPos, yPos);
 		}
 	}
-	yPos = yPos + 500;
+	yPos = yPos + 500;//moves up the ypos so theres a gap between the rows of cars
 }
 
 void Endless::RandomCoins(float dt)
 {
 	randCoinX = cocos2d::RandomHelper::random_int(1, 3);
+	//places the coin on a certain lanes depeneding on the random number
 	if (randCoinX == 1)
 	{
 		coinX = 60;
@@ -400,12 +404,13 @@ void Endless::RandomCoins(float dt)
 		coinX = 340;
 	}
 	createCoins(coinX, coinY);
-	coinY += 1000;
+	coinY += 1000;//moves the ypos up two rows of traffic for when drawing the next coin
 }
 
 void Endless::RandomPowerUps(float dt)
 {
 	randPowerX = cocos2d::RandomHelper::random_int(1, 3);
+	//places the power on a certain lanes depeneding on the random number
 	if (randPowerX == 1)
 	{
 		powerX = 60;
@@ -419,11 +424,11 @@ void Endless::RandomPowerUps(float dt)
 		powerX = 340;
 	}
 	
-	int randPower = cocos2d::RandomHelper::random_int(1, 3);
+	int randPower = cocos2d::RandomHelper::random_int(1, 3);//randomly generates what power up its going to be
 	auto powerUp1 = PowerUp::create(randPower);
-	powerUp1->setPosition(powerX, powerY);
+	powerUp1->setPosition(powerX, powerY);//sets the position to draw the power up
 	this->addChild(powerUp1);
-	powerY += 5000;
+	powerY += 5000;//moves the ypos up a number rows of traffic for when drawing the next power up
 }
 
 bool Endless::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event * event)
@@ -440,20 +445,19 @@ void Endless::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event * event)
 	}
 }
 
-void Endless::Particles()
+void Endless::Particles()//particles that are use for emissions from the car
 {
 
 }
 
-void Endless::Crash()
+void Endless::Crash()// draws the animation for a crash and pasticles that fly out from there
 {
+	//animation code
 	auto spritecache = SpriteFrameCache::getInstance();
 	spritecache->addSpriteFramesWithFile("GameScreen/explosion.plist");
 	cocos2d::SpriteFrame* spriteFrame = spritecache->getSpriteFrameByName("explosion0.png");
 	cocos2d::Vector<cocos2d::Sprite *> m_aiSprites;
 	cocos2d::Vector<cocos2d::SpriteFrame*> m_animFrames;
-
-
 	for (int i = 0; i < 23; i++)
 	{
 		// Get a SpriteFrame using a name from the spritesheet .plist file.
@@ -472,10 +476,10 @@ void Endless::Crash()
 	this->addChild(sprite, 10);
 	m_aiSprites.pushBack(sprite);
 
+	
+	//code for the particles that will be coloured orange
 	auto size = Director::getInstance()->getWinSize();
 	auto m_emitter = ParticleExplosion::createWithTotalParticles(900);
-	//m_emitter->setTexture(Director::getInstance()->getTextureCache()->addImage("smoke.png"));
-
 	m_emitter->setDuration(-1);
 	m_emitter->setGravity(Point(0, -240));
 	m_emitter->setAngle(0);
@@ -508,12 +512,13 @@ void Endless::OnAcceleration(cocos2d::CCAcceleration* pAcceleration, cocos2d::Ev
 {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
+	//sets xA and yA to the players position
 	float xA = player->getPosition().x;
 	float yA = player->getPosition().y;
 
 	float w = visibleSize.width;
 
-	xA = xA + (pAcceleration->x * w * 0.05);
+	xA = xA + (pAcceleration->x * w * 0.05);// checks to see how much the device has been tilted
 	if (move == true)
 	{
 		player->setPosition(xA, yA);
@@ -521,7 +526,7 @@ void Endless::OnAcceleration(cocos2d::CCAcceleration* pAcceleration, cocos2d::Ev
 }
 
 
-void Endless::createTowerBases(int x, int y)
+void Endless::createTowerBases(int x, int y)//creates the taxis
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
@@ -531,7 +536,7 @@ void Endless::createTowerBases(int x, int y)
 	this->addChild(spritebatch, 1, TOWERS_SPRITE_BATCH);
 }
 
-void Endless::createCoins(int x, int y)
+void Endless::createCoins(int x, int y)//creates the coins
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
@@ -541,7 +546,7 @@ void Endless::createCoins(int x, int y)
 	this->addChild(spritebatch, 4, COINS_SPRITE_BATCH);
 }
 
-void Endless::createPolice(int x, int y)
+void Endless::createPolice(int x, int y)//creates the police cars
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
@@ -551,7 +556,7 @@ void Endless::createPolice(int x, int y)
 	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
 }
 
-void Endless::createAmbulances(int x, int y)
+void Endless::createAmbulances(int x, int y)//creates the ambulances
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
@@ -562,7 +567,7 @@ void Endless::createAmbulances(int x, int y)
 	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
 }
 
-void Endless::createMTrucks(int x, int y)
+void Endless::createMTrucks(int x, int y)//creates the mini trucks
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
@@ -572,7 +577,7 @@ void Endless::createMTrucks(int x, int y)
 	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
 }
 
-void Endless::createTrucks(int x, int y)
+void Endless::createTrucks(int x, int y)//creates the trucks
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
@@ -630,7 +635,7 @@ bool Endless::onContactBegin(cocos2d::PhysicsContact &contact)
 					SonarCocosHelper::GooglePlayServices::unlockAchievement("CgkI69-MotMIEAIQEA");
 					SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQCA", 1);
 				}
-				this->scheduleOnce(schedule_selector(Endless::StopSpeed), 4.0f);
+				this->scheduleOnce(schedule_selector(Endless::StopSpeed), 4.5f);
 			}
 			else if (nodeB->getTag() == 60)
 			{
@@ -682,7 +687,7 @@ bool Endless::onContactBegin(cocos2d::PhysicsContact &contact)
 				SonarCocosHelper::GooglePlayServices::unlockAchievement("CgkI69-MotMIEAIQEA");
 				SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQCA", 1);
 			}
-			this->scheduleOnce(schedule_selector(Endless::StopSpeed), 4.0f);
+			this->scheduleOnce(schedule_selector(Endless::StopSpeed), 4.5f);
 		}
 		else if (nodeA->getTag() == 60)
 		{

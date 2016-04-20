@@ -55,8 +55,11 @@ bool GameOver::init()
 			CC_CALLBACK_1(GameOver::activateMainMenuScene, this));
 	auto menu = Menu::create(retryItem, mainMenuItem,
 		NULL);
+
+	//scales all the buttons in the scene
 	retryItem->setScale(1.18f);
 	mainMenuItem->setScale(1.18f);
+	
 	menu->alignItemsVerticallyWithPadding(visibleSize.height / 15);
 	menu->setPosition(Point(visibleSize.width / 2, (visibleSize.height - 235)));
 	this->addChild(menu);

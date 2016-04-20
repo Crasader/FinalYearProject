@@ -143,13 +143,6 @@ bool Level2::init()
 	createTrucks();
 	createBikes();
 
-
-	/*auto listener = EventListenerTouchOneByOne::create();
-	listener->setSwallowTouches(true);
-
-	listener->onTouchBegan = CC_CALLBACK_2(Level2::onTouchBegan, this);
-	listener->onTouchMoved = CC_CALLBACK_2(Level2::onTouchMoved, this);*/
-
 	auto director = Director::getInstance();
 	auto glview = director->getOpenGLView();
 	auto screenSize = glview->getFrameSize();
@@ -163,16 +156,18 @@ bool Level2::init()
 		player->setPositionX(1);
 	}
 
+	//checks for movement on the device that will be use to move the car
 	Device::setAccelerometerEnabled(true);
 	auto listener = EventListenerAcceleration::create(CC_CALLBACK_2(Level2::OnAcceleration, this));
 	
-	
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
+	//checks for collisions between two objects with physics bodies
 	auto contactListener = EventListenerPhysicsContact::create();
 	contactListener->onContactBegin = CC_CALLBACK_1(Level2::onContactBegin, this);
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);
 
+	//sets up the camera that will follow the player as it moves up the screen
 	cameraTarget = Sprite::create();
 	cameraTarget->setPositionX(visibleSize.width / 2);
 	cameraTarget->setPositionY(player->getPosition().y - 115);
@@ -186,7 +181,7 @@ bool Level2::init()
 
 void Level2::update(float dt)
 {
-	if (move == true)
+	if (move == true)//moves everything up the screen at the same speed
 	{
 		scoreLabel->setPositionY(scoreLabel->getPosition().y + 7.5);
 		label->setPositionY(label->getPosition().y + 7.5);
@@ -194,13 +189,13 @@ void Level2::update(float dt)
 		pauseItem->setPositionY(pauseItem->getPosition().y + 7.5);
 		player->setPositionY(player->getPosition().y + 7.5);
 	}
-	if (player->getPosition().y > 7870)
+	if (player->getPosition().y > 7870)//checks to see if the player has finished the level
 	{
 		float i = 2;
-		//activateGameOverScene(i);
 		activateLoadingScene(i);
 	}
 
+	//checks to make sure the player stays withen the bounds of the screen
 	if (player->getPosition().x < 25)
 	{
 		player->setPositionX(26);
@@ -209,6 +204,8 @@ void Level2::update(float dt)
 	{
 		player->setPositionX(371);
 	}
+
+	//gets the camera to follow the players y postion  
 	cameraTarget->setPositionY(player->getPosition().y + 115);
 	//Particles();
 }
@@ -227,7 +224,7 @@ void Level2::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event * event)
 	}
 }
 
-void Level2::Particles()
+void Level2::Particles()//particles that are use for emissions from the car
 {
 	auto size = Director::getInstance()->getWinSize();
 	auto m_emitter = ParticleSmoke::createWithTotalParticles(900);
@@ -260,15 +257,14 @@ void Level2::Particles()
 	addChild(m_emitter, 10);
 }
 
-void Level2::Crash()
+void Level2::Crash()// draws the animation for a crash and pasticles that fly out from there
 {
+	//animation code
 	auto spritecache = SpriteFrameCache::getInstance();
 	spritecache->addSpriteFramesWithFile("GameScreen/explosion.plist");
 	cocos2d::SpriteFrame* spriteFrame = spritecache->getSpriteFrameByName("explosion0.png");
 	cocos2d::Vector<cocos2d::Sprite *> m_aiSprites;
 	cocos2d::Vector<cocos2d::SpriteFrame*> m_animFrames;
-
-
 	for (int i = 0; i < 23; i++)
 	{
 		// Get a SpriteFrame using a name from the spritesheet .plist file.
@@ -288,11 +284,9 @@ void Level2::Crash()
 	m_aiSprites.pushBack(sprite);
 
 
-
+	//code for the particles that will be coloured orange
 	auto size = Director::getInstance()->getWinSize();
 	auto m_emitter = ParticleExplosion::createWithTotalParticles(900);
-	//m_emitter->setTexture(Director::getInstance()->getTextureCache()->addImage("smoke.png"));
-
 	m_emitter->setDuration(-1);
 	m_emitter->setGravity(Point(0, -240));
 	m_emitter->setAngle(0);
@@ -325,24 +319,25 @@ void Level2::OnAcceleration(cocos2d::CCAcceleration* pAcceleration, cocos2d::Eve
 {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
+	//sets xA and yA to the players position
 	float xA = player->getPosition().x;
 	float yA = player->getPosition().y;
 
 	float w = visibleSize.width;
 
-	xA = xA + (pAcceleration->x * w * 0.05);
+	xA = xA + (pAcceleration->x * w * 0.05);// checks to see how much the device has been tilted
 	if (move == true)
 	{
 		player->setPosition(xA, yA);
 	}
 }
 
-void Level2::createTowerBases()
+void Level2::createTowerBases()//creates the taxis
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 9; i < 17; i++)
+	for (int i = 9; i < 17; i++)//loops thru the taxi for level 2
 	{
 		TowerBase * base = TowerBase::create(Vec2(ptr->m_towerBaseX[i], ptr->m_towerBaseY[i]), m_gameState);
 		m_towerBases.push_back(base);
@@ -351,12 +346,12 @@ void Level2::createTowerBases()
 	this->addChild(spritebatch, 1, TOWERS_SPRITE_BATCH);
 }
 
-void Level2::createCoins()
+void Level2::createCoins()//creates the coins
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 23; i < 59; i++)
+	for (int i = 23; i < 59; i++)//loops thru the coins for level 2
 	{
 		Coin * base = Coin::create(Vec2(ptr->m_coinPosX[i], ptr->m_coinPosY[i]), m_gameState);
 		m_coins.push_back(base);
@@ -365,12 +360,12 @@ void Level2::createCoins()
 	this->addChild(spritebatch, 4, COINS_SPRITE_BATCH);
 }
 
-void Level2::createPolice()
+void Level2::createPolice()//creates the police cars
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 10; i < 17; i++)
+	for (int i = 10; i < 17; i++)//loops thru the police cars for level 2
 	{
 		Police * base = Police::create(Vec2(ptr->m_policePosX[i], ptr->m_policePosY[i]), m_gameState);
 		m_polices.push_back(base);
@@ -379,12 +374,12 @@ void Level2::createPolice()
 	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
 }
 
-void Level2::createAmbulances()
+void Level2::createAmbulances()//creates the ambulances
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 4; i < 13; i++)
+	for (int i = 4; i < 13; i++)//loops thru the ambulances for level 2
 	{
 		Ambulance * base = Ambulance::create(Vec2(ptr->m_ambulancePosX[i], ptr->m_ambulancePosY[i]), m_gameState);
 		m_ambulances.push_back(base);
@@ -393,12 +388,12 @@ void Level2::createAmbulances()
 	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
 }
 
-void Level2::createMTrucks()
+void Level2::createMTrucks()//creates the mini trucks
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 6; i < 14; i++)
+	for (int i = 6; i < 14; i++)//loops thru the mini trucks for level 2
 	{
 		MiniTruck * base = MiniTruck::create(Vec2(ptr->m_minitruckPosX[i], ptr->m_minitruckPosY[i]), m_gameState);
 		m_miniTrucks.push_back(base);
@@ -407,12 +402,12 @@ void Level2::createMTrucks()
 	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
 }
 
-void Level2::createTrucks()
+void Level2::createTrucks()//creates the trucks
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 10; i < 17; i++)
+	for (int i = 10; i < 17; i++)//loops thru the trucks for level 2
 	{
 		Truck * base = Truck::create(Vec2(ptr->m_truckPosX[i], ptr->m_truckPosY[i]), m_gameState);
 		m_trucks.push_back(base);
@@ -421,17 +416,16 @@ void Level2::createTrucks()
 	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
 }
 
-void Level2::createBikes()
+void Level2::createBikes()//creates the bikes
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 
-	for (int i = 3; i < 5; i++)
+	for (int i = 3; i < 5; i++)//loops thru the bkes for level 2
 	{
 		Bike * base = Bike::create(Vec2(ptr->m_bikePosX[i], ptr->m_bikePosY[i]), m_gameState);
 		m_bikes.push_back(base);
 		this->addChild(base, 1);
 	}
-	//this->addChild(base, 1, COINS_SPRITE_BATCH);
 }
 
 bool Level2::onContactBegin(cocos2d::PhysicsContact &contact)

@@ -155,16 +155,18 @@ bool Tutorial::init()
 	auto glview = director->getOpenGLView();
 	auto screenSize = glview->getFrameSize();
 
+	//checks for movement on the device that will be use to move the car
 	Device::setAccelerometerEnabled(true);
 	auto listener = EventListenerAcceleration::create(CC_CALLBACK_2(Tutorial::OnAcceleration, this));
 	
-	
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
+	//checks for collisions between two objects with physics bodies
 	auto contactListener = EventListenerPhysicsContact::create();
 	contactListener->onContactBegin = CC_CALLBACK_1(Tutorial::onContactBegin, this);
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);
 
+	//sets up the camera that will follow the player as it moves up the screen
 	cameraTarget = Sprite::create();
 	cameraTarget->setPositionX(visibleSize.width / 2);
 	cameraTarget->setPositionY(player->getPosition().y - 115);
@@ -178,7 +180,7 @@ bool Tutorial::init()
 
 void Tutorial::update(float dt)
 {
-	if (move == true)
+	if (move == true)//moves everything up the screen at the same speed
 	{
 		player->setPositionY(player->getPosition().y + 7.5);
 		pauseItem->setPositionY(pauseItem->getPosition().y + 7.5);
@@ -212,11 +214,12 @@ void Tutorial::update(float dt)
 		activateTutorialInfo4(this);
 	}
 
-	if (player->getPosition().y > 8350)
+	if (player->getPosition().y > 8350)//checks to see if the player has finished the level
 	{
 		activateGameOverScene(1);
 	}
 
+	//checks to make sure the player stays withen the bounds of the screen
 	if (player->getPosition().x < 25)
 	{
 		player->setPositionX(26);
@@ -225,6 +228,8 @@ void Tutorial::update(float dt)
 	{
 		player->setPositionX(371);
 	}
+
+	//gets the camera to follow the players y postion  
 	cameraTarget->setPositionY(player->getPosition().y + 115);
 }
 
@@ -242,15 +247,14 @@ void Tutorial::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event * event)
 	}
 }
 
-void Tutorial::Crash()
+void Tutorial::Crash()// draws the animation for a crash and pasticles that fly out from there
 {
+	//animation code
 	auto spritecache = SpriteFrameCache::getInstance();
 	spritecache->addSpriteFramesWithFile("GameScreen/explosion.plist");
 	cocos2d::SpriteFrame* spriteFrame = spritecache->getSpriteFrameByName("explosion0.png");
 	cocos2d::Vector<cocos2d::Sprite *> m_aiSprites;
 	cocos2d::Vector<cocos2d::SpriteFrame*> m_animFrames;
-
-
 	for (int i = 0; i < 23; i++)
 	{
 		// Get a SpriteFrame using a name from the spritesheet .plist file.
@@ -270,11 +274,9 @@ void Tutorial::Crash()
 	m_aiSprites.pushBack(sprite);
 
 
-
+	//code for the particles that will be coloured orange
 	auto size = Director::getInstance()->getWinSize();
 	auto m_emitter = ParticleExplosion::createWithTotalParticles(900);
-	//m_emitter->setTexture(Director::getInstance()->getTextureCache()->addImage("smoke.png"));
-
 	m_emitter->setDuration(-1);
 	m_emitter->setGravity(Point(0, -240));
 	m_emitter->setAngle(0);
@@ -307,24 +309,25 @@ void Tutorial::OnAcceleration(cocos2d::CCAcceleration* pAcceleration, cocos2d::E
 {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
+	//sets xA and yA to the players position
 	float xA = player->getPosition().x;
 	float yA = player->getPosition().y;
 
 	float w = visibleSize.width;
 
-	xA = xA + (pAcceleration->x * w * 0.05);
+	xA = xA + (pAcceleration->x * w * 0.05);// checks to see how much the device has been tilted
 	if (move == true)
 	{
 		player->setPosition(xA, yA);
 	}
 }
 
-void Tutorial::createTowerBases()
+void Tutorial::createTowerBases()//creates the taxis
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 24; i < ptr->m_numberOfTowerBases; i++)
+	for (int i = 24; i < ptr->m_numberOfTowerBases; i++)//loops thru the taxi for tutorial
 	{
 		TowerBase * base = TowerBase::create(Vec2(ptr->m_towerBaseX[i], ptr->m_towerBaseY[i]), m_gameState);
 		m_towerBases.push_back(base);
@@ -333,12 +336,12 @@ void Tutorial::createTowerBases()
 	this->addChild(spritebatch, 1, TOWERS_SPRITE_BATCH);
 }
 
-void Tutorial::createCoins()
+void Tutorial::createCoins()//creates the coins
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 92; i < 104; i++)
+	for (int i = 92; i < 104; i++)//loops thru the coins for tutorial
 	{
 		Coin * base = Coin::create(Vec2(ptr->m_coinPosX[i], ptr->m_coinPosY[i]), m_gameState);
 		m_coins.push_back(base);
@@ -347,12 +350,12 @@ void Tutorial::createCoins()
 	this->addChild(spritebatch, 4, COINS_SPRITE_BATCH);
 }
 
-void Tutorial::createPolice()
+void Tutorial::createPolice()//creates the police cars
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 24; i < ptr->m_numberOfPolice; i++)
+	for (int i = 24; i < ptr->m_numberOfPolice; i++)//loops thru the police cars for tutorial
 	{
 		Police * base = Police::create(Vec2(ptr->m_policePosX[i], ptr->m_policePosY[i]), m_gameState);
 		m_polices.push_back(base);
@@ -361,12 +364,12 @@ void Tutorial::createPolice()
 	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
 }
 
-void Tutorial::createAmbulances()
+void Tutorial::createAmbulances()//creates the ambulances
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 22; i < ptr->m_numberOfAmbulance; i++)
+	for (int i = 22; i < ptr->m_numberOfAmbulance; i++)//loops thru the ambulances for tutorial
 	{
 		Ambulance * base = Ambulance::create(Vec2(ptr->m_ambulancePosX[i], ptr->m_ambulancePosY[i]), m_gameState);
 		m_ambulances.push_back(base);
@@ -375,12 +378,12 @@ void Tutorial::createAmbulances()
 	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
 }
 
-void Tutorial::createMTrucks()
+void Tutorial::createMTrucks()//creates the mini trucks
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < 6; i++)//loops thru the mini trucks for tutorial
 	{
 		MiniTruck * base = MiniTruck::create(Vec2(ptr->m_minitruckPosX[i], ptr->m_minitruckPosY[i]), m_gameState);
 		m_miniTrucks.push_back(base);
@@ -389,12 +392,12 @@ void Tutorial::createMTrucks()
 	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
 }
 
-void Tutorial::createTrucks()
+void Tutorial::createTrucks()//creates the trucks
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create(ptr->m_textureAtlasImageFile);
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 10; i++)//loops thru the trucks for tutorial
 	{
 		Truck * base = Truck::create(Vec2(ptr->m_truckPosX[i], ptr->m_truckPosY[i]), m_gameState);
 		m_trucks.push_back(base);
@@ -403,11 +406,11 @@ void Tutorial::createTrucks()
 	this->addChild(spritebatch, 1, COINS_SPRITE_BATCH);
 }
 
-void Tutorial::createBikes()
+void Tutorial::createBikes()//creates the bikes
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 3; i++)//loops thru the bikes for tutorial
 	{
 		Bike * base = Bike::create(Vec2(ptr->m_bikePosX[i], ptr->m_bikePosY[i]), m_gameState);
 		m_bikes.push_back(base);

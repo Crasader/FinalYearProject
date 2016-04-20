@@ -13,7 +13,7 @@ Scene* ChooseMode::createScene()
 	return scene;
 }
 
-void ChooseMode::activateGameScene(cocos2d::Ref *pSender)
+void ChooseMode::activateGameScene(cocos2d::Ref *pSender)//plays the main game
 {
 	if (SonarCocosHelper::GooglePlayServices::isSignedIn)
 	{
@@ -23,7 +23,7 @@ void ChooseMode::activateGameScene(cocos2d::Ref *pSender)
 	Director::getInstance()->replaceScene(scene);
 }
 
-void ChooseMode::activateTutorialScene(cocos2d::Ref *pSender)
+void ChooseMode::activateTutorialScene(cocos2d::Ref *pSender)//plays the tutorial
 {
 	auto scene = Tutorial::createScene();
 	Director::getInstance()->replaceScene(scene);
@@ -61,8 +61,11 @@ bool ChooseMode::init()
 			CC_CALLBACK_1(ChooseMode::activateTutorialScene, this));
 	auto menu = Menu::create(retryItem, mainMenuItem,
 		NULL);
+
+	//scales al the buttons in the scene
 	retryItem->setScale(1.18f);
 	mainMenuItem->setScale(1.18f);
+
 	menu->alignItemsVerticallyWithPadding(visibleSize.height / 15);
 	menu->setPosition(Point(visibleSize.width / 2, (visibleSize.height - 235)));
 	this->addChild(menu);
