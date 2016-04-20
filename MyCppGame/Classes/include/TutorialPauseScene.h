@@ -11,11 +11,11 @@ public:
 	virtual bool init();
 
 	// Called when resume is selected.
-	void resume(Ref *pSender);
+	void resume(Ref *pSender);//changes scene back to the game scene.
 	// Called when main menu is selected.
-	void activateMainMenuScene(Ref *pSender);
+	void activateMainMenuScene(Ref *pSender);//changes scene to the main menu scene.
 	// Called when retry is selected.
-	void retry(Ref *pSender);
+	void retry(Ref *pSender);//restarts the game when called.
 
 	CREATE_FUNC(TutorialPause);
 };

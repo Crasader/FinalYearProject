@@ -11,9 +11,9 @@ private:
 public:
 	Taxi(GameStates & gameState);
 
-	static Taxi * create(cocos2d::Vec2 position, GameStates & gameState);
+	static Taxi * create(cocos2d::Vec2 position, GameStates & gameState);//creates the object when called.
 
-	void initOptions(cocos2d::Vec2 position);
+	void initOptions(cocos2d::Vec2 position);//sets the position of the object.
 
 	void addEvents();
 };

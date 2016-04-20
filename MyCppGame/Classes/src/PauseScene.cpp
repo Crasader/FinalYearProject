@@ -36,6 +36,10 @@ void PauseMenu::ToggleMusic(Ref *pSender)
 {
 	if (CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying())
 	{
+		if (SonarCocosHelper::GooglePlayServices::isSignedIn)
+		{
+			SonarCocosHelper::GooglePlayServices::unlockAchievement("CgkI69-MotMIEAIQEg");
+		}
 		CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
 	}
 	else

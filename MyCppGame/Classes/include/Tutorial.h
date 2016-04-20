@@ -30,63 +30,61 @@
 
 class Tutorial : public cocos2d::Layer
 {
+private:
+	Player * player;
+	PowerUp * powerUp;
+	bool speed;
+	cocos2d::Sprite *cameraTarget;//camera sprite
+	cocos2d::Sprite *backgroundSprite;//background sprite
+	cocos2d::Sprite *backgroundSprite2;//background sprite
+	cocos2d::Sprite *backgroundSprite3;//background sprite
+	cocos2d::Sprite *backgroundSprite4;//background sprite
+	cocos2d::Sprite *backgroundSprite5;//background sprite
+	cocos2d::Follow *camera;//follow camera
+	cocos2d::Label *label;
+	cocos2d::Label *scoreLabel;
+	cocos2d::MenuItemSprite *pauseItem;//menu item for the pause button
+	cocos2d::ProgressTimer *progressTimer;
+	std::string const TOWERS_SPRITE_BATCH = "TowerBases";
+	std::string const COINS_SPRITE_BATCH = "Coins";
+	bool powerUpBool;//bool to check to see if power up 1 is active
+	std::vector<TowerBase *> m_towerBases;  //array for taxi cars
+	std::vector<Coin *> m_coins;  //array for coins
+	std::vector<Police *> m_polices;  //array for police cars
+	std::vector<Ambulance *> m_ambulances;  //array for ambulances
+	std::vector<Truck *> m_trucks;  //array for trucks
+	std::vector<MiniTruck *> m_miniTrucks;  //array for mini trucks
+	std::vector<Bike *> m_bikes;  //array for bikes
+	bool move;//bool to check if car is moving or not
+	const char* achievementID = "CgkI69-MotMIEAIQAQ";// id used for google play trophy
 public:
 	static cocos2d::Scene* createScene();
 	virtual bool init();
 	std::shared_ptr<GameData> m_ptr;
-	Player * player;
-	PowerUp * powerUp;
-	bool speed;
-	void StopSpeed(float dt);
-	cocos2d::Sprite *cameraTarget;
-	cocos2d::Sprite *backgroundSprite;
-	cocos2d::Sprite *backgroundSprite2;
-	cocos2d::Sprite *backgroundSprite3;
-	cocos2d::Sprite *backgroundSprite4;
-	cocos2d::Sprite *backgroundSprite5;
-	cocos2d::Follow *camera;
-	cocos2d::Label *label;
-	cocos2d::Label *scoreLabel;
-	cocos2d::MenuItemSprite *pauseItem;
-	cocos2d::ProgressTimer *progressTimer;
-	std::string const TOWERS_SPRITE_BATCH = "TowerBases";
-	std::string const COINS_SPRITE_BATCH = "Coins";
+	void StopSpeed(float dt);//method to stop the speed boost 
 	GameStates m_gameState;
-	bool powerUpBool;
-	std::vector<TowerBase *> m_towerBases;  // add this
-	void createTowerBases();    // add this
-	std::vector<Coin *> m_coins;  // add this
-	void createCoins();    // add this
-	std::vector<Police *> m_polices;  // add this
-	void createPolice();    // add this
-	std::vector<Ambulance *> m_ambulances;  // add this
-	void createAmbulances();    // add this
-	std::vector<Truck *> m_trucks;  // add this
-	void createTrucks();    // add this
-	std::vector<MiniTruck *> m_miniTrucks;  // add this
-	void createMTrucks();    // add this
-	std::vector<Bike *> m_bikes;  // add this
-	void createBikes();    // add this
-	void ScrollBackground(float dt);
-	// Called when user pauses gameplay.
+	void createTowerBases();    //method to create the taxis
+	void createCoins();   //method to create the coins
+	void createPolice();    //method to create the police cars
+	void createAmbulances();   //method to create the abulances
+	void createTrucks();   //method to create the trucks
+	void createMTrucks();    //method to create the mini trucks
+	void createBikes();    //method to create the bikes
+	void DeactivatePowerUp(float dt);//deactivates the power up 1
 	void update(float dt);
-	// Called at game over 
-	void activateGameOverScene(float dt);
-	void activatePauseScene(Ref *pSender);
-	void activateTutorialInfo1(Ref *pSender);
-	void activateTutorialInfo2(Ref *pSender);
-	void activateTutorialInfo3(Ref *pSender);
-	void activateTutorialInfo4(Ref *pSender);
-	void addBackGroundSprite(cocos2d::Size const & visibleSize, cocos2d::Point const & origin);
-	bool move;
-	const char* achievementID = "CgkI69-MotMIEAIQAQ";
-	bool onContactBegin(cocos2d::PhysicsContact &contact);
+	void activateGameOverScene(float dt);// Called at game over 
+	void activatePauseScene(Ref *pSender);// Called when user pauses gameplay.
+	void activateTutorialInfo1(Ref *pSender);// changes scene to info 1 on tutorial slides
+	void activateTutorialInfo2(Ref *pSender);// changes scene to info 2 on tutorial slides
+	void activateTutorialInfo3(Ref *pSender);// changes scene to info 3 on tutorial slides
+	void activateTutorialInfo4(Ref *pSender);// changes scene to info 4 on tutorial slides
+	void addBackGroundSprite(cocos2d::Size const & visibleSize, cocos2d::Point const & origin);//add the backgrounds to the scene
+	bool onContactBegin(cocos2d::PhysicsContact &contact);//method that checks for collision between physics bodies
 	bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event * event);
 	void onTouchMoved(cocos2d::Touch *touch, cocos2d::Event * event);
-	void Crash();
+	void Crash();//method that creates the fire particles for crashes
 	cocos2d::PhysicsWorld * sceneWorld;
-	void SetPhysicsWorld(cocos2d::PhysicsWorld * world) { sceneWorld = world; };
-	//void OnAcceleration(cocos2d::Acceleration * acc, cocos2d::Event * event);
-	virtual void OnAcceleration(cocos2d::CCAcceleration* pAccelerationValue, cocos2d::Event * event);
+	void SetPhysicsWorld(cocos2d::PhysicsWorld * world) { sceneWorld = world; };//sets the world up as a physics world
+	virtual void OnAcceleration(cocos2d::CCAcceleration* pAccelerationValue, cocos2d::Event * event);//metjo that checks or movement on the device so it will move the car in that direction
 	CREATE_FUNC(Tutorial);
 };

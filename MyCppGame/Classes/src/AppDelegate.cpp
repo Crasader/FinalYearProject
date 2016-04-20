@@ -97,7 +97,6 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	
 	
 	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("audio/background.mp3",true);
-	CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(1.0f);
 	return true;
 }
 

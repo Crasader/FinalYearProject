@@ -47,6 +47,10 @@ void Tutorial::activatePauseScene(Ref *pSender)
 
 void Tutorial::activateGameOverScene(float dt)
 {
+	if (SonarCocosHelper::GooglePlayServices::isSignedIn)
+	{
+		SonarCocosHelper::GooglePlayServices::unlockAchievement("CgkI69-MotMIEAIQCw");
+	}
 	auto scene = TutorialOver::createScene();
 	Director::getInstance()->replaceScene(scene);
 }
@@ -88,7 +92,7 @@ void Tutorial::addBackGroundSprite(cocos2d::Size const & visibleSize, cocos2d::P
 	this->addChild(backgroundSprite5, -1);
 }
 
-void Tutorial::ScrollBackground(float dt)
+void Tutorial::DeactivatePowerUp(float dt)
 {
 	powerUpBool = false;
 	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/PowerUpOver.mp3");
@@ -432,7 +436,7 @@ bool Tutorial::onContactBegin(cocos2d::PhysicsContact &contact)
 				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/invisCollected.mp3");
 				nodeB->removeFromParentAndCleanup(true);
 				powerUpBool = true;
-				this->scheduleOnce(schedule_selector(Tutorial::ScrollBackground), 4.0f);
+				this->scheduleOnce(schedule_selector(Tutorial::DeactivatePowerUp), 4.0f);
 			}
 			else if (nodeB->getTag() == 50)
 			{
@@ -457,7 +461,7 @@ bool Tutorial::onContactBegin(cocos2d::PhysicsContact &contact)
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/invisCollected.mp3");
 			nodeA->removeFromParentAndCleanup(true);
 			powerUpBool = true;
-			this->scheduleOnce(schedule_selector(Tutorial::ScrollBackground), 4.0f);
+			this->scheduleOnce(schedule_selector(Tutorial::DeactivatePowerUp), 4.0f);
 		}
 		else if (nodeA->getTag() == 50)
 		{

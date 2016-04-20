@@ -11,9 +11,9 @@ private:
 public:
 	Truck(GameStates & gameState);
 
-	static Truck * create(cocos2d::Vec2 position, GameStates & gameState);
+	static Truck * create(cocos2d::Vec2 position, GameStates & gameState);//creates the object setting the image to use and physics body.
 
-	void initOptions(cocos2d::Vec2 position);
+	void initOptions(cocos2d::Vec2 position);//sets the position of the object
 
 	void addEvents();
 };

@@ -18,7 +18,7 @@ Scene* Endless::createScene()
 
 void Endless::activatePauseScene(Ref *pSender)
 {
-	auto scene = PauseMenu::createScene();
+	auto scene = PauseLevel2::createScene();
 	Director::getInstance()->pushScene(scene);
 }
 
@@ -39,40 +39,6 @@ void Endless::activateGameOverScene(float dt)
 	Director::getInstance()->replaceScene(scene);
 }
 
-//void Endless::moveBack(float dt)
-//{
-//
-//	/*if (backgroundSprite->getPosition().y < -backgroundSprite->boundingBox().size.height) {
-//		backgroundSprite->setPosition(ccp(backgroundSprite2->getPosition().x , backgroundSprite->getPosition().y + backgroundSprite2->boundingBox().size.height));
-//	}
-//	if (backgroundSprite2->getPosition().y < -backgroundSprite2->boundingBox().size.height) {
-//		backgroundSprite2->setPosition(ccp(backgroundSprite->getPosition().x , backgroundSprite2->getPosition().y + backgroundSprite->boundingBox().size.height));
-//	}*/
-//	/*Size visibleSize = Director::getInstance()->getVisibleSize();
-//	Point origin = Director::getInstance()->getVisibleOrigin();
-//	if (player->getPosition().y > playerTemp1)
-//	{
-//		backgroundSprite->setPosition(Point((visibleSize.width / 2) +
-//			origin.x, (visibleSize.height) + backTemp1));
-//	}
-//
-//	if (player->getPosition().y > playerTemp2)
-//	{
-//		backgroundSprite2->setPosition(Point((visibleSize.width / 2) +
-//			origin.x, (visibleSize.height) + backTemp2));
-//		backTemp1 += 6000;
-//		playerTemp1 += 6000;
-//	}
-//
-//	if (player->getPosition().y > playerTemp3)
-//	{
-//		backgroundSprite3->setPosition(Point((visibleSize.width / 2) +
-//			origin.x, (visibleSize.height) + backTemp3));
-//		backTemp2 += 6000;
-//		playerTemp2 += 6000;
-//	}*/
-//}
-
 void Endless::addBackGroundSprite(cocos2d::Size const & visibleSize, cocos2d::Point const & origin)
 {
 	std::shared_ptr<GameData> ptr = GameData::sharedGameData();
@@ -91,41 +57,6 @@ void Endless::addBackGroundSprite(cocos2d::Size const & visibleSize, cocos2d::Po
 			(ptr->m_backgroundTextureFile6);
 		backgroundSprite3->setPosition(Point((visibleSize.width / 2) +
 			origin.x, (visibleSize.height) + 4596));
-
-	//if (i == 4)
-	//{
-	//	backgroundSprite = Sprite::create
-	//		(ptr->m_backgroundTextureFile3);
-	//	backgroundSprite->setPosition(Point((visibleSize.width / 2) +
-	//		origin.x, (visibleSize.height) + 500));
-
-	//	backgroundSprite2 = Sprite::create
-	//		(ptr->m_backgroundTextureFile3);
-	//	backgroundSprite2->setPosition(Point((visibleSize.width / 2) +
-	//		origin.x, (visibleSize.height) + 2596));
-
-	//	backgroundSprite3 = Sprite::create
-	//		(ptr->m_backgroundTextureFile3);
-	//	backgroundSprite3->setPosition(Point((visibleSize.width / 2) +
-	//		origin.x, (visibleSize.height) + 4596));
-	//}
-	//if (i == 5)
-	//{
-	//	backgroundSprite = Sprite::create
-	//		(ptr->m_backgroundTextureFile4);
-	//	backgroundSprite->setPosition(Point((visibleSize.width / 2) +
-	//		origin.x, (visibleSize.height) + 500));
-
-	//	backgroundSprite2 = Sprite::create
-	//		(ptr->m_backgroundTextureFile4);
-	//	backgroundSprite2->setPosition(Point((visibleSize.width / 2) +
-	//		origin.x, (visibleSize.height) + 2596));
-
-	//	backgroundSprite3 = Sprite::create
-	//		(ptr->m_backgroundTextureFile4);
-	//	backgroundSprite3->setPosition(Point((visibleSize.width / 2) +
-	//		origin.x, (visibleSize.height) + 4596));
-	//}
 
 	this->addChild(backgroundSprite, -1);
 	this->addChild(backgroundSprite2, -1);
@@ -172,20 +103,7 @@ bool Endless::init()
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Point origin = Director::getInstance()->getVisibleOrigin();
 
-	//auto edgeBody = PhysicsBody::createEdgeBox(visibleSize, PHYSICSBODY_MATERIAL_DEFAULT, 2);
-
-	//auto edgeNode = Node::create();
-	//edgeNode->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
-	//edgeNode->setPhysicsBody(edgeBody);
-
-	//this->addChild(edgeNode);
-
 	powerUpBool = false;
-
-	//pauseItem->setPosition(Point(pauseItem->getContentSize().width -
-	//	(pauseItem->getContentSize().width / 4) + origin.x,
-	//	visibleSize.height - pauseItem->getContentSize().height +
-	//	(pauseItem->getContentSize().width / 4) + origin.y));
 
 	pauseItem->setPosition(22, 520);
 
@@ -195,15 +113,15 @@ bool Endless::init()
 	this->addChild(player, 5);
 
 	hud = HUD::create();
-	hud->setPosition(340, 530);
+	hud->setPosition(333, 530);
 	this->addChild(hud, 6);
 
 	label = Label::createWithTTF("Score:", "fonts/Marker Felt.ttf", 32);
-	label->setPosition(320, 522);
+	label->setPosition(312, 522);
 	this->addChild(label, 7);
 	__String *tempScore = __String::createWithFormat("%i", score);
 	scoreLabel = Label::createWithTTF(tempScore->getCString(), "fonts/Marker Felt.ttf", 32);
-	scoreLabel->setPosition(377, 522);
+	scoreLabel->setPosition(369, 522);
 	this->addChild(scoreLabel, 7);
 
 	auto menu = Menu::create(pauseItem, NULL);
@@ -211,18 +129,7 @@ bool Endless::init()
 	this->addChild(menu);
 
 	addBackGroundSprite(visibleSize, origin);
-	/*createTowerBases();
-	createCoins();
-	createPolice();
-	createAmbulances();
-	createMTrucks();
-	createTrucks();*/
 
-	/*auto listener = EventListenerTouchOneByOne::create();
-	listener->setSwallowTouches(true);
-
-	listener->onTouchBegan = CC_CALLBACK_2(Endless::onTouchBegan, this);
-	listener->onTouchMoved = CC_CALLBACK_2(Endless::onTouchMoved, this);*/
 	for (int i = 0; i < 100; i++)
 	{
 		EndlessGame(temp);
@@ -243,7 +150,6 @@ bool Endless::init()
 	auto screenSize = glview->getFrameSize();
 	if (player->getPositionX() > 500)
 	{
-		//float temp = screenSize.width - 10;
 		player->setPositionX(499);
 	}
 	if (player->getPositionX() < 0)
@@ -335,66 +241,87 @@ void Endless::UpdateScore(float dt)
 
 void Endless::EndlessGame(float dt)
 {
-		randX1 = cocos2d::RandomHelper::random_int(1, 3);
-	/*	if ((randX1 == tempRand1 || randX1 == tempRand2)&&(count == 1))
+	randX1 = cocos2d::RandomHelper::random_int(1, 3);
+	if (randX1 == 1)
+	{
+		xPos = 60;
+	}
+	if (randX1 == 2)
+	{
+		xPos = 195;
+	}
+	if (randX1 == 3)
+	{
+		xPos = 340;
+	}
+	tempRand1 = randX1;
+	preTemp = randX1;
+
+		
+	randCar = cocos2d::RandomHelper::random_int(1, 5);
+	if (randCar == 1)
+	{
+		createTrucks(xPos, yPos);
+	}
+	else if (randCar == 2)
+	{
+		createTowerBases(xPos, yPos);
+	}
+	else if (randCar == 3)
+	{
+		createPolice(xPos, yPos);
+	}
+	else if (randCar == 4)
+	{
+		createAmbulances(xPos, yPos);
+	}
+	else if (randCar == 5)
+	{
+		createMTrucks(xPos, yPos);
+	}
+
+	randX2 = cocos2d::RandomHelper::random_int(1, 3);
+
+	if (randX2 == tempRand1)
+	{
+		if (tempRand1 == 1)
 		{
-			if (randX1 == 1)
-			{
-				randX1 = cocos2d::RandomHelper::random_int(2, 3);
-				if (randX1 == 2)
-				{
-					xPos = 195;
-				}
-				if (randX1 == 3)
-				{
-					xPos = 340;
-				}
-			}
-			if (randX1 == 2)
-			{
-				randX1 = cocos2d::RandomHelper::random_int(7, 8);
-				if (randX1 == 7)
-				{
-					xPos = 60;
-				}
-				if (randX1 == 8)
-				{
-					xPos = 340;
-				}
-			}
-			if (randX1 == 3)
-			{
-				randX1 = cocos2d::RandomHelper::random_int(1, 2);
-				if (randX1 == 1)
-				{
-					xPos = 60;
-				}
-				if (randX1 == 2)
-				{
-					xPos = 195;
-				}
-			}
-			cont = true;
-			preTemp2 = randX1;
-		}*/
-		//else {
-			if (randX1 == 1)
-			{
-				xPos = 60;
-			}
-			if (randX1 == 2)
+			randX2 = cocos2d::RandomHelper::random_int(2, 3);
+			if (randX2 == 2)
 			{
 				xPos = 195;
 			}
-			if (randX1 == 3)
+			if (randX2 == 3)
 			{
 				xPos = 340;
 			}
-		//}
-		tempRand1 = randX1;
-		preTemp = randX1;
+		}
+		if (tempRand1 == 2)
+		{
+			randX2 = cocos2d::RandomHelper::random_int(7, 8);
+			if (randX2 == 7)
+			{
+				xPos = 60;
+			}
+			if (randX2 == 8)
+			{
+				xPos = 340;
+			}
+		}
+		if (tempRand1 == 3)
+		{
+			randX2 = cocos2d::RandomHelper::random_int(1, 2);
+			if (randX2 == 1)
+			{
+				xPos = 60;
+			}
+			if (randX2 == 2)
+			{
+				xPos = 195;
+			}
+		}
 
-		
+		tempRand2 = randX2;
 		randCar = cocos2d::RandomHelper::random_int(1, 5);
 		if (randCar == 1)
 		{
@@ -416,158 +343,45 @@ void Endless::EndlessGame(float dt)
 		{
 			createMTrucks(xPos, yPos);
 		}
-
-		randX2 = cocos2d::RandomHelper::random_int(1, 3);
-
-		if (randX2 == tempRand1)
+	}
+	else
+	{
+		if (randX2 == 1)
 		{
-			if (tempRand1 == 1)
-			{
-				randX2 = cocos2d::RandomHelper::random_int(2, 3);
-				if (randX2 == 2)
-				{
-					xPos = 195;
-				}
-				if (randX2 == 3)
-				{
-					xPos = 340;
-				}
-			}
-			if (tempRand1 == 2)
-			{
-				randX2 = cocos2d::RandomHelper::random_int(7, 8);
-				if (randX2 == 7)
-				{
-					xPos = 60;
-				}
-				if (randX2 == 8)
-				{
-					xPos = 340;
-				}
-			}
-			if (tempRand1 == 3)
-			{
-				randX2 = cocos2d::RandomHelper::random_int(1, 2);
-				if (randX2 == 1)
-				{
-					xPos = 60;
-				}
-				if (randX2 == 2)
-				{
-					xPos = 195;
-				}
-			}
-
-			tempRand2 = randX2;
-			randCar = cocos2d::RandomHelper::random_int(1, 5);
-			if (randCar == 1)
-			{
-				createTrucks(xPos, yPos);
-			}
-			else if (randCar == 2)
-			{
-				createTowerBases(xPos, yPos);
-			}
-			else if (randCar == 3)
-			{
-				createPolice(xPos, yPos);
-			}
-			else if (randCar == 4)
-			{
-				createAmbulances(xPos, yPos);
-			}
-			else if (randCar == 5)
-			{
-				createMTrucks(xPos, yPos);
-			}
+			xPos = 60;
 		}
-		/*else if (cont == true)
+		if (randX2 == 2)
 		{
-			if (preTemp2 == 1)
-			{
-				randX1 = cocos2d::RandomHelper::random_int(2, 3);
-				if (randX1 == 2)
-				{
-					xPos = 195;
-				}
-				if (randX1 == 3)
-				{
-					xPos = 340;
-				}
-			}
-			if (preTemp2 == 2)
-			{
-				randX1 = cocos2d::RandomHelper::random_int(7, 8);
-				if (randX1 == 7)
-				{
-					xPos = 60;
-				}
-				if (randX1 == 8)
-				{
-					xPos = 340;
-				}
-			}
-			if (preTemp2 == 3)
-			{
-				randX1 = cocos2d::RandomHelper::random_int(1, 2);
-				if (randX1 == 1)
-				{
-					xPos = 60;
-				}
-				if (randX1 == 2)
-				{
-					xPos = 195;
-				}
-			}
-			cont = false;
-		}*/
-		else
-		{
-			if (randX2 == 1)
-			{
-				xPos = 60;
-			}
-			if (randX2 == 2)
-			{
-				xPos = 195;
-			}
-			if (randX2 == 3)
-			{
-				xPos = 340;
-			}
-			tempRand2 = randX2;
-			randCar = cocos2d::RandomHelper::random_int(1, 5);
-			if (randCar == 1)
-			{
-				createTrucks(xPos, yPos);
-			}
-			else if (randCar == 2)
-			{
-				createTowerBases(xPos, yPos);
-			}
-			else if (randCar == 3)
-			{
-				createPolice(xPos, yPos);
-			}
-			else if (randCar == 4)
-			{
-				createAmbulances(xPos, yPos);
-			}
-			else if (randCar == 5)
-			{
-				createMTrucks(xPos, yPos);
-			}
+			xPos = 195;
 		}
-
-		/*if (tempRand1 == randX1 && tempRand2 == randX2 || tempRand2 == randX1 && tempRand1 == randX2)
+		if (randX2 == 3)
 		{
-			count = count + 1;
+			xPos = 340;
 		}
-		else
+		tempRand2 = randX2;
+		randCar = cocos2d::RandomHelper::random_int(1, 5);
+		if (randCar == 1)
 		{
-			count = 0;
-		}*/
-		yPos = yPos + 500;
+			createTrucks(xPos, yPos);
+		}
+		else if (randCar == 2)
+		{
+			createTowerBases(xPos, yPos);
+		}
+		else if (randCar == 3)
+		{
+			createPolice(xPos, yPos);
+		}
+		else if (randCar == 4)
+		{
+			createAmbulances(xPos, yPos);
+		}
+		else if (randCar == 5)
+		{
+			createMTrucks(xPos, yPos);
+		}
+	}
+	yPos = yPos + 500;
 }
 
 void Endless::RandomCoins(float dt)
@@ -606,7 +420,7 @@ void Endless::RandomPowerUps(float dt)
 	}
 	
 	int randPower = cocos2d::RandomHelper::random_int(1, 3);
-	auto powerUp1 = PowerUp::create(3);
+	auto powerUp1 = PowerUp::create(randPower);
 	powerUp1->setPosition(powerX, powerY);
 	this->addChild(powerUp1);
 	powerY += 5000;
@@ -628,43 +442,7 @@ void Endless::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event * event)
 
 void Endless::Particles()
 {
-	//std::string path = CCFileUtils::sharedFileUtils()->getWriteablePath() + "\\file.ext";
-	std::string path = CCFileUtils::sharedFileUtils()->getWritablePath() + "\\file.ext";
-	FILE* f = fopen(path.c_str(), "wb");
 
-	int size = 1; //number of items to save
-	fwrite(&size, sizeof(int), 1, f);
-	//for (unsigned int i = 0; i
-
-	//auto size = Director::getInstance()->getWinSize();
-	//auto m_emitter = ParticleSmoke::createWithTotalParticles(900);
-	////m_emitter->setTexture(Director::getInstance()->getTextureCache()->addImage("smoke.png"));
-	//m_emitter->setDuration(0.015f);
-	//m_emitter->setGravity(Point(0, -240));
-	//m_emitter->setAngle(0);
-	//m_emitter->setAngleVar(360);
-	//m_emitter->setRadialAccel(50);
-	//m_emitter->setRadialAccelVar(0);
-	//m_emitter->setTangentialAccel(0);
-	//m_emitter->setTangentialAccelVar(0);
-	//m_emitter->setPosVar(Point(1, 0));
-	//m_emitter->setLife(0.15f);
-	//m_emitter->setLifeVar(0.15f);
-	//m_emitter->setStartSpin(0);
-	//m_emitter->setStartSpinVar(0);
-	//m_emitter->setEndSpin(0);
-	//m_emitter->setEndSpinVar(0);
-	//m_emitter->setStartColor(Color4F(0, 0, 0, 1));
-	//m_emitter->setStartColorVar(Color4F(0, 0, 0, 0));
-	//m_emitter->setEndColor(Color4F(0, 0, 0, 1));
-	//m_emitter->setEndColorVar(Color4F(0, 0, 0, 0));
-	//m_emitter->setStartSize(7.5f);
-	//m_emitter->setStartSizeVar(0);
-	//m_emitter->setEndSize(2.0f);
-	//m_emitter->setEndSizeVar(0);
-	//m_emitter->setEmissionRate(80);
-	//m_emitter->setPosition(Vec2(player->getPosition().x + 15, player->getPosition().y - 72));
-	//addChild(m_emitter, 10);
 }
 
 void Endless::Crash()
@@ -823,7 +601,9 @@ bool Endless::onContactBegin(cocos2d::PhysicsContact &contact)
 				nodeB->removeFromParentAndCleanup(true);
 				if (SonarCocosHelper::GooglePlayServices::isSignedIn)
 				{
-					SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQAA", 1);
+					SonarCocosHelper::GooglePlayServices::unlockAchievement("CgkI69-MotMIEAIQDw");
+					SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQCg", 1);
+					SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQCQ", 1);
 				}
 			}
 
@@ -832,6 +612,11 @@ bool Endless::onContactBegin(cocos2d::PhysicsContact &contact)
 				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/PowerUpCollected.mp3");
 				nodeB->removeFromParentAndCleanup(true);
 				powerUpBool = true;
+				if (SonarCocosHelper::GooglePlayServices::isSignedIn)
+				{
+					SonarCocosHelper::GooglePlayServices::unlockAchievement("CgkI69-MotMIEAIQEA");
+					SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQCA", 1);
+				}
 				this->scheduleOnce(schedule_selector(Endless::ScrollBackground), 5.0f);
 			}
 
@@ -840,6 +625,11 @@ bool Endless::onContactBegin(cocos2d::PhysicsContact &contact)
 				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/speedboost.mp3");
 				nodeB->removeFromParentAndCleanup(true);
 				speed -= true;
+				if (SonarCocosHelper::GooglePlayServices::isSignedIn)
+				{
+					SonarCocosHelper::GooglePlayServices::unlockAchievement("CgkI69-MotMIEAIQEA");
+					SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQCA", 1);
+				}
 				this->scheduleOnce(schedule_selector(Endless::StopSpeed), 4.0f);
 			}
 			else if (nodeB->getTag() == 60)
@@ -848,6 +638,11 @@ bool Endless::onContactBegin(cocos2d::PhysicsContact &contact)
 				score = score + 2;
 				__String *tempScore = __String::createWithFormat("%i", score);
 				scoreLabel->setString(tempScore->getCString());
+				if (SonarCocosHelper::GooglePlayServices::isSignedIn)
+				{
+					SonarCocosHelper::GooglePlayServices::unlockAchievement("CgkI69-MotMIEAIQEA");
+					SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQCA", 1);
+				}
 				nodeB->removeFromParentAndCleanup(true);
 			}
 		}
@@ -860,7 +655,9 @@ bool Endless::onContactBegin(cocos2d::PhysicsContact &contact)
 			nodeA->removeFromParentAndCleanup(true);
 			if (SonarCocosHelper::GooglePlayServices::isSignedIn)
 			{
-				SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQAA", 1);
+				SonarCocosHelper::GooglePlayServices::unlockAchievement("CgkI69-MotMIEAIQDw");
+				SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQCg", 1);
+				SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQCQ", 1);
 			}
 		}
 		else if (nodeA->getTag() == 40)
@@ -868,6 +665,11 @@ bool Endless::onContactBegin(cocos2d::PhysicsContact &contact)
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/PowerUpCollected.mp3");
 			nodeA->removeFromParentAndCleanup(true);
 			powerUpBool = true;
+			if (SonarCocosHelper::GooglePlayServices::isSignedIn)
+			{
+				SonarCocosHelper::GooglePlayServices::unlockAchievement("CgkI69-MotMIEAIQEA");
+				SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQCA", 1);
+			}
 			this->scheduleOnce(schedule_selector(Endless::ScrollBackground), 3.0f);
 		}
 		else if (nodeA->getTag() == 50)
@@ -875,6 +677,11 @@ bool Endless::onContactBegin(cocos2d::PhysicsContact &contact)
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/speedboost.mp3");
 			speed = true;
 			nodeA->removeFromParentAndCleanup(true);
+			if (SonarCocosHelper::GooglePlayServices::isSignedIn)
+			{
+				SonarCocosHelper::GooglePlayServices::unlockAchievement("CgkI69-MotMIEAIQEA");
+				SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQCA", 1);
+			}
 			this->scheduleOnce(schedule_selector(Endless::StopSpeed), 4.0f);
 		}
 		else if (nodeA->getTag() == 60)
@@ -883,6 +690,11 @@ bool Endless::onContactBegin(cocos2d::PhysicsContact &contact)
 			score = score + 2;
 			__String *tempScore = __String::createWithFormat("%i", score);
 			scoreLabel->setString(tempScore->getCString());
+			if (SonarCocosHelper::GooglePlayServices::isSignedIn)
+			{
+				SonarCocosHelper::GooglePlayServices::unlockAchievement("CgkI69-MotMIEAIQEA");
+				SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQCA", 1);
+			}
 			nodeA->removeFromParentAndCleanup(true);
 		}
 	}
@@ -898,7 +710,9 @@ bool Endless::onContactBegin(cocos2d::PhysicsContact &contact)
 			Crash();
 			if (SonarCocosHelper::GooglePlayServices::isSignedIn)
 			{
-				SonarCocosHelper::GooglePlayServices::unlockAchievement(achievementID);
+				SonarCocosHelper::GooglePlayServices::unlockAchievement("CgkI69-MotMIEAIQDg");
+				SonarCocosHelper::GooglePlayServices::submitScore("CgkI69-MotMIEAIQEw", score);
+				SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQDQ", 1);
 			}
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/GameOver.mp3");
 		}

@@ -4,7 +4,7 @@
 #include "HUD.h"
 #include "TowerBase.h"
 #include "GameStates.h"
-#include "PauseScene.h"
+#include "PauseLevel2.h"
 #include "EndlessGameOver.h"
 #include "GameData.h"
 #include "Player.h"

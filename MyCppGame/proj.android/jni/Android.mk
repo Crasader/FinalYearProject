@@ -24,6 +24,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
    ../../Classes/src/MiniTruck.cpp \
    ../../Classes/src/OptionsScene.cpp \
    ../../Classes/src/PauseScene.cpp \
+   ../../Classes/src/PauseLevel2.cpp \
    ../../Classes/src/Player.cpp \
    ../../Classes/src/Police.cpp \
    ../../Classes/src/SplashScene.cpp \

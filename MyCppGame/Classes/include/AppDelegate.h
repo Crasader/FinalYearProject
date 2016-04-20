@@ -11,7 +11,7 @@ private: // Add  this
 public:
 	AppDelegate();
 	virtual ~AppDelegate();
-	virtual bool applicationDidFinishLaunching();
+	virtual bool applicationDidFinishLaunching();//method for all code to launch the game
 	virtual void applicationDidEnterBackground();
 	virtual void applicationWillEnterForeground();
 };

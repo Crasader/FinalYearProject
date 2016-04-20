@@ -15,6 +15,10 @@ Scene* ChooseMode::createScene()
 
 void ChooseMode::activateGameScene(cocos2d::Ref *pSender)
 {
+	if (SonarCocosHelper::GooglePlayServices::isSignedIn)
+	{
+		SonarCocosHelper::GooglePlayServices::unlockAchievement("CgkI69-MotMIEAIQEQ");
+	}
 	auto scene = GameScreen::createScene();
 	Director::getInstance()->replaceScene(scene);
 }

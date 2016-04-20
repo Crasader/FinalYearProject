@@ -11,9 +11,9 @@ private:
 public:
 	Police(GameStates & gameState);
 
-	static Police * create(cocos2d::Vec2 position, GameStates & gameState);
+	static Police * create(cocos2d::Vec2 position, GameStates & gameState);//creates the object.
 
-	void initOptions(cocos2d::Vec2 position);
+	void initOptions(cocos2d::Vec2 position);//sets the position for the image.
 
 	void addEvents();
 };

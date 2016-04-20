@@ -14,10 +14,10 @@ public:
 
 	static TowerBase * create(cocos2d::Vec2 position, GameStates & gameState);
 
-	void initOptions(cocos2d::Vec2 position);
+	void initOptions(cocos2d::Vec2 position);//sets the position of the object.
 
 	void addEvents();
-	void addBody(TowerBase * sprite);
+	void addBody(TowerBase * sprite);//adds a physics body to the object.
 	void handleTouchEvent(cocos2d::Touch* touch);
 
 	bool isTouched() const;

@@ -26,12 +26,10 @@ void Level3::activateLoadingScene(float dt)
 	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/LevelCompleted.mp3");
 	if (SonarCocosHelper::GooglePlayServices::isSignedIn)
 	{
-		SonarCocosHelper::GooglePlayServices::submitScore("CgkI69-MotMIEAIQAg", score);
+		SonarCocosHelper::GooglePlayServices::unlockAchievement("CgkI69-MotMIEAIQBg");
+		SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQBw", 1);
+		SonarCocosHelper::GooglePlayServices::submitScore("CgkI69-MotMIEAIQFA", Global::getInstance()->getScore());
 	}
-	//auto scene = Loading::createScene();
-	//Director::getInstance()->replaceScene(scene);
-	//auto scene = GameOver::createScene();
-	//Director::getInstance()->replaceScene(scene);
 	auto scene = GameComplete::createScene();
 	Director::getInstance()->replaceScene(scene);
 }
@@ -79,7 +77,7 @@ void Level3::addBackGroundSprite(cocos2d::Size const & visibleSize, cocos2d::Poi
 	this->addChild(backgroundSprite5, -1);
 }
 
-void Level3::ScrollBackground(float dt)
+void Level3::DeactivatePowerUp(float dt)
 {
 	powerUpBool = false;
 	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/PowerUpOver.mp3");
@@ -123,19 +121,19 @@ bool Level3::init()
 	this->addChild(player,5);
 
 	powerUp = PowerUp::create(2);
-	powerUp->setPosition(340,4050);
+	powerUp->setPosition(330,4050);
 	this->addChild(powerUp);
 
 	hud = HUD::create();
-	hud->setPosition(340, 530);
+	hud->setPosition(333, 530);
 	this->addChild(hud,6);
 
 	label = Label::createWithTTF("Score:", "fonts/Marker Felt.ttf", 32);
-	label->setPosition(320, 522);
+	label->setPosition(312, 522);
 	this->addChild(label,7);
 	__String *tempScore = __String::createWithFormat("%i", Global::getInstance()->getScore());
 	scoreLabel = Label::createWithTTF(tempScore->getCString(), "fonts/Marker Felt.ttf",32);
-	scoreLabel->setPosition(377, 522);
+	scoreLabel->setPosition(369, 522);
 	this->addChild(scoreLabel,7);
 
 	auto menu = Menu::create(pauseItem, NULL);
@@ -466,49 +464,59 @@ bool Level3::onContactBegin(cocos2d::PhysicsContact &contact)
 				__String *tempScore = __String::createWithFormat("%i", Global::getInstance()->getScore());
 				scoreLabel->setString(tempScore->getCString());
 				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/scoreSound.mp3");
-				//int x = nodeB->getPosition().x;
-				//int y = nodeB->getPosition().y;
-				//std::shared_ptr<GameData> ptr = GameData::sharedGameData();
-				//for (int i = 0; i < ptr->m_numberOfCoins; i++)
-				//{
-				//	if (m_coins[i]->getPosition().x == x && m_coins[i]->getPosition().y == y)
-				//	{
-				//		//m_coins[i]->setPositionX(4000);						
-				//		//nodeB->removeFromPhysicsWorld();
-				//		m_coins[i]->setPositionCoin();
-				//		//nodeB->removeFromParentAndCleanup(true);
-				//	}
-				//}
 				nodeB->removeFromParentAndCleanup(true);
 				if (SonarCocosHelper::GooglePlayServices::isSignedIn)
 				{
-					SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQAA", 1);
+					SonarCocosHelper::GooglePlayServices::unlockAchievement("CgkI69-MotMIEAIQDw");
+					SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQCg", 1);
+					SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQCQ", 1);
 				}
 			}
 
 			else if (nodeB->getTag() == 40)
 			{
+				CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(4.0f);
 				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/invisCollected.mp3");
-				Global::getInstance()->setScore(100);
+				Global::getInstance()->setScore(30);
 				__String *tempScore = __String::createWithFormat("%i", Global::getInstance()->getScore());
 				scoreLabel->setString(tempScore->getCString());
 				nodeB->removeFromParentAndCleanup(true);
 				powerUpBool = true;
-				this->scheduleOnce(schedule_selector(GameScreen::ScrollBackground), 4.0f);
+				if (SonarCocosHelper::GooglePlayServices::isSignedIn)
+				{
+					SonarCocosHelper::GooglePlayServices::unlockAchievement("CgkI69-MotMIEAIQEA");
+					SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQCA", 1);
+				}
+				this->scheduleOnce(schedule_selector(Level3::DeactivatePowerUp), 4.0f);
 			}
 			else if (nodeB->getTag() == 50)
 			{
+				CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(4.0f);
 				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/speedboost.mp3");
 				nodeB->removeFromParentAndCleanup(true);
+				Global::getInstance()->setScore(50);
+				__String *tempScore = __String::createWithFormat("%i", Global::getInstance()->getScore());
+				scoreLabel->setString(tempScore->getCString());
 				speed -= true;
-				this->scheduleOnce(schedule_selector(Endless::StopSpeed), 3.0f);
+				if (SonarCocosHelper::GooglePlayServices::isSignedIn)
+				{
+					SonarCocosHelper::GooglePlayServices::unlockAchievement("CgkI69-MotMIEAIQEA");
+					SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQCA", 1);
+				}
+				this->scheduleOnce(schedule_selector(Level3::StopSpeed), 3.0f);
 			}
 			else if (nodeB->getTag() == 60)
 			{
+				CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(4.0f);
 				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ScoreBoost.mp3");
 				Global::getInstance()->setScore(100);
 				__String *tempScore = __String::createWithFormat("%i", Global::getInstance()->getScore());
 				scoreLabel->setString(tempScore->getCString());
+				if (SonarCocosHelper::GooglePlayServices::isSignedIn)
+				{
+					SonarCocosHelper::GooglePlayServices::unlockAchievement("CgkI69-MotMIEAIQEA");
+					SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQCA", 1);
+				}
 				nodeB->removeFromParentAndCleanup(true);
 			}
 		}
@@ -518,60 +526,67 @@ bool Level3::onContactBegin(cocos2d::PhysicsContact &contact)
 			__String *tempScore = __String::createWithFormat("%i", Global::getInstance()->getScore());
 			scoreLabel->setString(tempScore->getCString());
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/scoreSound.mp3");
-			//int x = nodeA->getPosition().x;
-			//int y = nodeA->getPosition().y;
-			//std::shared_ptr<GameData> ptr = GameData::sharedGameData();
-			//for (int i = 0; i < ptr->m_numberOfCoins; i++)
-			//{
-			//	if (m_coins[i]->getPosition().x == x && m_coins[i]->getPosition().y == y)
-			//	{
-			//		/*m_coins[i]->setPositionX(4000);
-			//		m_coins[i]->setPositionY(4000);
-			//		m_coins[i]->getPhysicsBody()->setAngularVelocity(10);*/
-			//		//->removeFromParentAndCleanup(true);
-			//		//nodeA->removeFromPhysicsWorld();
-			//		m_coins[i]->setPositionCoin();
-			//		//nodeA->removeFromParentAndCleanup(true);
-			//	}
-			//}
 			nodeA->removeFromParentAndCleanup(true);
 			if (SonarCocosHelper::GooglePlayServices::isSignedIn)
 			{
-				SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQAA", 1);
+				SonarCocosHelper::GooglePlayServices::unlockAchievement("CgkI69-MotMIEAIQDw");
+				SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQCg", 1);
+				SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQCQ", 1);
 			}
 		}
 		else if (nodeA->getTag() == 40)
 		{
+			CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(4.0f);
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/invisCollected.mp3");
-			Global::getInstance()->setScore(100);
+			Global::getInstance()->setScore(30);
 			__String *tempScore = __String::createWithFormat("%i", Global::getInstance()->getScore());
 			scoreLabel->setString(tempScore->getCString());
 			nodeA->removeFromParentAndCleanup(true);
 			powerUpBool = true;
-			this->scheduleOnce(schedule_selector(GameScreen::ScrollBackground), 4.0f);
+			if (SonarCocosHelper::GooglePlayServices::isSignedIn)
+			{
+				SonarCocosHelper::GooglePlayServices::unlockAchievement("CgkI69-MotMIEAIQEA");
+				SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQCA", 1);
+			}
+			this->scheduleOnce(schedule_selector(Level3::DeactivatePowerUp), 4.0f);
 		}
 
-		else if (nodeB->getTag() == 50)
+		else if (nodeA->getTag() == 50)
 		{
+			CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(4.0f);
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/speedboost.mp3");
-			nodeB->removeFromParentAndCleanup(true);
+			nodeA->removeFromParentAndCleanup(true);
+			Global::getInstance()->setScore(50);
+			__String *tempScore = __String::createWithFormat("%i", Global::getInstance()->getScore());
+			scoreLabel->setString(tempScore->getCString());
 			speed -= true;
-			this->scheduleOnce(schedule_selector(Endless::StopSpeed), 3.0f);
+			if (SonarCocosHelper::GooglePlayServices::isSignedIn)
+			{
+				SonarCocosHelper::GooglePlayServices::unlockAchievement("CgkI69-MotMIEAIQEA");
+				SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQCA", 1);
+			}
+			this->scheduleOnce(schedule_selector(Level3::StopSpeed), 3.0f);
 		}
 
 		else if (nodeA->getTag() == 60)
 		{
+			CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(4.0f);
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ScoreBoost.mp3");
 			Global::getInstance()->setScore(100);
 			__String *tempScore = __String::createWithFormat("%i", Global::getInstance()->getScore());
 			scoreLabel->setString(tempScore->getCString());
+			if (SonarCocosHelper::GooglePlayServices::isSignedIn)
+			{
+				SonarCocosHelper::GooglePlayServices::unlockAchievement("CgkI69-MotMIEAIQEA");
+				SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQCA", 1);
+			}
 			nodeA->removeFromParentAndCleanup(true);
 		}
 	}
 
 	if ((0x000001 == a->getCollisionBitmask() && 0x000002 == b->getCollisionBitmask() || 0x000001 == b->getCollisionBitmask() && 0x000002 == a->getCollisionBitmask()))
 	{
-		/*if (powerUpBool == false)
+		if (powerUpBool == false)
 		{
 			this->scheduleOnce(schedule_selector(Level3::activateGameOverScene), 1.491f);
 			CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0.85f);
@@ -580,10 +595,12 @@ bool Level3::onContactBegin(cocos2d::PhysicsContact &contact)
 			Crash();
 			if (SonarCocosHelper::GooglePlayServices::isSignedIn)
 			{
-				SonarCocosHelper::GooglePlayServices::unlockAchievement(achievementID);
+				SonarCocosHelper::GooglePlayServices::unlockAchievement("CgkI69-MotMIEAIQDg");
+				SonarCocosHelper::GooglePlayServices::incrementAchievement("CgkI69-MotMIEAIQDQ", 1);
+				SonarCocosHelper::GooglePlayServices::submitScore("CgkI69-MotMIEAIQFA", Global::getInstance()->getScore());
 			}
 			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/GameOver.mp3");	
-		}*/
+		}
 	}
 	return true;
 }

@@ -11,9 +11,9 @@ private:
 public:
 	MiniTruck(GameStates & gameState);
 
-	static MiniTruck * create(cocos2d::Vec2 position, GameStates & gameState);
+	static MiniTruck * create(cocos2d::Vec2 position, GameStates & gameState);//creates the object 
 
-	void initOptions(cocos2d::Vec2 position);
+	void initOptions(cocos2d::Vec2 position);//sets the position where the obect is going to be drawn.
 
 	void addEvents();
 };
